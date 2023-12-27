@@ -3,17 +3,16 @@ import { Link } from 'react-router-dom';
 
 function Navbar() {
   return (
-    <nav className='w-screen flex justify-between justify-items-center place-items-center  h-11 bg-neutral-900 items-center font-light font-serif'>
+    <nav className='h-14 w-screen flex justify-between justify-items-center place-items-center  bg-neutral-900 items-center font-light font-serif'>
       <div className='w-1/3 ml-10'>
-        <Link to={'/'} className='flex w-7 h-9 place-items-center'>
+        <Link to={'/'} className='flex w-12 h-12 place-items-center'>
           <img
-            src='src/assets/Phoenix-2-removebg-preview.png'
+            src='src/assets/logo.png'
             alt='Home'
-            className='w-7'
+            className='w-12'
           />
           <div className='ml-2'>
-            <p className='text-amber-800 mb-0 text-xs'>Phoenix</p>
-            <p className='text-amber-800 mt-0 text-xs'>Pages</p>
+            <p className='text-orange-500 mb-0 text-sm'>Phoenix Pages</p>
           </div>
         </Link>
       </div>
