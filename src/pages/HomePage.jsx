@@ -12,7 +12,7 @@ function HomePage() {
         </h3>
         <div className='mt-8 flex justify-center items-center'>
           <button className='border-solid border-2 border-amber-800 p-3 ml-4 hover:bg-amber-800'>
-            <Link to={'/categories'}>Find all our books here</Link>
+            <Link to={'/books'}>Find all our books here</Link>
           </button>
         </div>
       </div>
