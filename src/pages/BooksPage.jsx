@@ -2,8 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Rating } from 'react-simple-star-rating';
-import StarRating from 'react-simple-star-rating';
+import RatingDisplay from '../components/RatingDisplay';
 
 function BooksPage() {
   const [books, setBooks] = useState([]);
@@ -22,7 +21,7 @@ function BooksPage() {
   const books_ten = books.slice(0, 10);
 
   return (
-    <div className=''>
+    <>
       <div className='flex flex-row'>
         <ul>
           <li>All</li>
@@ -49,12 +48,17 @@ function BooksPage() {
                             className='text-center object-cover h-60 w-26 '
                           />
                         </div>
-                        <div className='h-24 w-36 mt-4'>
-                          <h2><strong>{book.title}</strong> ({book.first_publish_year})</h2>
-                          <h4>{book.author_name}</h4>
-                          <div className='flex'>
-                            <Rating initialValue={book.ratings_average.toFixed(1)} />
-                            <StarRating ratingValue={book.ratings_average.toFixed(1)} readOnly />
+                        <div className='h-24 mw-44'>
+                          <div className='mh-12 flex justify-center items-center'>
+                            <h2><strong>{book.title}</strong> ({book.first_publish_year})</h2>
+                          </div>
+                          <div className='mh-10 flex justify-center items-center'>
+                            <h4>{book.author_name}</h4>
+                          </div>
+                          <div className='mh-6 flex justify-center items-center'>
+                            <div className='flex'>
+                              <RatingDisplay rating={book.ratings_average.toFixed(1)} />
+                            </div>
                           </div>
                         </div>
                       </>
@@ -65,7 +69,7 @@ function BooksPage() {
             );
           })}
       </section>
-    </div>
+    </>
   );
 }
 

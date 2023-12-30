@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function Navbar() {
   return (
     <nav className='h-14 w-screen flex justify-between justify-items-center place-items-center  bg-neutral-900 items-center font-light font-serif fixed'>
-      <div className='w-1/3 ml-10'>
+      <div className='mw-1/2 ml-10'>
         <Link to={'/'} className='flex w-12 h-12 place-items-center'>
           <img
             src='src/assets/logo.png'
@@ -16,7 +16,8 @@ function Navbar() {
           </div>
         </Link>
       </div>
-      <div className='w-1/3 flex justify-between text-center text-lg'>
+
+      <div className='w-1/2 flex justify-around text-center text-lg'>
         <Link to={'/categories'}>
           <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200'>
             Categories
@@ -33,10 +34,8 @@ function Navbar() {
           </h2>
         </Link>
       </div>
-
-      <div className='w-1/3 flex justify-end mr-10 text-lg'>
+      <div className='flex mr-10 text-lg items-center'>
         <input type='text' placeholder=' Search' className='text-amber-800 mr-3 border-2 border-amber-800 rounded-xl bg-transparent h-8' />
-
         <Link className=' text-neutral-200 hover:border-b hover:border-neutral-200'>
           <h2>Log In</h2>
         </Link>
