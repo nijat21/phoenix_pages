@@ -71,7 +71,7 @@ function BooksPage() {
           topFive.map(book => {
             return (
               <>
-                <Link key={book.key} to={`/${book.key}`}>
+                <Link key={book.key} to={`/books${book.key}`}>
                   <div className='flex flex-col text-center items-center mt-16'>
                     {book && (
                       <>
