@@ -15,6 +15,7 @@ function App() {
         <Route path='/' element={<HomePage />} />
         <Route path='/books' element={<BooksPage />} />
         <Route path='books/works/:bookKey' element={<SingleBookPage />} />
+        <Route path='authors/:authorKey' element={<AuthorPage />} />
         <Route path='/categories' element={<CategoriesPage />} />
         <Route path='/aboutus' element={<AboutUsPage />} />
       </Routes>

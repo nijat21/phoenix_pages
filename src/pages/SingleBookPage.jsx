@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 function SingleBookPage() {
   const { bookKey } = useParams();
 
   const [book, setBook] = useState(null);
+  const [author, setAuthor] = useState(null);
 
   useEffect(() => {
     axios
@@ -19,9 +21,22 @@ function SingleBookPage() {
       });
   }, []);
 
+  useEffect(() => {
+    if (book && book.authors) {
+      axios
+        .get(`https://openlibrary.org${book.authors[0].author.key}.json`)
+        .then(response => {
+          setAuthor(response.data);
+        })
+        .catch(error => {
+          console.error('Error fetching author:', error);
+        });
+    }
+  }, [book]);
+
   return (
     <div className='pt-14'>
-      {book && (
+      {book && author && (
         <section className='flex flex-col justify-items-center m-10 items-center border-solid border-2 border-amber-800'>
           <img
             src={`https://covers.openlibrary.org/b/id/${book.covers}-L.jpg`}
@@ -33,6 +48,11 @@ function SingleBookPage() {
             {typeof book.description === 'object'
               ? book.description.value
               : book.description}
+          </p>
+
+          <p className='mt-5'>
+            Author:
+            <Link to={'/books'}>{` ${author.name}`}</Link>
           </p>
         </section>
       )}
