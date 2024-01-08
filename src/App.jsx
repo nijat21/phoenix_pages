@@ -6,6 +6,7 @@ import CategoriesPage from './pages/CategoriesPage';
 import AboutUsPage from './pages/AboutUsPage';
 import BooksPage from './pages/BooksPage';
 import SingleBookPage from './pages/SingleBookPage';
+import AuthorPage from './pages/AuthorPage';
 
 function App() {
   return (
