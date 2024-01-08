@@ -52,7 +52,7 @@ function SingleBookPage() {
 
           <p className='mt-5'>
             Author:
-            <Link to={'/books'}>{` ${author.name}`}</Link>
+            <Link to={`${author.key}`}>{` ${author.name}`}</Link>
           </p>
         </section>
       )}

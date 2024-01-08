@@ -21,7 +21,8 @@ function BooksPage() {
   };
 
   // Subject query that will look for top a generic list of top 5 books
-  const genericSubject = 'subject:self-help&subject:drama&subject:science&subject:crime&subject:poetry'
+  const genericSubject =
+    'subject:self-help&subject:drama&subject:science&subject:crime&subject:poetry';
 
   // Books for the page is opened
   useEffect(() => {
@@ -29,17 +30,19 @@ function BooksPage() {
   }, []);
 
   // select the top5 books according to their ratings
-  const getTopFive = (input) => {
+  const getTopFive = input => {
     const five = input
-      ? input.sort((a, b) => b.ratings_sortable - a.ratings_sortable).slice(0, 5) : [];
+      ? input
+          .sort((a, b) => b.ratings_sortable - a.ratings_sortable)
+          .slice(0, 5)
+      : [];
     return five;
-  }
+  };
 
   const topFive = getTopFive(books);
   // books
   //   ? books.sort((a, b) => b.ratings_sortable - a.ratings_sortable).slice(0, 5)
   //   : [];
-
 
   return (
     <>
