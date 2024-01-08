@@ -11,7 +11,7 @@ function BooksPage() {
   const getBooksByCategory = async subj => {
     try {
       const response = await axios.get(
-        `https://openlibrary.org/search.json?q=subject:${subj}&limit=50`
+        `https://openlibrary.org/search.json?q=${subj}&limit=50`
       );
 
       setBooks(response.data.docs);
@@ -20,22 +20,26 @@ function BooksPage() {
     }
   };
 
+  // Subject query that will look for top a generic list of top 5 books
+  const genericSubject = 'subject:self-help&subject:drama&subject:science&subject:crime&subject:poetry'
+
+  // Books for the page is opened
   useEffect(() => {
-    // axios
-    //   .get('https://openlibrary.org/search.json?q=subject:drama&limit=50') //this returns a promise with books
-    //   .then(response => {
-    //     console.log(response.data);
-    //     setBooks(response.data.docs);
-    //   });
-    getBooksByCategory('drama');
+    getBooksByCategory(genericSubject);
   }, []);
 
   // select the top5 books according to their ratings
+  const getTopFive = (input) => {
+    const five = input
+      ? input.sort((a, b) => b.ratings_sortable - a.ratings_sortable).slice(0, 5) : [];
+    return five;
+  }
 
-  const topFive = books
-    ? books.sort((a, b) => b.ratings_average - a.ratings_average).slice(0, 5)
-    : [];
-  // const books_ten = books.slice(0, 10);
+  const topFive = getTopFive(books);
+  // books
+  //   ? books.sort((a, b) => b.ratings_sortable - a.ratings_sortable).slice(0, 5)
+  //   : [];
+
 
   return (
     <>
@@ -90,7 +94,7 @@ function BooksPage() {
                             </h2>
                           </div>
                           <div className='mh-10 flex justify-center items-center'>
-                            <h4>{book.author_name}</h4>
+                            <h4>{book.author_name[0]}</h4>
                           </div>
                           <div className='mh-6 flex justify-center items-center'>
                             <div className='flex'>
