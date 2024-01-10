@@ -36,22 +36,7 @@ function AuthorPage() {
       });
   }, []);
 
-  // const getBooksByAuthor = async name => {
-  //   try {
-  //     const response = await axios.get(
-  //       `https://openlibrary.org/search.json?q=author_key:${authorKey}&limit=50`
-  //     );
-
-  //     setAuthorBooks(response.data.docs);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getBooksByAuthor(author);
-  // }, [author]);
-
+  // We may need to replace is with global function
   const topFive = authorBooks
     ? authorBooks
       .sort((a, b) => b.ratings_average - a.ratings_average)
