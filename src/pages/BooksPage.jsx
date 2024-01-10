@@ -13,7 +13,6 @@ function BooksPage() {
       const response = await axios.get(
         `https://openlibrary.org/search.json?q=${subj}&limit=50`
       );
-
       setBooks(response.data.docs);
     } catch (error) {
       console.log(error);
@@ -21,8 +20,7 @@ function BooksPage() {
   };
 
   // Subject query that will look for top a generic list of top 5 books
-  const genericSubject =
-    'subject:self-help&subject:drama&subject:science&subject:crime&subject:poetry';
+  const genericSubject = 'subject:science&subject:self-help&subject:literature&subject:drama&subject:crime&subject:poetry';
 
   // Books for the page is opened
   useEffect(() => {
@@ -33,22 +31,18 @@ function BooksPage() {
   const getTopFive = input => {
     const five = input
       ? input
-          .sort((a, b) => b.ratings_sortable - a.ratings_sortable)
-          .slice(0, 5)
+        .sort((a, b) => b.ratings_sortable * b.ratings_count - a.ratings_sortable * a.ratings_count)
+        .slice(0, 5)
       : [];
     return five;
   };
-
   const topFive = getTopFive(books);
-  // books
-  //   ? books.sort((a, b) => b.ratings_sortable - a.ratings_sortable).slice(0, 5)
-  //   : [];
 
   return (
     <>
       <div className='pt-14 ml-10 w-25 flex flex-row'>
         <button className='m-3 border-solid border-2 border-amber-800 rounded-lg pt-1 pb-1 pr-3 pl-3 hover:bg-amber-800 hover:text-white'>
-          All
+          General
         </button>
         <button
           className='m-3 border-solid border-2 border-amber-800 rounded-lg pt-1 pb-1 pr-3 pl-3 hover:bg-amber-800  hover:text-white'

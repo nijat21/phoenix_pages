@@ -36,10 +36,11 @@ function SingleBookPage() {
 
   return (
     <div className='pt-14'>
-      {book && author && (
+      {/* only return books with cover and author information */}
+      {book && book.covers[0] && author && (
         <section className='flex flex-col justify-items-center m-10 items-center border-solid border-2 border-amber-800'>
           <img
-            src={`https://covers.openlibrary.org/b/id/${book.covers}-L.jpg`}
+            src={`https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`}
             alt='cover'
             className='text-center object-contain w-85 mb-5'
           />
@@ -51,8 +52,7 @@ function SingleBookPage() {
           </p>
 
           <p className='mt-5'>
-            Author:
-            <Link to={`${author.key}`}>{` ${author.name}`}</Link>
+            <Link to={`${author.key}`}>{`Author: ${author.name}`}</Link>
           </p>
         </section>
       )}
