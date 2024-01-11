@@ -5,10 +5,10 @@ function Navbar() {
   return (
     <nav className='h-13 w-screen flex justify-between justify-items-center place-items-center  bg-neutral-900 items-center font-light font-serif fixed'>
       <div className='mw-1/3 ml-10 w-1/3 '>
-        <Link to={'/'} className='flex w-12 h-12 place-items-center'>
-          <img src='src/assets/logo.png' alt='Home' className='w-12' />
+        <Link to={'/'} className='flex h-12 place-items-center'>
+          <img src='src/assets/phoenix.webp' alt='Home' className='w-12' />
           <div className='ml-1'>
-            <p className='text-orange-500 mb-0 text-sm'>Phoenix Pages</p>
+            <p className='text-red-700 mb-0 text-sm'>PhxPg</p>
           </div>
         </Link>
       </div>
