@@ -14,7 +14,7 @@ function BooksPage() {
   const getBooksByCategory = async subj => {
     try {
       const response = await axios.get(
-        `https://openlibrary.org/search.json?q=subject:${subj}&limit=50`
+        `https://openlibrary.org/search.json?subject=${subj}&limit=50`
       );
       setBooks(response.data.docs);
     } catch (error) {
@@ -23,7 +23,7 @@ function BooksPage() {
   };
 
   // Subject query that will look for top a generic list of top 5 books
-  const genericSubject = 'science&subject:self-help&subject:literature&subject:drama&subject:crime&subject:poetry';
+  const genericSubject = '*'
 
   // Books for the page is opened
   useEffect(() => {
@@ -50,7 +50,8 @@ function BooksPage() {
       {loading ? <Loader /> :
         <div>
           <div className='pt-14 ml-10 w-25 flex flex-row justify-center text-lg'>
-            <button className='m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black' onClick={() => getBooksByCategory(genericSubject)}>
+            <button className='m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black'
+              onClick={() => getBooksByCategory(genericSubject)}>
               General
             </button>
             <button
@@ -73,7 +74,8 @@ function BooksPage() {
             >
               Self-help
             </button>
-            <button className='m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black'>
+            <button className='m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black'
+              onClick={() => getBooksByCategory('poetry&subject:drama')}>
               Poetry and Drama
             </button>
           </div>

@@ -66,7 +66,7 @@ function AuthorPage() {
                           <>
                             <div className='h-64 flex justify-center items-center'>
                               <img
-                                src={`https://covers.openlibrary.org/b/id/${book.cover_i}-S.jpg`}
+                                src={`https://covers.openlibrary.org/b/id/${book.cover_i}-Mr.jpg`}
                                 alt='cover'
                                 className='text-center object-cover h-60 w-26 '
                               />
