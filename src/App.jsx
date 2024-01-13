@@ -7,6 +7,8 @@ import AboutUsPage from './pages/AboutUsPage';
 import BooksPage from './pages/BooksPage';
 import SingleBookPage from './pages/SingleBookPage';
 import AuthorPage from './pages/AuthorPage';
+import LogIn from './pages/LogIn';
+import SignUp from './pages/SignUp';
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Route path='/authors/:authorKey' element={<AuthorPage />} />
         <Route path='/categories' element={<CategoriesPage />} />
         <Route path='/aboutus' element={<AboutUsPage />} />
+        <Route path='/login' element={<LogIn />} />
+        <Route path='/signup' element={<SignUp />} />
       </Routes>
     </div>
   );
