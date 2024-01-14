@@ -57,11 +57,14 @@ function SingleBookPage() {
               <p className='mt-5'>
                 <Link to={`${author.key}`}>{`Author: ${author.name}`}</Link>
               </p>
-              <div className='my-10'>
-                <select name="" id="">
-                  <option value="">Want to Read</option>
-                  <option value="">Already Read</option>
-                </select>
+              <div className='my-4 flex flex-col'>
+                <button className='mt-4 border-solid border-2 border-amber-800 hover:bg-amber-800 text-l'>
+                  <select name="" id="">
+                    <option value="">Want to Read</option>
+                    <option value="">Already Read</option>
+                  </select>
+                </button>
+                <button className='mt-4 border-solid border-2 border-amber-800 hover:bg-amber-800 text-l'>Go Back</button>
               </div>
             </section>
           )}
