@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-const API_URL = 'https://server-phoenix-pages.adaptable.app/';
+const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
 function LogIn() {
   const [username, setUsername] = useState('');
@@ -17,18 +17,22 @@ function LogIn() {
 
     const response = await axios.get(`${API_URL}/users`);
 
+    console.log(response);
+
     if (!username) {
       setLogInMessage('Please input your username, mate!');
     } else if (!password) {
       setLogInMessage('Dude, are you serious?! Put in the password as well!');
-    }
-
-    response.data.forEach(user => {
-      if (user.username === username && user.password === password) {
+    } else {
+      const userCheck = response.data.find(
+        user => user.username === username && user.password === password
+      );
+      if (userCheck) {
+        navigate('/');
       } else {
-        navigate('/signup');
+        setLogInMessage("That's not the password, boy. Please try again.");
       }
-    });
+    }
   };
 
   return (
@@ -38,7 +42,7 @@ function LogIn() {
           <h3>Username:</h3>
           <p>
             Need an account?
-            <Link>Sign up</Link>
+            <Link to={'/signup'}>Sign up</Link>
           </p>
         </div>
         <input
@@ -61,6 +65,7 @@ function LogIn() {
         <p>{logInMessage}</p>
         <button type='submit'>Log In</button>
       </form>
+      <Link to={'/deleteuser'}>Delete Account</Link>
     </div>
   );
 }

@@ -3,13 +3,15 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-const API_URL = 'https://server-phoenix-pages.adaptable.app/';
+const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
 function SignUp() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirmed, setPasswordConfirmed] = useState('');
   const [logInMessage, setLogInMessage] = useState('');
+
+  const navigate = useNavigate();
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -26,11 +28,15 @@ function SignUp() {
       setLogInMessage('Man, cmon. Passwords dont match');
     }
 
-    response.data.forEach(user => {
-      if (user.username === username) {
-        setLogInMessage('Username already in use, try a different one');
-      }
-    });
+    const userCheck = response.data.find(user => user.username === username);
+
+    if (userCheck) {
+      setLogInMessage('Username already in use, try a different one');
+    } else {
+      const requestUser = { username, password };
+      await axios.post(`${API_URL}/users`, requestUser);
+      navigate('/');
+    }
   };
 
   return (
