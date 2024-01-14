@@ -43,6 +43,37 @@ function Navbar() {
         </div>
       </nav>
     </div>
+      <div className='w-1/3 flex justify-around text-center text-lg '>
+        <Link to={'/categories'}>
+          <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200'>
+            Categories
+          </h2>
+        </Link>
+        <Link>
+          <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200'>
+            Lists
+          </h2>
+        </Link>
+        <Link to={'/aboutus'}>
+          <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200'>
+            About Us
+          </h2>
+        </Link>
+      </div>
+      <div className=' w-1/3 mr-10 flex text-lg items-center justify-end  '>
+        <input
+          type='text'
+          placeholder=' Search'
+          className='text-amber-800 mr-3 border-2 border-amber-800 rounded-xl bg-transparent h-8'
+        />
+        <Link
+          to={'/login'}
+          className=' text-neutral-200 hover:border-b hover:border-neutral-200'
+        >
+          <h2>Log In</h2>
+        </Link>
+      </div>
+    </nav >
   );
 }
 
