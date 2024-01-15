@@ -10,6 +10,7 @@ import AuthorPage from './pages/AuthorPage';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import DeleteUser from './pages/DeleteUser';
+import MyBooks from './pages/MyBooks';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path='books/works/:bookKey' element={<SingleBookPage />} />
           <Route path='/authors/:authorKey' element={<AuthorPage />} />
           <Route path='/categories' element={<CategoriesPage />} />
+          <Route path='/mybooks' element={<MyBooks />} />
           <Route path='/aboutus' element={<AboutUsPage />} />
           <Route path='/login' element={<LogIn />} />
           <Route path='/signup' element={<SignUp />} />
