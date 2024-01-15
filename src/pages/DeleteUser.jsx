@@ -1,12 +1,11 @@
-import { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
 // this page can later be associated with the user that just logged in
-// for now, since we didnt implement the global variable yet, it needs the username and password
+// for now, since we didn't implement the global variable yet, it needs the username and password
 
 function DeleteUser() {
   const [username, setUsername] = useState('');

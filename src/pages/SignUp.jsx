@@ -1,6 +1,5 @@
-import { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const API_URL = 'https://server-phoenix-pages.adaptable.app';
@@ -17,21 +16,22 @@ function SignUp() {
     e.preventDefault();
 
     const response = await axios.get(`${API_URL}/users`);
+    const user = response.data;
 
     if (!username) {
-      setLogInMessage('Please input your username, mate!');
+      setLogInMessage('To Sign up, please input your username!');
     } else if (!password) {
-      setLogInMessage('Dude, are you serious?! Put in the password as well!');
+      setLogInMessage('To Sign up, please input your password!');
     } else if (!passwordConfirmed) {
-      setLogInMessage('You need to confirm your password!');
+      setLogInMessage('Please confirm your password!');
     } else if (passwordConfirmed !== password) {
-      setLogInMessage('Man, cmon. Passwords dont match');
+      setLogInMessage(`Passwords don't match!`);
     }
 
-    const userCheck = response.data.find(user => user.username === username);
+    const userCheck = user.find(user => user.username === username);
 
     if (userCheck) {
-      setLogInMessage('Username already in use, try a different one');
+      setLogInMessage('Username is taken. Please try a different one!');
     } else {
       const requestUser = { username, password };
       await axios.post(`${API_URL}/users`, requestUser);
@@ -56,7 +56,7 @@ function SignUp() {
         />
         <h3>Password:</h3>{' '}
         <input
-          type='text'
+          type='password'
           id='password'
           name='password'
           className='border-solid border-2 border-amber-800 mb-5'
@@ -65,9 +65,9 @@ function SignUp() {
         />
         <h3>Confirm Password:</h3>
         <input
-          type='text'
-          id='password'
-          name='password'
+          type='password'
+          id='password1'
+          name='password1'
           className='border-solid border-2 border-amber-800 mb-5'
           value={passwordConfirmed}
           onChange={e => setPasswordConfirmed(e.target.value)}
