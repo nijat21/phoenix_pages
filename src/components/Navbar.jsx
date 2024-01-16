@@ -20,6 +20,7 @@ function Navbar() {
     }
     else if (result === "logout") {
       setUserLogin('');
+      navigate('/')
     }
   }
 
@@ -66,7 +67,7 @@ function Navbar() {
               value={selected}
               onChange={handleChange}
             >
-              <h2>{userLogin[0]}</h2>
+              <option>{userLogin[0]}</option>
               <option value="profile">Profile</option>
               <option value="mybooks">My Books</option>
               <option value="logout">Log Out</option>

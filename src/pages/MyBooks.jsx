@@ -1,17 +1,19 @@
 import axios from 'axios';
-import { useState, useEffect, useRef, useContext } from 'react';
-import AuthContext from '../context/AuthProvider';
+import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import UserContext from '../context/UserProvider';
 import RatingDisplay from '../components/RatingDisplay';
 
 const API_URL = 'https://server-phoenix-pages.adaptable.app';
-const USERID = 1;
+
 
 function MyBooks() {
   const [myListOfBooks, setMyListOfBooks] = useState(null);
   const [additionalBookInfo, setAdditionalBookInfo] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const { USERID, setUSERID } = useContext(UserContext);
+
 
   const getList = async v => {
     try {

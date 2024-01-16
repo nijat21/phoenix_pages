@@ -1,18 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState, useContext } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import UserContext from '../context/UserProvider';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Loader from '../components/Loader';
 
 const API_URL = 'https://server-phoenix-pages.adaptable.app';
-const USERID = 1;
-const userId = 1;
 
 function SingleBookPage() {
   const { bookKey } = useParams();
+  const { USERID, setUSERID } = useContext(UserContext);
 
   const [book, setBook] = useState(null);
   const [author, setAuthor] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -40,7 +41,7 @@ function SingleBookPage() {
   }, [book]);
 
   const wantToRead = async () => {
-    const requestBook = { bookKey, userId };
+    const requestBook = { bookKey, userId: USERID };
 
     const response = await axios.get(
       `${API_URL}/users/${USERID}?_embed=books_to_read`
@@ -58,7 +59,7 @@ function SingleBookPage() {
   };
 
   const alreadyRead = async () => {
-    const requestBook = { bookKey, userId };
+    const requestBook = { bookKey, userId: USERID };
 
     const response = await axios.get(
       `${API_URL}/users/${USERID}?_embed=books_already_read`
@@ -74,6 +75,10 @@ function SingleBookPage() {
       await axios.post(`${API_URL}/books_already_read`, requestBook);
     }
   };
+
+  const handleGoBack = () => {
+    navigate(-1);
+  }
 
   return (
     <div>
@@ -106,13 +111,15 @@ function SingleBookPage() {
                     <option value="">Already Read</option>
                   </select>
                 </button> */}
-                <button onClick={() => wantToRead()}>
-                  Add to "Want to Read List"
-                </button>
-                <button onClick={() => alreadyRead()}>
-                  Add to "Already Read List"
-                </button>
-                <button className='mt-4 border-solid border-2 border-amber-800 hover:bg-amber-800 text-l'>
+                <div className='flex justify-evenly'>
+                  <button onClick={() => wantToRead()} className='px-4 mx-2 border-solid border-2 border-gray-300 hover:bg-gray-500'>
+                    Want to Read
+                  </button>
+                  <button onClick={() => alreadyRead()} className='px-4 mx-2 border-solid border-2 border-gray-300 hover:bg-gray-500'>
+                    Already Read
+                  </button>
+                </div>
+                <button className='mt-4 border-solid border-2 border-amber-800 hover:bg-amber-800 text-l' onClick={handleGoBack}>
                   Go Back
                 </button>
               </div>

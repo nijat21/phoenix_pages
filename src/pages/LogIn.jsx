@@ -5,14 +5,14 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
 const API_URL = 'https://server-phoenix-pages.adaptable.app';
-const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
 function LogIn() {
   const userRef = useRef(null);
-  const { userLogin, setUserLogin } = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const { userLogin, setUserLogin, USERID, setUSERID } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -27,9 +27,6 @@ function LogIn() {
     if (!username && !password) {
       setErrorMessage('Please input your username and password!');
     }
-    else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(username)) {
-      setErrorMessage("Please enter a valid email")
-    }
     else if (!username) {
       setErrorMessage('To Log in, please input your username!');
     } else if (!password) {
@@ -39,8 +36,10 @@ function LogIn() {
         user => user.username === username && user.password === password
       );
       if (userCheck) {
+        setUserLogin(username)
+        setUSERID(userCheck.id)
         navigate('/');
-        setUsername()
+
       } else {
         setErrorMessage('Username or password is wrong. Please try again.');
       }
