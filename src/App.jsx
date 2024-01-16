@@ -10,6 +10,7 @@ import AuthorPage from './pages/AuthorPage';
 import LogIn from './pages/LogIn';
 import SignUp from './pages/SignUp';
 import DeleteUser from './pages/DeleteUser';
+import Profile from './pages/Profile';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path='/aboutus' element={<AboutUsPage />} />
           <Route path='/login' element={<LogIn />} />
           <Route path='/signup' element={<SignUp />} />
+          <Route path='/profile' element={<Profile />} />
           <Route path='/deleteuser' element={<DeleteUser />} />
         </Routes>
       </div>

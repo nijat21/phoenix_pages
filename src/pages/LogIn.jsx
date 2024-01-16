@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { useState, useEffect, useRef, useContext } from 'react';
-import AuthContext from '../context/AuthProvider';
+import UserContext from '../context/UserProvider';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-const LOGIN_URL = 'https://server-phoenix-pages.adaptable.app/login';
+const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
 function LogIn() {
   const userRef = useRef(null);
-  const { setUsername } = useContext(AuthContext);
+  const { userLogin, setUserLogin } = useContext(UserContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -26,9 +26,6 @@ function LogIn() {
     if (!username && !password) {
       setErrorMessage('Please input your username and password!');
     }
-    else if (!/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(username)) {
-      setErrorMessage("Please enter a valid email")
-    }
     else if (!username) {
       setErrorMessage('To Log in, please input your username!');
     } else if (!password) {
@@ -39,7 +36,7 @@ function LogIn() {
       );
       if (userCheck) {
         navigate('/');
-        setUsername()
+        setUserLogin(username);
       } else {
         setErrorMessage("Username or password is wrong. Please try again.");
       }
@@ -69,7 +66,6 @@ function LogIn() {
                 className='border-solid border-2 border-amber-800 min-w-72 min-h-10 pl-1'
                 value={username}
                 onChange={e => setUsername(e.target.value)}
-                placeholder='Your email here'
                 ref={userRef}
               />
             </label>
