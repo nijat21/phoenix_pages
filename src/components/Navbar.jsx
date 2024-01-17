@@ -85,6 +85,11 @@ function Navbar() {
             </Link>
           </div>
           <div className='w-1/3 flex justify-around text-center text-lg '>
+            <Link to={'/'}>
+              <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200'>
+                Home
+              </h2>
+            </Link>
             <Link to={'/categories'}>
               <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200'>
                 Categories

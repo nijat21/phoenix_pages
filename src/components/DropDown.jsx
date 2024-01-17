@@ -2,7 +2,7 @@ import { useState, useContext } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import UserContext from '../context/UserProvider';
 
-function DropDown({ initial }) {
+function UserMenu({ initial }) {
     const { setUserLogin, setUSERID } = useContext(UserContext);
 
     const [open, setOpen] = useState(false)
@@ -44,4 +44,4 @@ function DropDown({ initial }) {
     )
 }
 
-export default DropDown
+export default UserMenu
