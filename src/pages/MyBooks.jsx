@@ -72,7 +72,7 @@ function MyBooks() {
 
         const promisesArray = await Promise.all(promises);
         setAdditionalBookInfo(promisesArray);
-        console.log(additionalBookInfo);
+        // console.log(additionalBookInfo);
       } catch (error) {
         console.error('Error fetching additional book info:', error);
       }
@@ -92,6 +92,14 @@ function MyBooks() {
       await axios.delete(`${API_URL}/books_already_read/${id}`);
       getList(2);
     }
+  };
+
+  const addToAlreadyRead = async (key, id) => {
+    const newKey = key.slice(7);
+    const requestBook = { bookKey: newKey, userId: USERID };
+    await axios.post(`${API_URL}/books_already_read`, requestBook);
+    await axios.delete(`${API_URL}/books_to_read/${id}`);
+    getList(1);
   };
 
   return (
@@ -153,6 +161,14 @@ function MyBooks() {
                     )}
                   </div>
                 </Link>
+                {list === 1 && (
+                  <button
+                    onClick={() => addToAlreadyRead(book.key, book.id)}
+                    className='px-4 mx-2 border-solid border-2 border-gray-300 hover:bg-gray-500'
+                  >
+                    Already Read
+                  </button>
+                )}
                 <button
                   onClick={() => removeFromList(book.id)}
                   className='px-4 mx-2 border-solid border-2 border-gray-300 hover:bg-gray-500'
