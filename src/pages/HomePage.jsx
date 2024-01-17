@@ -20,7 +20,7 @@ function HomePage() {
 
   return (
     <div className=''>
-      <div className="bg-[url('src/assets/darkAcademiaLibrary.jpeg')] bg-cover h-screen pt-10 flex items-center justify-center align-middle">
+      <div className="bg-[url('src/assets/darkAcademiaLibrary.jpeg')] bg-cover h-screen w-screen pt-10 flex items-center justify-center align-middle">
         <div className='text-white w-fit flex flex-col items-center'>
           <h1 className='text-8xl pl-8 pr-8'>Phoenix Pages</h1>
           <h3 className='text-2xl mt-16'>

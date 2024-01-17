@@ -105,12 +105,6 @@ function SingleBookPage() {
                 <Link to={`${author.key}`}>{`Author: ${author.name}`}</Link>
               </p>
               <div className='my-4 flex flex-col'>
-                {/* <button className='mt-4 border-solid border-2 border-amber-800 hover:bg-amber-800 text-l'>
-                  <select name="" id="">
-                    <option value="">Want to Read</option>
-                    <option value="">Already Read</option>
-                  </select>
-                </button> */}
                 <div className='flex justify-evenly'>
                   <button onClick={() => wantToRead()} className='px-4 mx-2 border-solid border-2 border-gray-300 hover:bg-gray-500'>
                     Want to Read
