@@ -2,6 +2,7 @@ import { useEffect, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import UserContext from '../context/UserProvider';
+import DropDown from './DropDown';
 
 
 function Navbar() {
@@ -40,6 +41,11 @@ function Navbar() {
           </div>
 
           <div className='w-1/3 flex justify-around text-center text-lg '>
+            <Link to={'/'}>
+              <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200'>
+                Home
+              </h2>
+            </Link>
             <Link to={'/categories'}>
               <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200'>
                 Categories
@@ -60,18 +66,12 @@ function Navbar() {
             <input
               type='text'
               placeholder=' Search'
-              className='text-amber-800 mr-3 border-2 border-amber-800 rounded-xl bg-transparent h-8'
+              className='text-amber-800 mr-3 pl-1 border-2 border-amber-800 rounded-xl bg-transparent h-8 text-justify'
             />
-            <select
-              className='bg-transparent text-white text-base border-solid border-2 border-amber-800 rounded-lg'
-              value={selected}
-              onChange={handleChange}
-            >
-              <option>{userLogin[0]}</option>
-              <option value="profile">Profile</option>
-              <option value="mybooks">My Books</option>
-              <option value="logout">Log Out</option>
-            </select>
+            <div>
+              <DropDown initial={userLogin[0].toUpperCase()} />
+            </div>
+
           </div>
         </nav>
         :
@@ -85,6 +85,11 @@ function Navbar() {
             </Link>
           </div>
           <div className='w-1/3 flex justify-around text-center text-lg '>
+            <Link to={'/'}>
+              <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200'>
+                Home
+              </h2>
+            </Link>
             <Link to={'/categories'}>
               <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200'>
                 Categories
