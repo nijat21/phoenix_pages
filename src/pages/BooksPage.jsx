@@ -9,6 +9,7 @@ import Loader from '../components/Loader';
 function BooksPage() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  // const [category, setCategory] = useState(null)
   // const [newEdition, setNewEdition] = useState(null);
 
   const getBooksByCategory = async subj => {
@@ -17,47 +18,64 @@ function BooksPage() {
         `https://openlibrary.org/search.json?subject=${subj}&limit=50`
       );
       setBooks(response.data.docs);
+      // setCategory(subj);
     } catch (error) {
       console.log(error);
     }
   };
 
   // Subject query that will look for top a generic list of top 5 books
-  const genericSubject = '*'
+  const genericSubject = '*';
 
   // Books for the page is opened
   useEffect(() => {
     setLoading(true);
     getBooksByCategory(genericSubject).then(() => {
       setLoading(false);
-    })
+    });
   }, []);
 
   // Book rating algorithm
   const getTopFive = input => {
     const five = input
       ? input
-        .filter((book => book.readinglog_count > 300))
-        .sort((a, b) => ((b.ratings_average * 0.5) + (b.already_read_count / (b.readinglog_count - b.currently_reading_count) * 5 * 0.5)) - ((a.ratings_average * 0.5) + (a.already_read_count / (a.readinglog_count - a.currently_reading_count) * 5 * 0.5)))
-      // .slice(0, 5)
-      : [];
+          .filter(book => book.readinglog_count > 300)
+          .sort(
+            (a, b) =>
+              b.ratings_average * 0.5 +
+              (b.already_read_count /
+                (b.readinglog_count - b.currently_reading_count)) *
+                5 *
+                0.5 -
+              (a.ratings_average * 0.5 +
+                (a.already_read_count /
+                  (a.readinglog_count - a.currently_reading_count)) *
+                  5 *
+                  0.5)
+          )
+      : // .slice(0, 5)
+        [];
     return five.slice(0, 5);
   };
   const topFive = getTopFive(books);
 
   return (
     <>
-      {loading ? <Loader /> :
+      {loading ? (
+        <Loader />
+      ) : (
         <div>
           <div className='pt-14 ml-10 w-25 flex flex-row justify-center text-lg'>
-            <button className='m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black'
-              onClick={() => getBooksByCategory(genericSubject)}>
+            <button
+              className='m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black'
+              onClick={() => getBooksByCategory(genericSubject)}
+            >
               General
             </button>
             <button
               className='m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black'
               onClick={() => {
-                getBooksByCategory('science')
+                getBooksByCategory('science');
               }}
             >
               Science
@@ -74,8 +92,10 @@ function BooksPage() {
             >
               Self-help
             </button>
-            <button className='m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black'
-              onClick={() => getBooksByCategory('poetry&subject:drama')}>
+            <button
+              className='m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black'
+              onClick={() => getBooksByCategory('poetry&subject:drama')}
+            >
               Poetry and Drama
             </button>
           </div>
@@ -130,7 +150,7 @@ function BooksPage() {
             </div>
           </div>
         </div>
-      }
+      )}
     </>
   );
 }
