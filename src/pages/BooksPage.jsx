@@ -8,6 +8,7 @@ import Loader from '../components/Loader';
 function BooksPage() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [imageLoaded, setImageLoaded] = useState(false);
   // const [category, setCategory] = useState(null)
   // const [newEdition, setNewEdition] = useState(null);
 
@@ -38,22 +39,22 @@ function BooksPage() {
   const getTopFive = input => {
     const five = input
       ? input
-        .filter(book => book.readinglog_count > 300)
-        .sort(
-          (a, b) =>
-            b.ratings_average * 0.5 +
-            (b.already_read_count /
-              (b.readinglog_count - b.currently_reading_count)) *
-            5 *
-            0.5 -
-            (a.ratings_average * 0.5 +
-              (a.already_read_count /
-                (a.readinglog_count - a.currently_reading_count)) *
-              5 *
-              0.5)
-        )
+          .filter(book => book.readinglog_count > 300)
+          .sort(
+            (a, b) =>
+              b.ratings_average * 0.5 +
+              (b.already_read_count /
+                (b.readinglog_count - b.currently_reading_count)) *
+                5 *
+                0.5 -
+              (a.ratings_average * 0.5 +
+                (a.already_read_count /
+                  (a.readinglog_count - a.currently_reading_count)) *
+                  5 *
+                  0.5)
+          )
       : // .slice(0, 5)
-      [];
+        [];
     return five.slice(0, 5);
   };
   const topFive = getTopFive(books);
@@ -110,10 +111,18 @@ function BooksPage() {
                           {book && book.cover_i && (
                             <>
                               <div className='h-64 flex justify-center items-center'>
+                                {!imageLoaded && (
+                                  <img
+                                    src='src/assets/coverLoading1.webp'
+                                    alt='loading'
+                                    className='text-center object-cover h-60 w-26'
+                                  />
+                                )}
                                 <img
                                   src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
                                   alt='cover'
                                   className='text-center object-cover h-60 w-26 '
+                                  onLoad={() => setImageLoaded(true)}
                                 />
                               </div>
                               <div className='h-24 mw-44'>
@@ -143,7 +152,7 @@ function BooksPage() {
                 })}
             </section>
             <div className='mt-12 flex justify-center'>
-              <button className='border-solid border-2 border-amber-800 p-3 ml-4 hover:bg-amber-800 text-xl'>
+              <button className='border-solid border-2 border-amber-800 p-3 ml-4 hover:bg-amber-800 hover:text-white text-xl'>
                 <Link to={'/books'}>Discover more</Link>
               </button>
             </div>

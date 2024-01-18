@@ -9,6 +9,7 @@ function AuthorPage() {
 
   const [author, setAuthor] = useState(null);
   const [authorBooks, setAuthorBooks] = useState([]);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
     axios
@@ -39,8 +40,8 @@ function AuthorPage() {
   // We may need to replace is with global function
   const topFive = authorBooks
     ? authorBooks
-      .sort((a, b) => b.ratings_average - a.ratings_average)
-      .slice(0, 5)
+        .sort((a, b) => b.ratings_average - a.ratings_average)
+        .slice(0, 5)
     : [];
 
   return (
@@ -54,7 +55,8 @@ function AuthorPage() {
           <img
             src={`https://covers.openlibrary.org/a/olid/${authorKey}-M.jpg`}
             alt='cover'
-            className='text-center object-contain w-85 mb-5' />
+            className='text-center object-contain w-85 mb-5'
+          />
           <section className='grid grid-cols-5'>
             {authorBooks &&
               topFive.map(book => {
@@ -65,10 +67,18 @@ function AuthorPage() {
                         {book && (
                           <>
                             <div className='h-64 flex justify-center items-center'>
+                              {!imageLoaded && (
+                                <img
+                                  src={'src/assets/coverLoading1.webp'}
+                                  alt='loading'
+                                  className='text-center object-cover h-60 w-26'
+                                />
+                              )}
                               <img
-                                src={`https://covers.openlibrary.org/b/id/${book.cover_i}-Mr.jpg`}
+                                src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
                                 alt='cover'
                                 className='text-center object-cover h-60 w-26 '
+                                onLoad={() => setImageLoaded(true)}
                               />
                             </div>
                             <div className='h-24 mw-44'>
@@ -83,7 +93,9 @@ function AuthorPage() {
                               </div>
                               <div className='mh-6 flex justify-center items-center'>
                                 <div className='flex'>
-                                  <RatingDisplay rating={book.ratings_average.toFixed(1)} />
+                                  <RatingDisplay
+                                    rating={book.ratings_average.toFixed(1)}
+                                  />
                                 </div>
                               </div>
                             </div>
