@@ -2,7 +2,8 @@ import { useEffect, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import UserContext from '../context/UserProvider';
-import DropDown from './DropDown';
+import UserMenu from './UserMenu'
+import CategoriesMenu from './CategoriesMenu'
 
 
 function Navbar() {
@@ -35,7 +36,7 @@ function Navbar() {
             <Link to={'/'} className='flex h-12 place-items-center'>
               <img src='src/assets/phoenix.webp' alt='Home' className='w-12' />
               <div className='ml-1'>
-                <p className='text-red-700 mb-0 text-sm'>PhxPg</p>
+                <p className='text-red-700 mb-0 text-sm font-sans'>Phoenix Pages</p>
               </div>
             </Link>
           </div>
@@ -46,11 +47,9 @@ function Navbar() {
                 Home
               </h2>
             </Link>
-            <Link to={'/categories'}>
-              <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200'>
-                Categories
-              </h2>
-            </Link>
+            <div className='text-neutral-200 hover:border-b hover:border-neutral-200'>
+              <CategoriesMenu />
+            </div>
             <Link to={'/aboutus'}>
               <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200'>
                 About Us
@@ -69,7 +68,7 @@ function Navbar() {
               className='text-amber-800 mr-3 pl-1 border-2 border-amber-800 rounded-xl bg-transparent h-8 text-justify'
             />
             <div>
-              <DropDown initial={userLogin[0].toUpperCase()} />
+              <UserMenu initial={userLogin[0].toUpperCase()} />
             </div>
 
           </div>
@@ -80,7 +79,7 @@ function Navbar() {
             <Link to={'/'} className='flex h-12 place-items-center'>
               <img src='src/assets/phoenix.webp' alt='Home' className='w-12' />
               <div className='ml-1'>
-                <p className='text-red-700 mb-0 text-sm'>PhxPg</p>
+                <p className='text-red-800 mb-0 text-xl text-bold font-serif'>Phoenix Pages</p>
               </div>
             </Link>
           </div>
@@ -90,11 +89,9 @@ function Navbar() {
                 Home
               </h2>
             </Link>
-            <Link to={'/categories'}>
-              <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200'>
-                Categories
-              </h2>
-            </Link>
+            <div className='text-neutral-200 hover:border-b hover:border-neutral-200'>
+              <CategoriesMenu />
+            </div>
             <Link to={'/aboutus'}>
               <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200'>
                 About Us

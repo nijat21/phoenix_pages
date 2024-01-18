@@ -4,9 +4,7 @@ import UserContext from '../context/UserProvider';
 
 function UserMenu({ initial }) {
     const { setUserLogin, setUSERID } = useContext(UserContext);
-
     const [open, setOpen] = useState(false)
-
     const navigate = useNavigate();
 
     const handleOpen = () => {
@@ -15,14 +13,17 @@ function UserMenu({ initial }) {
 
     const handleProfile = () => {
         navigate('/profile')
+        handleOpen();
     }
     const handleMyBooks = () => {
         navigate('/mybooks')
+        handleOpen();
     }
     const handleLogout = () => {
         setUserLogin('')
         setUSERID('')
         navigate('/')
+        handleOpen();
     }
 
     return (
@@ -32,7 +33,7 @@ function UserMenu({ initial }) {
             </div>
             <div className='flex justify-center'>
                 {open ?
-                    <ul className='absolute mt-2 flex flex-col justify-center items-center py-4 backdrop-filter backdrop-blur-3xl px-3 border-solid border-2 border-neutral-200 rounded-xl'>
+                    <ul className='absolute mt-2 flex flex-col justify-center items-center py-4 bg-neutral-900 backdrop-filter backdrop-blur-3xl px-3 border-solid border-2 border-neutral-200 rounded-xl'>
                         <li><button onClick={handleProfile}>Profile</button></li>
                         <li><button onClick={handleMyBooks}>My Books</button></li>
                         <li><button onClick={handleLogout}>Logout</button></li>
@@ -44,4 +45,4 @@ function UserMenu({ initial }) {
     )
 }
 
-export default UserMenu
+export default UserMenu;

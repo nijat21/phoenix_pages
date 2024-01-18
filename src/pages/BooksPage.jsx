@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import RatingDisplay from '../components/RatingDisplay';
-import CategoriesPage from './CategoriesPage';
 import Loader from '../components/Loader';
 
 function BooksPage() {
@@ -39,22 +38,22 @@ function BooksPage() {
   const getTopFive = input => {
     const five = input
       ? input
-          .filter(book => book.readinglog_count > 300)
-          .sort(
-            (a, b) =>
-              b.ratings_average * 0.5 +
-              (b.already_read_count /
-                (b.readinglog_count - b.currently_reading_count)) *
-                5 *
-                0.5 -
-              (a.ratings_average * 0.5 +
-                (a.already_read_count /
-                  (a.readinglog_count - a.currently_reading_count)) *
-                  5 *
-                  0.5)
-          )
+        .filter(book => book.readinglog_count > 300)
+        .sort(
+          (a, b) =>
+            b.ratings_average * 0.5 +
+            (b.already_read_count /
+              (b.readinglog_count - b.currently_reading_count)) *
+            5 *
+            0.5 -
+            (a.ratings_average * 0.5 +
+              (a.already_read_count /
+                (a.readinglog_count - a.currently_reading_count)) *
+              5 *
+              0.5)
+        )
       : // .slice(0, 5)
-        [];
+      [];
     return five.slice(0, 5);
   };
   const topFive = getTopFive(books);
