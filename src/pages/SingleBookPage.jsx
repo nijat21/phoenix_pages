@@ -151,70 +151,79 @@ function SingleBookPage() {
   return (
     <div>
       {
-        <div className='pt-14'>
+        <div className='pt-3'>
           {/* only return books with cover and author information */}
           {book && book.covers[0] && author && (
-            <section className='flex flex-col justify-items-center m-10 items-center border-solid border-2 border-amber-800'>
-              {!imageLoaded && (
-                <img
-                  src='src/assets/coverLoading1.webp'
-                  alt='loading'
-                  className='text-center object-contain w-85 mb-5'
-                />
-              )}
-              <img
-                src={`https://covers.openlibrary.org/b/id/${book.covers[0]}-M.jpg`}
-                alt='cover'
-                className='text-center object-contain w-85 mb-5'
-                onLoad={() => setImageLoaded(true)}
-              />
-              <h2 className='mb-10'>
-                <strong>{book.title}</strong>
-              </h2>
-              <p>
-                {typeof book.description === 'object'
-                  ? book.description.value
-                  : book.description}
-              </p>
-
-              <p className='mt-5'>
-                <Link to={`${author.key}`}>{`Author: ${author.name}`}</Link>
-              </p>
-              <div className='my-4 flex flex-col'>
-                {USERID && (
-                  <div className='flex justify-evenly'>
-                    {!wantToReadCheck ? (
-                      <button
-                        onClick={() => wantToRead()}
-                        className='px-4 mx-2 border-solid border-2 border-amber-800 hover:bg-gray-500'
-                      >
-                        Want to Read
-                      </button>
-                    ) : (
-                      <button className='px-4 mx-2 border-solid border-2 border-gray-300'>
-                        Want to Read
-                      </button>
-                    )}
-                    {!alreadyReadCheck ? (
-                      <button
-                        onClick={() => alreadyRead()}
-                        className='px-4 mx-2 border-solid border-2 border-amber-800 hover:bg-gray-500'
-                      >
-                        Already Read
-                      </button>
-                    ) : (
-                      <button className='px-4 mx-2 border-solid border-2 border-gray-300'>
-                        Already Read
-                      </button>
-                    )}
-                  </div>
+            <section className='flex  justify-items-center m-10 items-center border-solid border-2 border-amber-800'>
+              <figure className='w-1/3  flex justify-center'>
+                {!imageLoaded && (
+                  <img
+                    src='src/assets/coverLoading1.webp'
+                    alt='loading'
+                    className='text-center object-contain w-85 mb-5'
+                  />
                 )}
-                <button
-                  className='mt-4 border-solid border-2 border-amber-800 hover:bg-amber-800 text-l'
-                  onClick={handleGoBack}
-                >
-                  Go Back
-                </button>
+                <img
+                  src={`https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`}
+                  alt='cover'
+                  className='text-center object-contain w-85 mb-5'
+                  onLoad={() => setImageLoaded(true)}
+                />
+              </figure>
+              <div className='w-1/2 flex flex-col justify-start  border-solid border-2 border-amber-800'>
+                <div className='mb-30 '>
+                  <h1 className='mb-1'>
+                    <strong className='text-2xl'>{book.title}</strong>
+                  </h1>
+                  <p className='mt-1 mb-11 '>
+                    <Link
+                      to={`${author.key}`}
+                      className='hover:border-b hover:border-neutral-800'
+                    >{`${author.name}`}</Link>
+                  </p>
+                  <p className='mb-20 border-solid border-2 border-amber-800'>
+                    {typeof book.description === 'object'
+                      ? book.description.value
+                      : book.description}
+                  </p>
+                </div>
+
+                <div className='my-2 self-end flex flex-col border-solid border-2 border-amber-800'>
+                  {USERID && (
+                    <div className='flex justify-evenly'>
+                      {!wantToReadCheck ? (
+                        <button
+                          onClick={() => wantToRead()}
+                          className='px-4 mx-2 border-solid border-2 border-amber-800 hover:bg-gray-500'
+                        >
+                          Want to Read
+                        </button>
+                      ) : (
+                        <button className='px-4 mx-2 border-solid border-2 border-gray-300'>
+                          Want to Read
+                        </button>
+                      )}
+                      {!alreadyReadCheck ? (
+                        <button
+                          onClick={() => alreadyRead()}
+                          className='px-4 mx-2 border-solid border-2 border-amber-800 hover:bg-gray-500'
+                        >
+                          Already Read
+                        </button>
+                      ) : (
+                        <button className='px-4 mx-2 border-solid border-2 border-gray-300'>
+                          Already Read
+                        </button>
+                      )}
+                    </div>
+                  )}
+                  <button
+                    className='mt-4 border-solid border-2 border-amber-800 hover:bg-amber-800 text-l'
+                    onClick={handleGoBack}
+                  >
+                    Go Back
+                  </button>
+                </div>
               </div>
             </section>
           )}

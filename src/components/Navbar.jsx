@@ -2,41 +2,38 @@ import { useEffect, useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import UserContext from '../context/UserProvider';
-import UserMenu from './UserMenu'
-import CategoriesMenu from './CategoriesMenu'
-
+import UserMenu from './UserMenu';
+import CategoriesMenu from './CategoriesMenu';
 
 function Navbar() {
   const navigate = useNavigate();
   const { userLogin, setUserLogin } = useContext(UserContext);
-  const [selected, setSelected] = useState('')
+  const [selected, setSelected] = useState('');
 
-  const handleChange = (e) => {
+  const handleChange = e => {
     const result = e.target.value;
     setSelected(result);
-    if (result === "profile") {
-      navigate('/profile')
-    }
-    else if (result === "mybooks") {
-      navigate("/mybooks")
-    }
-    else if (result === "logout") {
+    if (result === 'profile') {
+      navigate('/profile');
+    } else if (result === 'mybooks') {
+      navigate('/mybooks');
+    } else if (result === 'logout') {
       setUserLogin('');
-      navigate('/')
+      navigate('/');
     }
-  }
-
+  };
 
   return (
     <>
-      {userLogin ?
-        <nav className='h-13 w-screen flex justify-between justify-items-center place-items-center  bg-neutral-900 items-center font-light font-serif fixed'>
+      {userLogin ? (
+        <nav className='h-15 w-screen flex justify-between justify-items-center place-items-center  bg-neutral-900 items-center font-light font-serif fixed'>
           <div className='mw-1/3 ml-10 w-1/3 '>
-
             <Link to={'/'} className='flex h-12 place-items-center'>
               <img src='src/assets/phoenix.webp' alt='Home' className='w-12' />
               <div className='ml-1'>
-                <p className='text-red-700 mb-0 text-sm font-sans'>Phoenix Pages</p>
+                <p className='text-red-700 mb-0 text-sm font-sans'>
+                  Phoenix Pages
+                </p>
               </div>
             </Link>
           </div>
@@ -70,16 +67,17 @@ function Navbar() {
             <div>
               <UserMenu initial={userLogin[0].toUpperCase()} />
             </div>
-
           </div>
         </nav>
-        :
+      ) : (
         <nav className='h-13 w-screen flex justify-between justify-items-center place-items-center  bg-neutral-900 items-center font-light font-serif fixed'>
           <div className='mw-1/3 ml-10 w-1/3 '>
             <Link to={'/'} className='flex h-12 place-items-center'>
               <img src='src/assets/phoenix.webp' alt='Home' className='w-12' />
               <div className='ml-1'>
-                <p className='text-red-800 mb-0 text-xl text-bold font-serif'>Phoenix Pages</p>
+                <p className='text-red-800 mb-0 text-xl text-bold font-serif'>
+                  Phoenix Pages
+                </p>
               </div>
             </Link>
           </div>
@@ -112,7 +110,7 @@ function Navbar() {
             </Link>
           </div>
         </nav>
-      }
+      )}
     </>
   );
 }
