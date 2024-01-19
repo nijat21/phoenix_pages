@@ -45,24 +45,31 @@ function AuthorPage() {
     : [];
 
   return (
-    <div className='pt-14'>
+    <div className='pt-14 flex flex-col '>
       {author && (
         <>
-          <p>{`${author.name}`}</p>
+          <section className='w-1/2 border-2 border-slate-600'>
+            <img
+              src={`https://covers.openlibrary.org/a/olid/${authorKey}-M.jpg`}
+              alt='cover'
+              className='text-center object-contain w-85 mb-5'
+            />
+            <h1 className='mb-1'>
+              <strong className='text-2xl'>{`${author.name}`}</strong>
+            </h1>
 
-          <p>Birth Date: {author.birth_date}</p>
-
-          <img
-            src={`https://covers.openlibrary.org/a/olid/${authorKey}-M.jpg`}
-            alt='cover'
-            className='text-center object-contain w-85 mb-5'
-          />
-          <section className='grid grid-cols-5'>
+            <p>Birth Date: {author.birth_date}</p>
+          </section>
+          <section className='grid grid-cols-5 gap-5 mr-5 ml-5'>
             {authorBooks &&
               topFive.map(book => {
                 return (
                   <>
-                    <Link key={book.key} to={`/books${book.key}`}>
+                    <Link
+                      key={book.key}
+                      to={`/books${book.key}`}
+                      className='border-2 border-slate-300 hover:border-slate-700'
+                    >
                       <div className='flex flex-col text-center items-center mt-16'>
                         {book && (
                           <>

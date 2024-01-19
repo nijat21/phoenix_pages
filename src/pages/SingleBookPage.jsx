@@ -154,8 +154,8 @@ function SingleBookPage() {
         <div className='pt-3'>
           {/* only return books with cover and author information */}
           {book && book.covers[0] && author && (
-            <section className='flex  justify-items-center m-10 items-center border-solid border-2 border-amber-800'>
-              <figure className='w-1/3  flex justify-center'>
+            <section className='flex  justify-items-center m-10 items-center '>
+              <figure className='w-1/5 ml-10 flex flex-col justify-center'>
                 {!imageLoaded && (
                   <img
                     src='src/assets/coverLoading1.webp'
@@ -166,11 +166,39 @@ function SingleBookPage() {
                 <img
                   src={`https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`}
                   alt='cover'
-                  className='text-center object-contain w-85 mb-5'
+                  className='text-center object-contain mb-7'
                   onLoad={() => setImageLoaded(true)}
                 />
+                {USERID && (
+                  <div className='flex justify-evenly'>
+                    {!wantToReadCheck ? (
+                      <button
+                        onClick={() => wantToRead()}
+                        className='px-4 mx-2 border-solid border-2 border-amber-800 hover:bg-gray-500'
+                      >
+                        Want to Read
+                      </button>
+                    ) : (
+                      <button className='px-4 mx-2 border-solid border-2 border-gray-300'>
+                        Want to Read
+                      </button>
+                    )}
+                    {!alreadyReadCheck ? (
+                      <button
+                        onClick={() => alreadyRead()}
+                        className='px-4 mx-2 border-solid border-2 border-amber-800 hover:bg-gray-500'
+                      >
+                        Already Read
+                      </button>
+                    ) : (
+                      <button className='px-4 mx-2 border-solid border-2 border-gray-300'>
+                        Already Read
+                      </button>
+                    )}
+                  </div>
+                )}
               </figure>
-              <div className='w-1/2 flex flex-col justify-start  border-solid border-2 border-amber-800'>
+              <div className='w-1/2 ml-20 flex flex-col justify-start  '>
                 <div className='mb-30 '>
                   <h1 className='mb-1'>
                     <strong className='text-2xl'>{book.title}</strong>
@@ -181,44 +209,16 @@ function SingleBookPage() {
                       className='hover:border-b hover:border-neutral-800'
                     >{`${author.name}`}</Link>
                   </p>
-                  <p className='mb-20 border-solid border-2 border-amber-800'>
+                  <p className='mb-20 pb-3 border-b-2 border-amber-800'>
                     {typeof book.description === 'object'
                       ? book.description.value
                       : book.description}
                   </p>
                 </div>
 
-                <div className='my-2 self-end flex flex-col border-solid border-2 border-amber-800'>
-                  {USERID && (
-                    <div className='flex justify-evenly'>
-                      {!wantToReadCheck ? (
-                        <button
-                          onClick={() => wantToRead()}
-                          className='px-4 mx-2 border-solid border-2 border-amber-800 hover:bg-gray-500'
-                        >
-                          Want to Read
-                        </button>
-                      ) : (
-                        <button className='px-4 mx-2 border-solid border-2 border-gray-300'>
-                          Want to Read
-                        </button>
-                      )}
-                      {!alreadyReadCheck ? (
-                        <button
-                          onClick={() => alreadyRead()}
-                          className='px-4 mx-2 border-solid border-2 border-amber-800 hover:bg-gray-500'
-                        >
-                          Already Read
-                        </button>
-                      ) : (
-                        <button className='px-4 mx-2 border-solid border-2 border-gray-300'>
-                          Already Read
-                        </button>
-                      )}
-                    </div>
-                  )}
+                <div className='my-2 self-end flex flex-col '>
                   <button
-                    className='mt-4 border-solid border-2 border-amber-800 hover:bg-amber-800 text-l'
+                    className='mt-4 p-2 border-solid border-2 border-amber-800 text-l'
                     onClick={handleGoBack}
                   >
                     Go Back

@@ -65,7 +65,7 @@ function BooksPage() {
         <Loader />
       ) : (
         <div>
-          <div className='pt-14 ml-10 w-25 flex flex-row justify-center text-lg'>
+          <div className='pt-5 mb-5 ml-10 w-25 flex flex-row justify-center text-lg'>
             <button
               className='m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black'
               onClick={() => getBooksByCategory(genericSubject)}
@@ -100,13 +100,17 @@ function BooksPage() {
             </button>
           </div>
 
-          <div className='flex flex-col'>
-            <section className='grid grid-cols-5'>
+          <div className='flex flex-col mr-5 ml-5'>
+            <section className='grid grid-cols-5 gap-5'>
               {books &&
                 topFive.map(book => {
                   return (
                     <>
-                      <Link key={book.key} to={`/books${book.key}`}>
+                      <Link
+                        key={book.key}
+                        to={`/books${book.key}`}
+                        className='border-2 border-slate-300 hover:border-slate-700'
+                      >
                         <div className='flex flex-col text-center items-center mt-16'>
                           {book && book.cover_i && (
                             <>
