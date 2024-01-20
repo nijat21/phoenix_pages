@@ -10,7 +10,7 @@ function BooksPage() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const { category, setCategory } = useContext(UserContext)
+  const { category, setCategory } = useContext(UserContext);
 
   const getBooksByCategory = async subj => {
     try {
@@ -44,22 +44,21 @@ function BooksPage() {
   const getTopFive = input => {
     const five = input
       ? input
-        .filter(book => book.readinglog_count > 300)
-        .sort(
-          (a, b) =>
-            b.ratings_average * 0.5 +
-            (b.already_read_count /
-              (b.readinglog_count - b.currently_reading_count)) *
-            5 *
-            0.5 -
-            (a.ratings_average * 0.5 +
-              (a.already_read_count /
-                (a.readinglog_count - a.currently_reading_count)) *
-              5 *
-              0.5)
-        )
-      :
-      [];
+          .filter(book => book.readinglog_count > 300)
+          .sort(
+            (a, b) =>
+              b.ratings_average * 0.5 +
+              (b.already_read_count /
+                (b.readinglog_count - b.currently_reading_count)) *
+                5 *
+                0.5 -
+              (a.ratings_average * 0.5 +
+                (a.already_read_count /
+                  (a.readinglog_count - a.currently_reading_count)) *
+                  5 *
+                  0.5)
+          )
+      : [];
     return five.slice(0, 5);
   };
   const topFive = getTopFive(books);
@@ -72,13 +71,17 @@ function BooksPage() {
         <div>
           <div className='pt-5 mb-5 ml-10 w-25 flex flex-row justify-center text-lg'>
             <button
-              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === genericSubject && "border-b-2 border-black"}`}
+              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${
+                category === genericSubject && ' border-black'
+              }`}
               onClick={() => getBooksByCategory(genericSubject)}
             >
               General
             </button>
             <button
-              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === 'science' && "border-b-2 border-black"}`}
+              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${
+                category === 'science' && 'border-b-2 border-black'
+              }`}
               onClick={() => {
                 getBooksByCategory('science');
               }}
@@ -86,19 +89,25 @@ function BooksPage() {
               Science
             </button>
             <button
-              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === 'crime' && "border-b-2 border-black"}`}
+              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${
+                category === 'crime' && 'border-b-2 border-black'
+              }`}
               onClick={() => getBooksByCategory('crime')}
             >
               Crime
             </button>
             <button
-              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === 'selfhelp' && "border-b-2 border-black"}`}
+              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${
+                category === 'selfhelp' && 'border-b-2 border-black'
+              }`}
               onClick={() => getBooksByCategory('selfhelp')}
             >
               Self-help
             </button>
             <button
-              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === 'poetry&subject:drama' && "border-b-2 border-black"}`}
+              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${
+                category === 'poetry&subject:drama' && 'border-b-2 border-black'
+              }`}
               onClick={() => getBooksByCategory('poetry&subject:drama')}
             >
               Poetry and Drama
@@ -106,14 +115,22 @@ function BooksPage() {
           </div>
 
           <div className='flex flex-col mr-5 ml-5'>
-            <section className='grid grid-cols-5 gap-5'>
+            <section className='grid grid-cols-5 gap-5 auto-rows-auto'>
               {books &&
                 topFive.map(book => {
                   return (
-                    <div key={book.key}>
-                      <BookCard book={book} setImageLoaded={setImageLoaded} imageLoaded={imageLoaded} />
-                    </div>
-                  )
+                    <Link
+                      key={book.key}
+                      to={`/books${book.key}`}
+                      className='min-h-max flex-shrink-0  border-2 border-slate-300 hover:border-slate-700'
+                    >
+                      <BookCard
+                        book={book}
+                        setImageLoaded={setImageLoaded}
+                        imageLoaded={imageLoaded}
+                      />
+                    </Link>
+                  );
                 })}
             </section>
             <div className='mt-12 flex justify-center'>

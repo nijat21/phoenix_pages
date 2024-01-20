@@ -112,7 +112,7 @@ function AuthorPage() {
               </p>
             </div>
           </section>
-          <section className='flex overflow-x-auto h-50 gap-5 mr-20 ml-20 pb-5'>
+          <section className='flex overflow-x-scroll h-auto gap-5 mr-20 ml-20 pb-5'>
             {authorBooks &&
               topTen.map(book => {
                 return (
@@ -148,7 +148,7 @@ function AuthorPage() {
                                   </strong>{' '}
                                   {book.title.length > 50 && (
                                     <button
-                                      className='ml-1 font-thin text-gray-400 hover:bg-slate-600'
+                                      className='ml-1 font-thin text-gray-400 hover:bg-slate-200 hover:px-1'
                                       onClick={e => {
                                         e.stopPropagation();
                                         showTitle(book.title.length);

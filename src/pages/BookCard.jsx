@@ -1,47 +1,70 @@
 import { Link } from 'react-router-dom';
 import RatingDisplay from '../components/RatingDisplay';
+import { useEffect, useState } from 'react';
+
 function BookCard({ book, setImageLoaded, imageLoaded }) {
+  const [show, setShow] = useState(true);
+  const [length, setLength] = useState(50);
+
+  const showTitle = titleLength => {
+    setShow(!show);
+    if (show) {
+      setLength(titleLength);
+    } else {
+      setLength(50);
+    }
+  };
+
   return (
-    <>
-      <Link key={book.key} to={`/books${book.key}`}>
-        <div className='flex flex-col text-center items-center mt-16'>
-          {book && book.cover_i && (
-            <>
-              <div className='h-64 flex justify-center items-center'>
-                {!imageLoaded && (
-                  <img
-                    src='src/assets/coverLoading1.webp'
-                    alt='loading'
-                    className='text-center object-cover h-60 w-26'
-                  />
+    <div className='flex flex-col h-auto text-center items-center'>
+      {book && book.cover_i && (
+        <>
+          <div className='h-64 flex justify-center items-center'>
+            {!imageLoaded && (
+              <img
+                src='src/assets/coverLoading1.webp'
+                alt='loading'
+                className='text-center object-cover h-60 w-26'
+              />
+            )}
+            <img
+              src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
+              alt='cover'
+              className='text-center object-cover h-60 w-26 '
+              onLoad={() => setImageLoaded(true)}
+            />
+          </div>
+          <div className='h-auto mw-44'>
+            <div className='mh-12 flex justify-center items-center'>
+              <h2>
+                <strong className='max-w-xs'>
+                  {book.title.slice(0, length)}
+                </strong>{' '}
+                {book.title.length > 50 && (
+                  <button
+                    className='ml-1 font-thin text-gray-400 hover:bg-slate-200 hover:px-1'
+                    onClick={e => {
+                      e.stopPropagation();
+                      showTitle(book.title.length);
+                      e.preventDefault();
+                    }}
+                  >
+                    {show ? 'more' : 'less'}
+                  </button>
                 )}
-                <img
-                  src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
-                  alt='cover'
-                  className='text-center object-cover h-60 w-26 '
-                  onLoad={() => setImageLoaded(true)}
-                />
-              </div>
-              <div className='h-24 mw-44'>
-                <div className='mh-12 flex justify-center items-center'>
-                  <h2>
-                    <strong>{book.title}</strong> ({book.first_publish_year})
-                  </h2>
-                </div>
-                <div className='mh-10 flex justify-center items-center'>
-                  <h4>{book.author_name[0]}</h4>
-                </div>
-                <div className='mh-6 flex justify-center items-center'>
-                  <div className='flex'>
-                    <RatingDisplay rating={book.ratings_average.toFixed(1)} />
-                  </div>
-                </div>
-              </div>
-            </>
-          )}
-        </div>
-      </Link>
-    </>
+              </h2>
+            </div>
+            <p className='text-sm'>({book.first_publish_year})</p>
+            <div className='mh-10 flex justify-center items-center '>
+              <h4>{book.author_name[0]}</h4>
+            </div>
+            <div className=' flex justify-center items-center '>
+              <RatingDisplay rating={book.ratings_average.toFixed(1)} />
+            </div>
+          </div>
+        </>
+      )}
+    </div>
   );
 }
 export default BookCard;
