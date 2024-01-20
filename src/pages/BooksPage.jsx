@@ -1,16 +1,15 @@
-import React from 'react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import RatingDisplay from '../components/RatingDisplay';
 import Loader from '../components/Loader';
+import BookList from './BookList';
 
 function BooksPage() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
-  // const [category, setCategory] = useState(null)
-  // const [newEdition, setNewEdition] = useState(null);
+  const [category, setCategory] = useState('')
 
   const getBooksByCategory = async subj => {
     try {
@@ -18,7 +17,9 @@ function BooksPage() {
         `https://openlibrary.org/search.json?subject=${subj}&limit=50`
       );
       setBooks(response.data.docs);
-      // setCategory(subj);
+      setCategory(subj);
+      // Saving category locally
+      localStorage.setItem('selectedCategory', subj);
     } catch (error) {
       console.log(error);
     }
@@ -30,7 +31,10 @@ function BooksPage() {
   // Books for the page is opened
   useEffect(() => {
     setLoading(true);
-    getBooksByCategory(genericSubject).then(() => {
+    // if there is a selected category, initialCategory gets it's value, if not, it gets genericSubject
+    const selectedCategory = localStorage.getItem('selectedCategory');
+    const initialCategory = selectedCategory || genericSubject;
+    getBooksByCategory(initialCategory).then(() => {
       setLoading(false);
     });
   }, []);
@@ -39,22 +43,22 @@ function BooksPage() {
   const getTopFive = input => {
     const five = input
       ? input
-          .filter(book => book.readinglog_count > 300)
-          .sort(
-            (a, b) =>
-              b.ratings_average * 0.5 +
-              (b.already_read_count /
-                (b.readinglog_count - b.currently_reading_count)) *
-                5 *
-                0.5 -
-              (a.ratings_average * 0.5 +
-                (a.already_read_count /
-                  (a.readinglog_count - a.currently_reading_count)) *
-                  5 *
-                  0.5)
-          )
+        .filter(book => book.readinglog_count > 300)
+        .sort(
+          (a, b) =>
+            b.ratings_average * 0.5 +
+            (b.already_read_count /
+              (b.readinglog_count - b.currently_reading_count)) *
+            5 *
+            0.5 -
+            (a.ratings_average * 0.5 +
+              (a.already_read_count /
+                (a.readinglog_count - a.currently_reading_count)) *
+              5 *
+              0.5)
+        )
       : // .slice(0, 5)
-        [];
+      [];
     return five.slice(0, 5);
   };
   const topFive = getTopFive(books);
@@ -67,13 +71,13 @@ function BooksPage() {
         <div>
           <div className='pt-14 ml-10 w-25 flex flex-row justify-center text-lg'>
             <button
-              className='m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black'
+              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === genericSubject && "bg-yellow-100 border-black"}`}
               onClick={() => getBooksByCategory(genericSubject)}
             >
               General
             </button>
             <button
-              className='m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black'
+              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === 'science' && "bg-yellow-100 border-black"}`}
               onClick={() => {
                 getBooksByCategory('science');
               }}
@@ -81,19 +85,19 @@ function BooksPage() {
               Science
             </button>
             <button
-              className='m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black'
+              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === 'crime' && "bg-yellow-100 border-black"}`}
               onClick={() => getBooksByCategory('crime')}
             >
               Crime
             </button>
             <button
-              className='m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black'
+              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === 'selfhelp' && "bg-yellow-100 border-black"}`}
               onClick={() => getBooksByCategory('selfhelp')}
             >
               Self-help
             </button>
             <button
-              className='m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black'
+              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === 'poetry&subject:drama' && "bg-yellow-100 border-black"}`}
               onClick={() => getBooksByCategory('poetry&subject:drama')}
             >
               Poetry and Drama
@@ -105,50 +109,10 @@ function BooksPage() {
               {books &&
                 topFive.map(book => {
                   return (
-                    <>
-                      <Link key={book.key} to={`/books${book.key}`}>
-                        <div className='flex flex-col text-center items-center mt-16'>
-                          {book && book.cover_i && (
-                            <>
-                              <div className='h-64 flex justify-center items-center'>
-                                {!imageLoaded && (
-                                  <img
-                                    src='src/assets/coverLoading1.webp'
-                                    alt='loading'
-                                    className='text-center object-cover h-60 w-26'
-                                  />
-                                )}
-                                <img
-                                  src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
-                                  alt='cover'
-                                  className='text-center object-cover h-60 w-26 '
-                                  onLoad={() => setImageLoaded(true)}
-                                />
-                              </div>
-                              <div className='h-24 mw-44'>
-                                <div className='mh-12 flex justify-center items-center'>
-                                  <h2>
-                                    <strong>{book.title}</strong> (
-                                    {book.first_publish_year})
-                                  </h2>
-                                </div>
-                                <div className='mh-10 flex justify-center items-center'>
-                                  <h4>{book.author_name[0]}</h4>
-                                </div>
-                                <div className='mh-6 flex justify-center items-center'>
-                                  <div className='flex'>
-                                    <RatingDisplay
-                                      rating={book.ratings_average.toFixed(1)}
-                                    />
-                                  </div>
-                                </div>
-                              </div>
-                            </>
-                          )}
-                        </div>
-                      </Link>
-                    </>
-                  );
+                    <div key={book.key}>
+                      <BookList book={book} setImageLoaded={setImageLoaded} imageLoaded={imageLoaded} />
+                    </div>
+                  )
                 })}
             </section>
             <div className='mt-12 flex justify-center'>

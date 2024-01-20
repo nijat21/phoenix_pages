@@ -5,3 +5,13 @@
 body {
   @apply font-serif;
 }
+
+.zoom-container {
+  overflow: visible;
+  position: relative;
+}
+
+.zoom-container:hover {
+  transform: scale(1.1);
+  transition: transform 0.2s ease;
+}

@@ -23,94 +23,67 @@ function Navbar() {
     }
   };
 
+  const handleSearch = () => {
+    navigate('/search');
+  }
+
   return (
     <>
-      {userLogin ? (
-        <nav className='h-15 w-screen flex justify-between justify-items-center place-items-center  bg-neutral-900 items-center font-light font-serif fixed'>
-          <div className='mw-1/3 ml-10 w-1/3 '>
-            <Link to={'/'} className='flex h-12 place-items-center'>
-              <img src='src/assets/phoenix.webp' alt='Home' className='w-12' />
-              <div className='ml-1'>
-                <p className='text-red-700 mb-0 text-sm font-sans'>
-                  Phoenix Pages
-                </p>
-              </div>
-            </Link>
-          </div>
-
-          <div className='w-1/3 flex justify-around text-center text-lg '>
-            <Link to={'/'}>
-              <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200'>
-                Home
-              </h2>
-            </Link>
-            <div className='text-neutral-200 hover:border-b hover:border-neutral-200'>
-              <CategoriesMenu />
+      <nav className='h-16 w-screen flex justify-between justify-items-center place-items-center  bg-neutral-900 items-center font-light font-serif fixed'>
+        <div className='mw-1/3 ml-10 w-1/3 '>
+          <Link to={'/'} className='flex h-12 place-items-center'>
+            <img src='src/assets/phoenix-removebg-preview.png' alt='Home' className='w-14' />
+            <div className='ml-1'>
+              <p className='text-red-800 text-bold mb-0 text-3xl'>
+                Phoenix Pages
+              </p>
             </div>
-            <Link to={'/aboutus'}>
-              <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200'>
-                About Us
-              </h2>
-            </Link>
+          </Link>
+        </div>
+
+        <div className='w-1/3 flex justify-around text-center text-xl '>
+          <Link to={'/'}>
+            <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
+              Home
+            </h2>
+          </Link>
+          <div className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
+            <CategoriesMenu />
+          </div>
+          <Link to={'/aboutus'}>
+            <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
+              About Us
+            </h2>
+          </Link>
+          {userLogin &&
             <Link to={'/mybooks'}>
-              <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200'>
+              <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
                 My Books
               </h2>
             </Link>
-          </div>
-          <div className=' w-1/3 mr-10 flex text-lg items-center justify-end '>
-            <input
-              type='text'
-              placeholder=' Search'
-              className='text-amber-800 mr-3 pl-1 border-2 border-amber-800 rounded-xl bg-transparent h-8 text-justify'
-            />
-            <div>
+          }
+        </div>
+        <div className='w-1/3 mr-10 flex text-xl items-center justify-end '>
+          <input
+            type='text'
+            placeholder=' Search'
+            className='text-neutral-200 mr-3 pl-2 border-2 border-neutral-600 rounded-xl bg-transparent h-8 text-justify'
+            onChange={handleSearch}
+          />
+          {userLogin ?
+            <div className="zoom-container">
               <UserMenu initial={userLogin[0].toUpperCase()} />
             </div>
-          </div>
-        </nav>
-      ) : (
-        <nav className='h-13 w-screen flex justify-between justify-items-center place-items-center  bg-neutral-900 items-center font-light font-serif fixed'>
-          <div className='mw-1/3 ml-10 w-1/3 '>
-            <Link to={'/'} className='flex h-12 place-items-center'>
-              <img src='src/assets/phoenix.webp' alt='Home' className='w-12' />
-              <div className='ml-1'>
-                <p className='text-red-800 mb-0 text-xl text-bold font-serif'>
-                  Phoenix Pages
-                </p>
-              </div>
-            </Link>
-          </div>
-          <div className='w-1/3 flex justify-around text-center text-lg '>
-            <Link to={'/'}>
-              <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200'>
-                Home
-              </h2>
-            </Link>
-            <div className='text-neutral-200 hover:border-b hover:border-neutral-200'>
-              <CategoriesMenu />
-            </div>
-            <Link to={'/aboutus'}>
-              <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200'>
-                About Us
-              </h2>
-            </Link>
-          </div>
-          <div className=' w-1/3 mr-10 flex text-lg items-center justify-end '>
-            <input
-              type='text'
-              placeholder=' Search'
-              className='text-amber-800 mr-3 border-2 border-amber-800 rounded-xl bg-transparent h-8'
-            />
+            :
             <Link
               to={'/login'}
-              className=' text-neutral-200 hover:border-b hover:border-neutral-200'
+              className=' text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'
             >
               <h2>Log In</h2>
             </Link>
-          </div>
-        </nav>
-      )}
+          }
+        </div>
+      </nav>
     </>
   );
 }

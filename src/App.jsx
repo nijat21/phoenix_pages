@@ -11,12 +11,13 @@ import SignUp from './pages/SignUp';
 import DeleteUser from './pages/DeleteUser';
 import Profile from './pages/Profile';
 import MyBooks from './pages/MyBooks';
+import Search from './pages/Search';
 
 function App() {
   return (
     <div>
       <Navbar />
-      <div className='pt-12'>
+      <div className='pt-16'>
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/books' element={<BooksPage />} />
@@ -28,6 +29,7 @@ function App() {
           <Route path='/signup' element={<SignUp />} />
           <Route path='/profile' element={<Profile />} />
           <Route path='/deleteuser' element={<DeleteUser />} />
+          <Route path='/search' element={<Search />} />
         </Routes>
       </div>
     </div>
