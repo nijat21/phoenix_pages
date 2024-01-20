@@ -28,13 +28,11 @@ function HomePage() {
             Phoenix Pages."
           </h3>
           <div className='mt-16 flex justify-center items-center'>
-            <button className='border-solid border-2 border-amber-800 p-3 ml-4 hover:bg-amber-800 text-xl'>
-              <Link to={'/books'}>Find all our books here</Link>
-            </button>
+            <Link to={'/books'} className='border-solid border-2 border-amber-800 p-3 ml-4 hover:bg-amber-800 text-xl'>Find all our books here</Link>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }
 

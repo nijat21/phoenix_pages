@@ -27,7 +27,7 @@ function UserMenu({ initial }) {
     useEffect(() => {
         const handleOutsideClick = (e) => {
             {
-                open && !usrMenu.current.contains(e.target) &&
+                open && usrMenu.current && !usrMenu.current.contains(e.target) &&
                     setOpen(false)
             }
         }
