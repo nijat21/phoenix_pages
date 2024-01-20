@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import RatingDisplay from '../components/RatingDisplay';
 
-function BookList({ book, setImageLoaded, imageLoaded }) {
+function BookCard({ book, setImageLoaded, imageLoaded }) {
 
 
     return (
@@ -51,4 +51,4 @@ function BookList({ book, setImageLoaded, imageLoaded }) {
     );
 }
 
-export default BookList
+export default BookCard

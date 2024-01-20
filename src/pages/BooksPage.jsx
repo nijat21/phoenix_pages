@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import RatingDisplay from '../components/RatingDisplay';
 import Loader from '../components/Loader';
-import BookList from './BookList';
+import BookCard from './BookCard';
 
 function BooksPage() {
   const [books, setBooks] = useState([]);
@@ -110,7 +110,7 @@ function BooksPage() {
                 topFive.map(book => {
                   return (
                     <div key={book.key}>
-                      <BookList book={book} setImageLoaded={setImageLoaded} imageLoaded={imageLoaded} />
+                      <BookCard book={book} setImageLoaded={setImageLoaded} imageLoaded={imageLoaded} />
                     </div>
                   )
                 })}
