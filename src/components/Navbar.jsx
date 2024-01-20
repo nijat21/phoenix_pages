@@ -7,7 +7,7 @@ import CategoriesMenu from './CategoriesMenu';
 
 function Navbar() {
   const navigate = useNavigate();
-  const { userLogin, setUserLogin } = useContext(UserContext);
+  const { userLogin, setUserLogin, searchTitle, setSearchTitle } = useContext(UserContext);
   const [selected, setSelected] = useState('');
 
   const handleChange = e => {
@@ -23,7 +23,8 @@ function Navbar() {
     }
   };
 
-  const handleSearch = () => {
+  const handleSearch = (e) => {
+    setSearchTitle(e.target.value)
     navigate('/search');
   }
 
@@ -32,7 +33,7 @@ function Navbar() {
       <nav className='h-16 w-screen flex justify-between justify-items-center place-items-center  bg-neutral-900 items-center font-light font-serif fixed'>
         <div className='mw-1/3 ml-10 w-1/3 '>
           <Link to={'/'} className='flex h-12 place-items-center'>
-            <img src='src/assets/phoenix-removebg-preview.png' alt='Home' className='w-14' />
+            <img src='../src/assets/phoenix-removebg-preview.png' alt='Home' className='w-14' />
             <div className='ml-1'>
               <p className='text-red-800 text-bold mb-0 text-3xl'>
                 Phoenix Pages

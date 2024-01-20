@@ -40,8 +40,8 @@ function AuthorPage() {
   // We may need to replace is with global function
   const topFive = authorBooks
     ? authorBooks
-        .sort((a, b) => b.ratings_average - a.ratings_average)
-        .slice(0, 5)
+      .sort((a, b) => b.ratings_average - a.ratings_average)
+      .slice(0, 5)
     : [];
 
   return (

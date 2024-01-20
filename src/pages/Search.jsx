@@ -1,42 +1,41 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import UserContext from '../context/UserProvider';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import RatingDisplay from '../components/RatingDisplay';
 import Loader from '../components/Loader';
+import BookCard from './BookCard';
+import { useNavigate } from 'react-router-dom';
 
 function Search() {
     const [books, setBooks] = useState([]);
     const [loading, setLoading] = useState(true);
     const [imageLoaded, setImageLoaded] = useState(false);
-    // const [category, setCategory] = useState(null)
-    // const [newEdition, setNewEdition] = useState(null);
+    const { searchTitle, setSearchTitle } = useContext(UserContext);
+    const navigate = useNavigate();
 
-    const getBooksByCategory = async subj => {
+    const getBooksByCategory = async title => {
         try {
             const response = await axios.get(
-                `https://openlibrary.org/search.json?subject=${subj}&limit=50`
+                `https://openlibrary.org/search.json?title=${title}&limit=50`
             );
             setBooks(response.data.docs);
-            // setCategory(subj);
         } catch (error) {
             console.log(error);
         }
     };
 
-    // Subject query that will look for top a generic list of top 5 books
-    const genericSubject = '*';
-
     // Books for the page is opened
     useEffect(() => {
         setLoading(true);
-        getBooksByCategory(genericSubject).then(() => {
+        getBooksByCategory(searchTitle).then(() => {
             setLoading(false);
         });
-    }, []);
+    }, [searchTitle]);
 
     // Book rating algorithm
-    const getTopFive = input => {
-        const five = input
+    const rank = input => {
+        const ranked = input
             ? input
                 .filter(book => book.readinglog_count > 300)
                 .sort(
@@ -52,11 +51,11 @@ function Search() {
                             5 *
                             0.5)
                 )
-            : // .slice(0, 5)
+            :
             [];
-        return five.slice(0, 5);
+        return ranked.slice(0, 15);
     };
-    const topFive = getTopFive(books);
+    const topFifteen = rank(books);
 
     return (
         <>
@@ -64,60 +63,22 @@ function Search() {
                 <Loader />
             ) : (
                 <div>
-                    <div className='flex flex-col'>
+                    <div className='flex flex-col items-center'>
+                        <h1 className='text-3xl my-6'>Search Results</h1>
                         <section className='grid grid-cols-5'>
                             {books &&
-                                topFive.map(book => {
+                                topFifteen.map(book => {
                                     return (
-                                        <>
-                                            <Link key={book.key} to={`/books${book.key}`}>
-                                                <div className='flex flex-col text-center items-center mt-16'>
-                                                    {book && book.cover_i && (
-                                                        <>
-                                                            <div className='h-64 flex justify-center items-center'>
-                                                                {!imageLoaded && (
-                                                                    <img
-                                                                        src='src/assets/coverLoading1.webp'
-                                                                        alt='loading'
-                                                                        className='text-center object-cover h-60 w-26'
-                                                                    />
-                                                                )}
-                                                                <img
-                                                                    src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
-                                                                    alt='cover'
-                                                                    className='text-center object-cover h-60 w-26 '
-                                                                    onLoad={() => setImageLoaded(true)}
-                                                                />
-                                                            </div>
-                                                            <div className='h-24 mw-44'>
-                                                                <div className='mh-12 flex justify-center items-center'>
-                                                                    <h2>
-                                                                        <strong>{book.title}</strong> (
-                                                                        {book.first_publish_year})
-                                                                    </h2>
-                                                                </div>
-                                                                <div className='mh-10 flex justify-center items-center'>
-                                                                    <h4>{book.author_name[0]}</h4>
-                                                                </div>
-                                                                <div className='mh-6 flex justify-center items-center'>
-                                                                    <div className='flex'>
-                                                                        <RatingDisplay
-                                                                            rating={book.ratings_average.toFixed(1)}
-                                                                        />
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </>
-                                                    )}
-                                                </div>
-                                            </Link>
-                                        </>
+                                        <div key={book.key}>
+                                            <BookCard book={book} setImageLoaded={setImageLoaded} imageLoaded={imageLoaded} />
+                                        </div>
                                     );
                                 })}
                         </section>
                         <div className='mt-12 flex justify-center'>
-                            <button className='border-solid border-2 border-amber-800 p-3 ml-4 hover:bg-amber-800 hover:text-white text-xl'>
-                                <Link to={'/books'}>Discover more</Link>
+                            <button className='border-solid border-2 border-amber-800 p-3 ml-4 hover:bg-amber-800 hover:text-white text-xl'
+                                onClick={() => { navigate(-1) }}>
+                                Go Back
                             </button>
                         </div>
                     </div>

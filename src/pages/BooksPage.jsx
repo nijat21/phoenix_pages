@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import UserContext from '../context/UserProvider';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import RatingDisplay from '../components/RatingDisplay';
@@ -9,7 +10,7 @@ function BooksPage() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [category, setCategory] = useState('')
+  const { category, setCategory } = useContext(UserContext)
 
   const getBooksByCategory = async subj => {
     try {
@@ -57,7 +58,7 @@ function BooksPage() {
               5 *
               0.5)
         )
-      : // .slice(0, 5)
+      :
       [];
     return five.slice(0, 5);
   };
@@ -71,13 +72,13 @@ function BooksPage() {
         <div>
           <div className='pt-5 mb-5 ml-10 w-25 flex flex-row justify-center text-lg'>
             <button
-              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === genericSubject && "bg-yellow-100 border-black"}`}
+              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === genericSubject && "border-b-2 border-black"}`}
               onClick={() => getBooksByCategory(genericSubject)}
             >
               General
             </button>
             <button
-              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === 'science' && "bg-yellow-100 border-black"}`}
+              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === 'science' && "border-b-2 border-black"}`}
               onClick={() => {
                 getBooksByCategory('science');
               }}
@@ -85,19 +86,19 @@ function BooksPage() {
               Science
             </button>
             <button
-              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === 'crime' && "bg-yellow-100 border-black"}`}
+              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === 'crime' && "border-b-2 border-black"}`}
               onClick={() => getBooksByCategory('crime')}
             >
               Crime
             </button>
             <button
-              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === 'selfhelp' && "bg-yellow-100 border-black"}`}
+              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === 'selfhelp' && "border-b-2 border-black"}`}
               onClick={() => getBooksByCategory('selfhelp')}
             >
               Self-help
             </button>
             <button
-              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === 'poetry&subject:drama' && "bg-yellow-100 border-black"}`}
+              className={`m-3 pt-1 pb-1 pr-3 pl-3 border-b-2 border-transparent hover:border-b-2 hover:border-black ${category === 'poetry&subject:drama' && "border-b-2 border-black"}`}
               onClick={() => getBooksByCategory('poetry&subject:drama')}
             >
               Poetry and Drama
