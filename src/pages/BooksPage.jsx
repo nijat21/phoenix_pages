@@ -122,7 +122,7 @@ function BooksPage() {
                     <Link
                       key={book.key}
                       to={`/books${book.key}`}
-                      className='min-h-max flex-shrink-0  border-2 border-slate-300 hover:border-slate-700'
+                      className='min-h-max flex-shrink-0 rounded-br-lg shadow-slate-400 shadow-sm  border-2 border-slate-300 hover:border-slate-700'
                     >
                       <BookCard
                         book={book}
@@ -134,7 +134,7 @@ function BooksPage() {
                 })}
             </section>
             <div className='mt-12 flex justify-center'>
-              <button className='border-solid border-2 border-amber-800 p-3 ml-4 hover:bg-amber-800 hover:text-white text-xl'>
+              <button className='mt-4 p-4 rounded-2xl  shadow-slate-400 shadow-sm border-2 text-white border-lime-700 bg-lime-700 hover:bg-lime-600 hover:border-lime-600 text-xl'>
                 <Link to={'/books'}>Discover more</Link>
               </button>
             </div>

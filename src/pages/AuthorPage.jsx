@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
@@ -7,6 +7,7 @@ import BookCard from './BookCard';
 
 function AuthorPage() {
   const { authorKey } = useParams();
+  const navigate = useNavigate();
 
   const [author, setAuthor] = useState(null);
   const [authorBooks, setAuthorBooks] = useState([]);
@@ -85,7 +86,20 @@ function AuthorPage() {
     }
   };
 
-  // not working
+  const removeText = text => {
+    const indexOfSeparationOne = text.indexOf('([');
+    const indexOfSeparationTwo = text.indexOf('<');
+
+    if (indexOfSeparationOne !== -1) {
+      const modifiedText = text.slice(0, indexOfSeparationOne);
+      return modifiedText;
+    } else if (indexOfSeparationTwo !== -1) {
+      const modifiedText = text.slice(0, indexOfSeparationTwo);
+      return modifiedText;
+    } else {
+      return text;
+    }
+  };
 
   const handleGoBack = () => {
     navigate(-1);
@@ -98,7 +112,7 @@ function AuthorPage() {
           <section className=' flex flex-start '>
             {!authorImageLoaded && (
               <img
-                src='../src/assets/authorGeneric'
+                src='../src/assets/authorGeneric.png'
                 alt='loading'
                 className='text-center object-contain max-w-64 max-h-80 mb-5 ml-10'
               />
@@ -106,7 +120,7 @@ function AuthorPage() {
             <img
               src={`https://covers.openlibrary.org/a/olid/${authorKey}-M.jpg`}
               alt='cover'
-              className='text-center object-contain max-w-64 max-h-80 mb-5 ml-10'
+              className='text-center object-contain max-w-64 max-h-80 mb-5 ml-10 rounded-tl-lg rounded-tr-lg rounded-br-lg shadow-slate-700 shadow-sm'
               onLoad={() => {
                 setAuthorImageLoaded(true);
               }}
@@ -124,13 +138,15 @@ function AuthorPage() {
 
               <p className='mb-14 pb-10 border-b-2 border-amber-800'>
                 {typeof author.bio === 'object'
-                  ? `${author.bio.value.slice(0, bioLength)}`
-                  : `${author.bio.slice(0, bioLength)}`}
+                  ? removeText(`${author.bio.value.slice(0, bioLength)}`)
+                  : removeText(`${author.bio.slice(0, bioLength)}`)}
 
-                {(author.bio.length > 1140 ||
-                  author.bio.value.length > 1140) && (
+                {((typeof author.bio !== 'object' &&
+                  author.bio.length > 1140) ||
+                  (typeof author.bio === 'object' &&
+                    author.bio.value.length > 1140)) && (
                   <button
-                    className='ml-1 font-thin text-gray-400 hover:bg-slate-200 hover:px-1'
+                    className='ml-1 font-thin text-gray-400 rounded-lg hover:bg-slate-200 hover:px-1'
                     onClick={e => {
                       e.stopPropagation();
                       showBio(undefined);
@@ -143,7 +159,7 @@ function AuthorPage() {
               </p>
             </div>
           </section>
-          <section className='flex overflow-x-scroll h-auto gap-5 mr-20 ml-20 pb-5'>
+          <section className='flex overflow-x-scroll  h-auto gap-5 mr-20 ml-20 pb-5'>
             {authorBooks &&
               topTen.map(book => {
                 return (
@@ -167,7 +183,7 @@ function AuthorPage() {
                               <img
                                 src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
                                 alt='cover'
-                                className='text-center object-cover w-20'
+                                className='text-center object-cover w-20 rounded-tr-lg rounded-br-lg shadow-slate-400 shadow-sm'
                                 onLoad={() => setImageLoaded(true)}
                               />
                             </div>
@@ -179,7 +195,7 @@ function AuthorPage() {
                                   </strong>{' '}
                                   {book.title.length > 50 && (
                                     <button
-                                      className='ml-1 font-thin text-gray-400 hover:bg-slate-200 hover:px-1'
+                                      className='ml-1 font-thin text-gray-400 rounded-lg hover:bg-slate-200 hover:px-1'
                                       onClick={e => {
                                         e.stopPropagation();
                                         showTitle(book.title.length);
@@ -215,7 +231,7 @@ function AuthorPage() {
           </section>
           <div className='my-2 mr-20 self-end flex flex-col '>
             <button
-              className='mt-4 p-2 border-solid border-2 border-amber-800 text-l hover:bg-amber-800 hover:text-white'
+              className='mt-4 p-2 rounded-2xl border-2 text-white border-lime-700 text-l bg-lime-700 hover:bg-lime-600 hover:border-lime-600'
               onClick={handleGoBack}
             >
               Go Back

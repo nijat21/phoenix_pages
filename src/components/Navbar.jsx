@@ -7,7 +7,8 @@ import CategoriesMenu from './CategoriesMenu';
 
 function Navbar() {
   const navigate = useNavigate();
-  const { userLogin, setUserLogin, searchTitle, setSearchTitle } = useContext(UserContext);
+  const { userLogin, setUserLogin, searchTitle, setSearchTitle } =
+    useContext(UserContext);
   const [selected, setSelected] = useState('');
 
   const handleChange = e => {
@@ -23,19 +24,23 @@ function Navbar() {
     }
   };
 
-  const handleSearch = (e) => {
-    setSearchTitle(e.target.value)
+  const handleSearch = e => {
+    setSearchTitle(e.target.value);
     navigate('/search');
-  }
+  };
 
   return (
     <>
       <nav className='h-16 w-screen flex justify-between justify-items-center place-items-center  bg-neutral-900 items-center font-light font-serif fixed'>
         <div className='mw-1/3 ml-10 w-1/3 '>
           <Link to={'/'} className='flex h-12 place-items-center'>
-            <img src='../src/assets/phoenix-removebg-preview.png' alt='Home' className='w-14' />
+            <img
+              src='../src/assets/phoenix-removebg-preview.png'
+              alt='Home'
+              className='w-14'
+            />
             <div className='ml-1'>
-              <p className='text-red-800 text-bold mb-0 text-3xl'>
+              <p className='text-amber-800 text-bold mb-0 text-2xl'>
                 Phoenix Pages
               </p>
             </div>
@@ -56,13 +61,13 @@ function Navbar() {
               About Us
             </h2>
           </Link>
-          {userLogin &&
+          {userLogin && (
             <Link to={'/mybooks'}>
               <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
                 My Books
               </h2>
             </Link>
-          }
+          )}
         </div>
         <div className='w-1/3 mr-10 flex text-xl items-center justify-end '>
           <input
@@ -71,18 +76,18 @@ function Navbar() {
             className='text-neutral-200 mr-3 pl-2 border-2 border-neutral-600 rounded-xl bg-transparent h-8 text-justify'
             onChange={handleSearch}
           />
-          {userLogin ?
-            <div className="zoom-container">
+          {userLogin ? (
+            <div className='zoom-container'>
               <UserMenu initial={userLogin[0].toUpperCase()} />
             </div>
-            :
+          ) : (
             <Link
               to={'/login'}
               className=' text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'
             >
               <h2>Log In</h2>
             </Link>
-          }
+          )}
         </div>
       </nav>
     </>
