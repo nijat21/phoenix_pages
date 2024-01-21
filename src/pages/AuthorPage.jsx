@@ -13,7 +13,9 @@ function AuthorPage() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [authorImageLoaded, setAuthorImageLoaded] = useState(false);
   const [length, setLength] = useState(50);
+  const [bioLength, setBioLength] = useState(1140);
   const [show, setShow] = useState(true);
+  const [bioShow, setBioShow] = useState(true);
 
   useEffect(() => {
     axios
@@ -74,18 +76,33 @@ function AuthorPage() {
     }
   };
 
+  const showBio = authorBioLength => {
+    setBioShow(!bioShow);
+    if (bioShow) {
+      setBioLength(authorBioLength);
+    } else {
+      setBioLength(1140);
+    }
+  };
+
+  // not working
+
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div className='mt-6 flex flex-col'>
       {author && (
         <>
           <section className=' flex flex-start '>
-            {/* {!authorImageLoaded && (
+            {!authorImageLoaded && (
               <img
                 src='../src/assets/authorGeneric'
                 alt='loading'
                 className='text-center object-contain max-w-64 max-h-80 mb-5 ml-10'
               />
-            )} */}
+            )}
             <img
               src={`https://covers.openlibrary.org/a/olid/${authorKey}-M.jpg`}
               alt='cover'
@@ -105,10 +122,24 @@ function AuthorPage() {
                 {author.death_date ? `- ${author.death_date}` : ' '}
               </p>
 
-              <p className='mb-20 pb-12 border-b-2 border-amber-800'>
+              <p className='mb-14 pb-10 border-b-2 border-amber-800'>
                 {typeof author.bio === 'object'
-                  ? `${author.bio.value}`
-                  : `${author.bio}`}
+                  ? `${author.bio.value.slice(0, bioLength)}`
+                  : `${author.bio.slice(0, bioLength)}`}
+
+                {(author.bio.length > 1140 ||
+                  author.bio.value.length > 1140) && (
+                  <button
+                    className='ml-1 font-thin text-gray-400 hover:bg-slate-200 hover:px-1'
+                    onClick={e => {
+                      e.stopPropagation();
+                      showBio(undefined);
+                      e.preventDefault();
+                    }}
+                  >
+                    {bioShow ? 'more' : 'less'}
+                  </button>
+                )}
               </p>
             </div>
           </section>
@@ -128,7 +159,7 @@ function AuthorPage() {
                             <div className='min-h-fit pt-3 flex justify-center items-center'>
                               {!imageLoaded && (
                                 <img
-                                  src='src/assets/coverLoading1.webp'
+                                  src='../src/assets/coverLoading1.webp'
                                   alt='loading'
                                   className='text-center object-cover h-60 w-26'
                                 />
@@ -182,6 +213,14 @@ function AuthorPage() {
                 );
               })}
           </section>
+          <div className='my-2 mr-20 self-end flex flex-col '>
+            <button
+              className='mt-4 p-2 border-solid border-2 border-amber-800 text-l hover:bg-amber-800 hover:text-white'
+              onClick={handleGoBack}
+            >
+              Go Back
+            </button>
+          </div>
         </>
       )}
     </div>
