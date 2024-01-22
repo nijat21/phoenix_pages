@@ -122,10 +122,18 @@ function BooksPage() {
               {books &&
                 topBooks.map(book => {
                   return (
-                    <div key={book.key}>
-                      <BookCard book={book} setImageLoaded={setImageLoaded} imageLoaded={imageLoaded} />
-                    </div>
-                  )
+                    <Link
+                      key={book.key}
+                      to={`/books${book.key}`}
+                      className='min-h-max flex-shrink-0 rounded-br-lg shadow-slate-400 shadow-sm  border-2 border-slate-300 hover:border-slate-700'
+                    >
+                      <BookCard
+                        book={book}
+                        setImageLoaded={setImageLoaded}
+                        imageLoaded={imageLoaded}
+                      />
+                    </Link>
+                  );
                 })}
             </section>
             <div className='mt-12 flex justify-center'>

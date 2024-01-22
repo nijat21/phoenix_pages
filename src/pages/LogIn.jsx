@@ -58,9 +58,9 @@ function LogIn() {
   }, []);
 
   return (
-    <div className='h-screen flex justify-center'>
-      <div className='mb-40'>
-        <div className='h-full w-full flex flex-col items-center justify-center'>
+    <div className='h-screen flex justify-center '>
+      <div className='mb-40 flex items-center'>
+        <div className=' w-full px-12 py-10 flex flex-col items-center justify-center border-2 border-slate-400 rounded-md shadow-sm shadow-slate-500'>
           <form
             onSubmit={handleSubmit}
             className='min-h-72 min-w-72 flex flex-col justify-around'
@@ -76,7 +76,7 @@ function LogIn() {
                 type='text'
                 id='username'
                 name='username'
-                className='border-solid border-2 border-amber-800 min-w-72 min-h-10 pl-1'
+                className='border-solid rounded-md border-2 border-amber-800 min-w-72 min-h-10 pl-1'
                 value={username}
                 onChange={e => setUsername(e.target.value)}
                 ref={userRef}
@@ -88,7 +88,7 @@ function LogIn() {
                 type='password'
                 id='passwordLogin'
                 name='passwordLogin'
-                className='border-solid border-2 border-amber-800 min-w-72  min-h-10 pl-1'
+                className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1'
                 value={password}
                 onChange={e => setPassword(e.target.value)}
               />
@@ -97,14 +97,14 @@ function LogIn() {
               <p className='text-s text-red-500'>{errorMessage}</p>
             </label>
             <div className='flex justify-center'>
-              <div className='flex flex-col justify-center items-center border-solid border-2 border-gray-400 min-w-20'>
+              <div className='flex flex-col justify-center items-center rounded-md border-solid border-2 border-lime-600 min-w-20 hover:bg-lime-600 hover:text-white'>
                 <button type='submit'>Log In</button>
               </div>
             </div>
           </form>
           <span className='text-s text-gray-500 mt-4'>
             Need an account?
-            <Link to={'/signup'} className='text-blue-400'>
+            <Link to={'/signup'} className='text-blue-400 hover:text-gray-500'>
               {' '}
               Sign up
             </Link>

@@ -16,6 +16,8 @@ function SingleBookPage() {
   const [alreadyReadCheck, setAlreadyReadCheck] = useState(false);
   const [wantToReadCheck, setWantToReadCheck] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [descLength, setDescLength] = useState(850);
+  const [descShow, setDescShow] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,19 +54,21 @@ function SingleBookPage() {
         `${API_URL}/users/${USERID}?_embed=books_already_read`
       );
 
-      const bookCheckToRead = responseToRead.data.books_to_read.find(
-        book => book.bookKey === bookKey
-      );
-      const bookCheckAlreadyRead =
-        responseAlreadyRead.data.books_already_read.find(
+      if (USERID) {
+        const bookCheckToRead = await responseToRead.data.books_to_read.find(
           book => book.bookKey === bookKey
         );
+        const bookCheckAlreadyRead =
+          await responseAlreadyRead.data.books_already_read.find(
+            book => book.bookKey === bookKey
+          );
 
-      if (bookCheckToRead) {
-        setWantToReadCheck(true);
-      }
-      if (bookCheckAlreadyRead) {
-        setAlreadyReadCheck(true);
+        if (bookCheckToRead) {
+          setWantToReadCheck(true);
+        }
+        if (bookCheckAlreadyRead) {
+          setAlreadyReadCheck(true);
+        }
       }
     };
 
@@ -144,6 +148,30 @@ function SingleBookPage() {
     }
   };
 
+  const removeText = text => {
+    const indexOfSeparationOne = text.indexOf('--');
+    const indexOfSeparationTwo = text.indexOf('([');
+
+    if (indexOfSeparationTwo !== -1) {
+      const modifiedText = text.slice(0, indexOfSeparationTwo);
+      return modifiedText;
+    } else if (indexOfSeparationOne !== -1) {
+      const modifiedText = text.slice(0, indexOfSeparationOne);
+      return modifiedText;
+    } else {
+      return text;
+    }
+  };
+
+  const showDesc = authorBioLength => {
+    setDescShow(!descShow);
+    if (descShow) {
+      setDescLength(authorBioLength);
+    } else {
+      setDescLength(1140);
+    }
+  };
+
   const handleGoBack = () => {
     navigate(-1);
   };
@@ -158,42 +186,42 @@ function SingleBookPage() {
               <figure className='w-1/5 ml-10 flex flex-col justify-center'>
                 {!imageLoaded && (
                   <img
-                    src='src/assets/coverLoading1.webp'
+                    src='../src/assets/coverLoading1.webp'
                     alt='loading'
-                    className='text-center object-contain w-85 mb-5'
+                    className='text-center object-contain w-85 mb-10'
                   />
                 )}
                 <img
                   src={`https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`}
                   alt='cover'
-                  className='text-center object-contain mb-7'
+                  className='text-center object-contain mb-10 rounded-tr-xl rounded-br-xl shadow-slate-700 shadow-2xl'
                   onLoad={() => setImageLoaded(true)}
                 />
                 {USERID && (
-                  <div className='flex justify-evenly'>
+                  <div className='flex justify-evenly flex-col '>
                     {!wantToReadCheck ? (
                       <button
                         onClick={() => wantToRead()}
-                        className='px-4 mx-2 border-solid border-2 border-amber-800 hover:bg-gray-500'
+                        className='px-4 py-1 mx-2 mb-5 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
                       >
                         Want to Read
                       </button>
                     ) : (
-                      <button className='px-4 mx-2 border-solid border-2 border-gray-300'>
+                      <div className='px-4 py-1 mx-2 mb-5 text-center rounded-2xl border-solid border-2 border-amber-800'>
                         Want to Read
-                      </button>
+                      </div>
                     )}
                     {!alreadyReadCheck ? (
                       <button
                         onClick={() => alreadyRead()}
-                        className='px-4 mx-2 border-solid border-2 border-amber-800 hover:bg-gray-500'
+                        className='px-4 py-1 mx-2 rounded-2xl border-solid bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
                       >
                         Already Read
                       </button>
                     ) : (
-                      <button className='px-4 mx-2 border-solid border-2 border-gray-300'>
+                      <div className='px-4 py-1 mx-2 text-center rounded-2xl border-solid border-2 border-amber-800'>
                         Already Read
-                      </button>
+                      </div>
                     )}
                   </div>
                 )}
@@ -211,14 +239,30 @@ function SingleBookPage() {
                   </p>
                   <p className='mb-20 pb-3 border-b-2 border-amber-800'>
                     {typeof book.description === 'object'
-                      ? book.description.value
-                      : book.description}
+                      ? removeText(book.description.value.slice(0, descLength))
+                      : removeText(book.description.slice(0, descLength))}
+
+                    {((typeof book.description !== 'object' &&
+                      book.description.length > 850) ||
+                      (typeof book.description === 'object' &&
+                        book.description.value.length > 850)) && (
+                      <button
+                        className='ml-1 font-thin text-gray-400 rounded-lg hover:bg-slate-200 hover:px-1'
+                        onClick={e => {
+                          e.stopPropagation();
+                          showDesc(undefined);
+                          e.preventDefault();
+                        }}
+                      >
+                        {descShow ? 'more' : 'less'}
+                      </button>
+                    )}
                   </p>
                 </div>
 
                 <div className='my-2 self-end flex flex-col '>
                   <button
-                    className='mt-4 p-2 border-solid border-2 border-amber-800 text-l'
+                    className='mt-4 p-2 rounded-2xl border-2 text-white border-lime-700 text-l bg-lime-700 hover:bg-lime-600 hover:border-lime-600'
                     onClick={handleGoBack}
                   >
                     Go Back
