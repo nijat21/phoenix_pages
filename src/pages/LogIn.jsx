@@ -1,49 +1,56 @@
-import axios from 'axios';
-import { useState, useEffect, useRef, useContext } from 'react';
-import UserContext from '../context/UserProvider';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import axios from "axios";
+import { useState, useEffect, useRef, useContext } from "react";
+import UserContext from "../context/UserProvider";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const API_URL = 'https://server-phoenix-pages.adaptable.app';
+const API_URL = "https://server-phoenix-pages.adaptable.app";
 
 function LogIn() {
   const userRef = useRef(null);
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  const { userLogin, setUserLogin, USERID, setUSERID } = useContext(UserContext);
+  const { storeToken, authenticateUser, setUSERID } = useContext(UserContext);
 
   const navigate = useNavigate();
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log("Start login process");
 
     const response = await axios.get(`${API_URL}/users`);
     const users = response.data;
-
+    const requestBody = { username, password };
     console.log(response);
 
-    if (!username && !password) {
-      setErrorMessage('Please input your username and password!');
-    }
-    else if (!username) {
-      setErrorMessage('To Log in, please input your username!');
-    } else if (!password) {
-      setErrorMessage('To Log in, please input your password!');
-    } else {
-      const userCheck = users.find(
-        user => user.username === username && user.password === password
-      );
-      if (userCheck) {
-        setUserLogin(username)
-        setUSERID(userCheck.id)
-        navigate('/');
+    // Checking if the user exists
+    const userExists = users.find(
+      (user) =>
+        user.username === requestBody.username &&
+        user.password === requestBody.password
+    );
 
+
+    if (!username && !password) {
+      setErrorMessage("Please input your username and password!");
+    } else if (!username) {
+      setErrorMessage("To Log in, please input your username!");
+    } else if (!password) {
+      setErrorMessage("To Log in, please input your password!");
+    } else {
+      if (userExists) {
+        storeToken(userExists.id);
+        setUSERID(userExists.id);
+        authenticateUser()
+        navigate("/");
       } else {
-        setErrorMessage('Username or password is wrong. Please try again.');
+        setErrorMessage("Username or password is wrong. Please try again.");
       }
     }
+    console.log("End login process");
   };
 
   useEffect(() => {

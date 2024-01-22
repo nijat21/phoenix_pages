@@ -8,20 +8,6 @@ import CategoriesMenu from './CategoriesMenu';
 function Navbar() {
   const navigate = useNavigate();
   const { userLogin, setUserLogin, searchTitle, setSearchTitle } = useContext(UserContext);
-  const [selected, setSelected] = useState('');
-
-  const handleChange = e => {
-    const result = e.target.value;
-    setSelected(result);
-    if (result === 'profile') {
-      navigate('/profile');
-    } else if (result === 'mybooks') {
-      navigate('/mybooks');
-    } else if (result === 'logout') {
-      setUserLogin('');
-      navigate('/');
-    }
-  };
 
   const handleSearch = (e) => {
     setSearchTitle(e.target.value)
@@ -67,7 +53,7 @@ function Navbar() {
         <div className='w-1/3 mr-10 flex text-xl items-center justify-end '>
           <input
             type='text'
-            placeholder=' Search'
+            placeholder=' Search by title'
             className='text-neutral-200 mr-3 pl-2 border-2 border-neutral-600 rounded-xl bg-transparent h-8 text-justify'
             onChange={handleSearch}
           />

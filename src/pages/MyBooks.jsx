@@ -126,7 +126,7 @@ function MyBooks() {
         additionalBookInfo.map(book => {
           return (
             book && (
-              <div className='flex flex-col text-center items-center mt-16'>
+              <div className='flex flex-col text-center items-center mt-16' key={book.key}>
                 <Link key={book.key} to={`/books${book.key}`}>
                   <div className='flex flex-col text-center items-center mt-16'>
                     {book && book.covers && (

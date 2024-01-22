@@ -3,7 +3,7 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import UserContext from '../context/UserProvider';
 
 function UserMenu({ initial }) {
-    const { setUserLogin, setUSERID } = useContext(UserContext);
+    const { logOutUser } = useContext(UserContext);
     const usrMenu = useRef(null);
     const [open, setOpen] = useState(false)
     const navigate = useNavigate();
@@ -18,10 +18,8 @@ function UserMenu({ initial }) {
     }
 
     const handleLogout = () => {
-        setUserLogin('')
-        setUSERID('')
-        navigate('/')
-        handleOpen();
+        logOutUser()
+        navigate('/');
     }
 
     useEffect(() => {
