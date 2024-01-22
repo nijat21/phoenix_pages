@@ -25,6 +25,7 @@ export const UserProvider = ({ children }) => {
                 const response = await axios.get(`${API_URL}/users/${userId}`);
                 setUserLogin(response.data.username);
                 setUserLogged(true);
+                setUSERID(userId)
             } catch (error) {
                 console.log(error);
             }

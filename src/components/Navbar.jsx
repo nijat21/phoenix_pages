@@ -1,5 +1,5 @@
 import { useEffect, useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import UserContext from '../context/UserProvider';
 import UserMenu from './UserMenu';
@@ -7,11 +7,15 @@ import CategoriesMenu from './CategoriesMenu';
 
 function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation()
   const { userLogin, setUserLogin, searchTitle, setSearchTitle } = useContext(UserContext);
 
   const handleSearch = e => {
+    e.preventDefault();
     setSearchTitle(e.target.value);
-    navigate('/search');
+    if (location.pathname !== '/search') {
+      navigate('/search');
+    }
   };
 
   return (

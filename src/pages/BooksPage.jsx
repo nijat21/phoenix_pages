@@ -46,20 +46,20 @@ function BooksPage() {
   const getTopBooks = (input, n) => {
     const five = input
       ? input
-          .filter(book => book.readinglog_count > 300)
-          .sort(
-            (a, b) =>
-              b.ratings_average * 0.5 +
-              (b.already_read_count /
-                (b.readinglog_count - b.currently_reading_count)) *
-                5 *
-                0.5 -
-              (a.ratings_average * 0.5 +
-                (a.already_read_count /
-                  (a.readinglog_count - a.currently_reading_count)) *
-                  5 *
-                  0.5)
-          )
+        .filter(book => book.readinglog_count > 300)
+        .sort(
+          (a, b) =>
+            b.ratings_average * 0.5 +
+            (b.already_read_count /
+              (b.readinglog_count - b.currently_reading_count)) *
+            5 *
+            0.5 -
+            (a.ratings_average * 0.5 +
+              (a.already_read_count /
+                (a.readinglog_count - a.currently_reading_count)) *
+              5 *
+              0.5)
+        )
       : [];
     return five.slice(0, n);
   };
@@ -83,21 +83,19 @@ function BooksPage() {
         <div className='mb-10'>
           <div className='py-5 flex flex-row justify-center items-center text-lg'>
             <button
-              className={`m-3 py-1 px-3  ${
-                category === genericSubject
+              className={`m-3 py-1 px-3  ${category === genericSubject
                   ? 'border-b-2 border-black'
                   : 'border-b-2 border-transparent'
-              } hover:border-b-2 hover:border-black`}
+                } hover:border-b-2 hover:border-black`}
               onClick={() => getBooksByCategory(genericSubject)}
             >
               General
             </button>
             <button
-              className={`m-3 py-1 px-3 ${
-                category === 'science'
+              className={`m-3 py-1 px-3 ${category === 'science'
                   ? 'border-b-2 border-black'
                   : 'border-b-2 border-transparent'
-              } hover:border-b-2 hover:border-black`}
+                } hover:border-b-2 hover:border-black`}
               onClick={() => {
                 getBooksByCategory('science');
               }}
@@ -105,31 +103,28 @@ function BooksPage() {
               Science
             </button>
             <button
-              className={`m-3 py-1 px-3 ${
-                category === 'crime'
+              className={`m-3 py-1 px-3 ${category === 'crime'
                   ? 'border-b-2 border-black'
                   : 'border-b-2 border-transparent'
-              } hover:border-b-2 hover:border-black`}
+                } hover:border-b-2 hover:border-black`}
               onClick={() => getBooksByCategory('crime')}
             >
               Crime
             </button>
             <button
-              className={`m-3 py-1 px-3 ${
-                category === 'selfhelp'
+              className={`m-3 py-1 px-3 ${category === 'selfhelp'
                   ? 'border-b-2 border-black'
                   : 'border-b-2 border-transparent'
-              } hover:border-b-2 hover:border-black`}
+                } hover:border-b-2 hover:border-black`}
               onClick={() => getBooksByCategory('selfhelp')}
             >
               Self-help
             </button>
             <button
-              className={`m-3 py-1 px-3 ${
-                category === 'poetry&subject:drama'
+              className={`m-3 py-1 px-3 ${category === 'poetry&subject:drama'
                   ? 'border-b-2 border-black'
                   : 'border-b-2 border-transparent'
-              } hover:border-b-2 hover:border-black`}
+                } hover:border-b-2 hover:border-black`}
               onClick={() => getBooksByCategory('poetry&subject:drama')}
             >
               Poetry and Drama

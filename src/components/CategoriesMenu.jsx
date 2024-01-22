@@ -8,14 +8,14 @@ function CategoriesMenu() {
   const navigate = useNavigate();
   const { category, setCategory } = useContext(UserContext);
 
-  const handleOpen = () => {
+  const handleOpen = (e) => {
+    e.stopPropogation();
     setOpen(!open)
   }
 
   const handleCategoryClick = (cat) => {
-    // e.preventDefault();
     setCategory(cat);
-    // setOpen(false)
+    setOpen(false)
     navigate('/books')
   }
 
