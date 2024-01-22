@@ -11,8 +11,18 @@ function MyBooks() {
   const [additionalBookInfo, setAdditionalBookInfo] = useState([]);
   const [list, setList] = useState(null);
   const [loading, setLoading] = useState(true);
-
   const { USERID, setUSERID } = useContext(UserContext);
+  const [show, setShow] = useState(true);
+  const [length, setLength] = useState(50);
+
+  const showTitle = titleLength => {
+    setShow(!show);
+    if (show) {
+      setLength(titleLength);
+    } else {
+      setLength(50);
+    }
+  };
 
   const getList = async v => {
     try {
@@ -49,16 +59,20 @@ function MyBooks() {
     }
   };
 
-  const getAuthorByKey = async authorKey => {
-    try {
-      const response = await axios.get(
-        `https://openlibrary.org${authorKey}.json`
-      );
-      return response.data.name;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getAuthorByKey = async authorKey => {
+  //   try {
+  //     const response = await axios.get(
+  //       `https://openlibrary.org${authorKey}.json`
+  //     );
+  //     return response.data.name;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  useEffect(() => {
+    getList(1);
+  }, []);
 
   useEffect(() => {
     const fetchAdditionalInfo = async () => {
@@ -102,83 +116,107 @@ function MyBooks() {
     getList(1);
   };
 
-  return (
-    <div className='pt-14 flex flex-col text-center items-center'>
-      <h2>Which List do you want to see?</h2>
+  const handleGoBack = () => {
+    navigate(-1);
+  };
 
+  return (
+    <div className='py-5 flex flex-col text-center'>
       <section>
         <button
           onClick={() => getList(1)}
-          className='px-4 mx-2 border-solid border-2 border-gray-300 hover:bg-gray-500'
+          className={`m-3 py-1 px-3 ${
+            list === 1
+              ? 'border-b-2 border-black'
+              : 'border-b-2 border-transparent'
+          } hover:border-b-2 hover:border-black`}
         >
           Want to Read
         </button>
 
         <button
           onClick={() => getList(2)}
-          className='px-4 mx-2 border-solid border-2 border-gray-300 hover:bg-gray-500'
+          className={`m-3 py-1 px-3 ${
+            list === 2
+              ? 'border-b-2 border-black'
+              : 'border-b-2 border-transparent'
+          } hover:border-b-2 hover:border-black`}
         >
           Already Read
         </button>
       </section>
 
-      {additionalBookInfo &&
-        additionalBookInfo.map(book => {
-          return (
-            book && (
-              <div className='flex flex-col text-center items-center mt-16' key={book.key}>
-                <Link key={book.key} to={`/books${book.key}`}>
-                  <div className='flex flex-col text-center items-center mt-16'>
+      <section className='flex overflow-x-scroll h-auto gap-5 mx-20 my-10 py-8 border-b-2 border-t-2 border-amber-800 '>
+        {additionalBookInfo &&
+          additionalBookInfo.map(book => {
+            return (
+              book && (
+                <Link
+                  key={book.key}
+                  to={`/books${book.key}`}
+                  className='min-h-max w-1/5 pb-2 px-3 flex-shrink-0 rounded-br-lg shadow-slate-400 shadow-sm  border-2 border-slate-300 hover:border-slate-700'
+                >
+                  <div className='flex flex-col h-auto text-center items-center'>
                     {book && book.covers && (
                       <>
                         <div className='h-64 flex justify-center items-center'>
                           <img
                             src={`https://covers.openlibrary.org/b/id/${book.covers[0]}-M.jpg`}
                             alt='cover'
-                            className='text-center object-cover h-60 w-26 '
+                            className='text-center object-cover h-60 w-26 rounded-tr-lg rounded-br-lg shadow-slate-400 shadow-sm w-40 '
                           />
                         </div>
                         <div className='h-24 mw-44'>
-                          <div className='mh-12 flex justify-center items-center'>
+                          <div className=' flex justify-center items-center'>
                             <h2>
-                              <strong>{book.title}</strong>
-                              {/* (
-                              {book.first_publish_year}) */}
+                              <strong className='max-w-xs'>
+                                {book.title.slice(0, length)}
+                              </strong>{' '}
+                              {book.title.length > 50 && (
+                                <button
+                                  className='ml-1 font-thin text-gray-400 hover:bg-slate-200 hover:px-1'
+                                  onClick={e => {
+                                    e.stopPropagation();
+                                    showTitle(book.title.length);
+                                    e.preventDefault();
+                                  }}
+                                >
+                                  {show ? 'more' : 'less'}
+                                </button>
+                              )}
                             </h2>
-                          </div>
-                          <div className='mh-10 flex justify-center items-center'>
-                            {/* <h4>{getAuthorByKey(book.authors[0].author.key)}</h4> */}
-                          </div>
-                          <div className='mh-6 flex justify-center items-center'>
-                            <div className='flex'>
-                              {/* <RatingDisplay
-                              rating={book.ratings_average.toFixed(1)}
-                            /> */}
-                            </div>
                           </div>
                         </div>
                       </>
                     )}
                   </div>
-                </Link>
-                {list === 1 && (
+                  {list === 1 && (
+                    <button
+                      onClick={() => addToAlreadyRead(book.key, book.id)}
+                      className='px-4 mx-2 border-solid border-2 border-gray-300 hover:bg-gray-500'
+                    >
+                      Already Read
+                    </button>
+                  )}
                   <button
-                    onClick={() => addToAlreadyRead(book.key, book.id)}
+                    onClick={() => removeFromList(book.id)}
                     className='px-4 mx-2 border-solid border-2 border-gray-300 hover:bg-gray-500'
                   >
-                    Already Read
+                    Remove
                   </button>
-                )}
-                <button
-                  onClick={() => removeFromList(book.id)}
-                  className='px-4 mx-2 border-solid border-2 border-gray-300 hover:bg-gray-500'
-                >
-                  Remove
-                </button>
-              </div>
-            )
-          );
-        })}
+                </Link>
+              )
+            );
+          })}
+      </section>
+      <div className='my-2 mr-20 self-end flex flex-col '>
+        <button
+          className=' p-2 rounded-2xl border-2 text-white border-lime-700 text-l bg-lime-700 hover:bg-lime-600 hover:border-lime-600'
+          onClick={handleGoBack}
+        >
+          Go Back
+        </button>
+      </div>
     </div>
   );
 }

@@ -16,11 +16,11 @@ body {
   transition: transform 0.2s ease;
 }
 
-::-webkit-scrollbar {
+.scrollable-container::-webkit-scrollbar {
   width: 6px; /* You can adjust this value as needed */
   height: 6px; /* You can adjust this value as needed */
 }
-::-webkit-scrollbar-thumb {
+.scrollable-container::-webkit-scrollbar-thumb {
   background-color: #888; /* Color of the scroll thumb */
   border-radius: 6px; /* Rounded corners for the thumb */
 }

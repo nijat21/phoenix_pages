@@ -159,7 +159,7 @@ function AuthorPage() {
               </p>
             </div>
           </section>
-          <section className='flex overflow-x-scroll  h-auto gap-5 mr-20 ml-20 pb-5'>
+          <section className='flex overflow-x-scroll  h-auto gap-5 mr-20 ml-20 pb-5 scrollable-container'>
             {authorBooks &&
               topTen.map(book => {
                 return (

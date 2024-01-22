@@ -27,7 +27,7 @@ function BookCard({ book, setImageLoaded, imageLoaded }) {
             <img
               src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
               alt='cover'
-              className='text-center object-cover h-60 w-26 rounded-tr-lg rounded-br-lg shadow-slate-400 shadow-sm'
+              className='text-center object-cover h-60 w-26 rounded-tr-lg rounded-br-lg shadow-slate-400 shadow-sm w-40'
               onLoad={() => setImageLoaded(true)}
             />
           </div>
