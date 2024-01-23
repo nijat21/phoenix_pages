@@ -24,7 +24,7 @@ function SingleBookPage() {
     axios
       .get(`https://openlibrary.org/works/${bookKey}.json`) //this returns a promise
       .then(response => {
-        console.log(response.data);
+        // console.log(response.data);
         setBook(response.data);
       })
       .catch(error => {
@@ -98,10 +98,10 @@ function SingleBookPage() {
         book => book.bookKey === bookKey
       );
 
-    console.log(bookCheckAlreadyRead);
+    // console.log(bookCheckAlreadyRead);
 
     if (bookCheckToRead) {
-      console.log('This book is already on the list');
+      // console.log('This book is already on the list');
     } else {
       await axios.post(`${API_URL}/books_to_read`, requestBook);
       setWantToReadCheck(true);
@@ -137,7 +137,7 @@ function SingleBookPage() {
       );
 
     if (bookCheckAlreadyRead) {
-      console.log('This book is already on the list');
+      // console.log('This book is already on the list');
     } else {
       await axios.post(`${API_URL}/books_already_read`, requestBook);
       setAlreadyReadCheck(true);
@@ -246,17 +246,17 @@ function SingleBookPage() {
                       book.description.length > 850) ||
                       (typeof book.description === 'object' &&
                         book.description.value.length > 850)) && (
-                      <button
-                        className='ml-1 font-thin text-gray-400 rounded-lg hover:bg-slate-200 hover:px-1'
-                        onClick={e => {
-                          e.stopPropagation();
-                          showDesc(undefined);
-                          e.preventDefault();
-                        }}
-                      >
-                        {descShow ? 'more' : 'less'}
-                      </button>
-                    )}
+                        <button
+                          className='ml-1 font-thin text-gray-400 rounded-lg hover:bg-slate-200 hover:px-1'
+                          onClick={e => {
+                            e.stopPropagation();
+                            showDesc(undefined);
+                            e.preventDefault();
+                          }}
+                        >
+                          {descShow ? 'more' : 'less'}
+                        </button>
+                      )}
                   </p>
                 </div>
 

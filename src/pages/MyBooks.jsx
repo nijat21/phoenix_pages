@@ -27,6 +27,7 @@ function MyBooks() {
   const getList = async v => {
     try {
       if (v === 1) {
+        // console.log(USERID)
         const response = await axios.get(
           `${API_URL}/users/${USERID}?_embed=books_to_read`
         );
@@ -51,7 +52,7 @@ function MyBooks() {
       const response = await axios.get(
         `https://openlibrary.org/works/${bookKey}.json`
       );
-      console.log(response);
+      // console.log(response);
       response.data.id = id;
       return response.data;
     } catch (error) {
@@ -82,7 +83,7 @@ function MyBooks() {
 
           return info;
         });
-        console.log(promises);
+        // console.log(promises);
 
         const promisesArray = await Promise.all(promises);
         setAdditionalBookInfo(promisesArray);
@@ -125,22 +126,20 @@ function MyBooks() {
       <section>
         <button
           onClick={() => getList(1)}
-          className={`m-3 py-1 px-3 ${
-            list === 1
-              ? 'border-b-2 border-black'
-              : 'border-b-2 border-transparent'
-          } hover:border-b-2 hover:border-black`}
+          className={`m-3 py-1 px-3 ${list === 1
+            ? 'border-b-2 border-black'
+            : 'border-b-2 border-transparent'
+            } hover:border-b-2 hover:border-black`}
         >
           Want to Read
         </button>
 
         <button
           onClick={() => getList(2)}
-          className={`m-3 py-1 px-3 ${
-            list === 2
-              ? 'border-b-2 border-black'
-              : 'border-b-2 border-transparent'
-          } hover:border-b-2 hover:border-black`}
+          className={`m-3 py-1 px-3 ${list === 2
+            ? 'border-b-2 border-black'
+            : 'border-b-2 border-transparent'
+            } hover:border-b-2 hover:border-black`}
         >
           Already Read
         </button>
