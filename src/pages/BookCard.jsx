@@ -21,7 +21,7 @@ function BookCard({ book, setImageLoaded, imageLoaded }) {
               <img
                 src='src/assets/coverLoading1.webp'
                 alt='loading'
-                className='text-center object-cover h-60 w-26'
+                className='text-center object-cover h-60 w-26 rounded-tr-lg rounded-br-lg shadow-slate-400 shadow-sm w-40'
               />
             )}
             <img

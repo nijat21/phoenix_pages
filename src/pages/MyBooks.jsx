@@ -190,20 +190,30 @@ function MyBooks() {
                       </>
                     )}
                   </div>
-                  {list === 1 && (
+                  <div className='flex justify-center text-sm'>
+                    {list === 1 && (
+                      <button
+                        onClick={e => {
+                          e.stopPropagation();
+                          addToAlreadyRead(book.key, book.id);
+                          e.preventDefault();
+                        }}
+                        className='w-1/2 px-2 py-1 mx-2 mb-2 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
+                      >
+                        Already Read
+                      </button>
+                    )}
                     <button
-                      onClick={() => addToAlreadyRead(book.key, book.id)}
-                      className='px-4 mx-2 border-solid border-2 border-gray-300 hover:bg-gray-500'
+                      onClick={e => {
+                        e.stopPropagation();
+                        removeFromList(book.id);
+                        e.preventDefault();
+                      }}
+                      className='w-1/2 px-2 py-1 mx-1 mb-2 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
                     >
-                      Already Read
+                      Remove
                     </button>
-                  )}
-                  <button
-                    onClick={() => removeFromList(book.id)}
-                    className='px-4 mx-2 border-solid border-2 border-gray-300 hover:bg-gray-500'
-                  >
-                    Remove
-                  </button>
+                  </div>
                 </Link>
               )
             );
