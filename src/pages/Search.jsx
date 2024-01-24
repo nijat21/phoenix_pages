@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import RatingDisplay from '../components/RatingDisplay';
 import Loader from '../components/Loader';
-import BookCard from './BookCard';
+import BookCard from '../pages/BookCard';
 import { useNavigate } from 'react-router-dom';
 
 function Search() {

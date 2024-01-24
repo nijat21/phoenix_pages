@@ -14,11 +14,17 @@ function BooksPage() {
   const [discoverClicked, setDiscoverClicked] = useState(false);
   const { category, setCategory } = useContext(UserContext);
 
+  const claimCategory = () => {
+    localStorage.setItem('selectedCategory', category);
+  }
+
   const getBooksByCategory = async subj => {
     try {
+      setLoading(true);
       const response = await axios.get(
         `https://openlibrary.org/search.json?subject=${subj}&limit=50`
       );
+      { response.data && setLoading(false) }
       setBooks(response.data.docs);
       setCategory(subj);
       // Saving category locally
@@ -33,14 +39,16 @@ function BooksPage() {
 
   // Books for the page is opened
   useEffect(() => {
-    setLoading(true);
+    claimCategory();
     // if there is a selected category, initialCategory gets it's value, if not, it gets genericSubject
     const selectedCategory = localStorage.getItem('selectedCategory');
     const initialCategory = selectedCategory || genericSubject;
-    getBooksByCategory(initialCategory).then(() => {
-      setLoading(false);
-    });
-  }, []);
+    getBooksByCategory(initialCategory);
+
+    // if (category !== initialCategory) {
+    //   getBooksByCategory(initialCategory);
+    // }
+  }, [category]);
 
   // Book rating algorithm
   const getTopBooks = (input, n) => {
@@ -84,48 +92,46 @@ function BooksPage() {
           <div className='py-5 flex flex-row justify-center items-center text-lg'>
             <button
               className={`m-3 py-1 px-3  ${category === genericSubject
-                  ? 'border-b-2 border-black'
-                  : 'border-b-2 border-transparent'
+                ? 'border-b-2 border-black'
+                : 'border-b-2 border-transparent'
                 } hover:border-b-2 hover:border-black`}
-              onClick={() => getBooksByCategory(genericSubject)}
+              onClick={() => setCategory(genericSubject)}
             >
               General
             </button>
             <button
               className={`m-3 py-1 px-3 ${category === 'science'
-                  ? 'border-b-2 border-black'
-                  : 'border-b-2 border-transparent'
+                ? 'border-b-2 border-black'
+                : 'border-b-2 border-transparent'
                 } hover:border-b-2 hover:border-black`}
-              onClick={() => {
-                getBooksByCategory('science');
-              }}
+              onClick={() => setCategory('science')}
             >
               Science
             </button>
             <button
               className={`m-3 py-1 px-3 ${category === 'crime'
-                  ? 'border-b-2 border-black'
-                  : 'border-b-2 border-transparent'
+                ? 'border-b-2 border-black'
+                : 'border-b-2 border-transparent'
                 } hover:border-b-2 hover:border-black`}
-              onClick={() => getBooksByCategory('crime')}
+              onClick={() => setCategory('crime')}
             >
               Crime
             </button>
             <button
               className={`m-3 py-1 px-3 ${category === 'selfhelp'
-                  ? 'border-b-2 border-black'
-                  : 'border-b-2 border-transparent'
+                ? 'border-b-2 border-black'
+                : 'border-b-2 border-transparent'
                 } hover:border-b-2 hover:border-black`}
-              onClick={() => getBooksByCategory('selfhelp')}
+              onClick={() => setCategory('selfhelp')}
             >
               Self-help
             </button>
             <button
               className={`m-3 py-1 px-3 ${category === 'poetry&subject:drama'
-                  ? 'border-b-2 border-black'
-                  : 'border-b-2 border-transparent'
+                ? 'border-b-2 border-black'
+                : 'border-b-2 border-transparent'
                 } hover:border-b-2 hover:border-black`}
-              onClick={() => getBooksByCategory('poetry&subject:drama')}
+              onClick={() => setCategory('poetry&subject:drama')}
             >
               Poetry and Drama
             </button>
