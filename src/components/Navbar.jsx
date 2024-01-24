@@ -7,14 +7,32 @@ import CategoriesMenu from './CategoriesMenu';
 
 function Navbar() {
   const navigate = useNavigate();
-  const location = useLocation()
-  const { userLogin, setUserLogin, searchTitle, setSearchTitle } = useContext(UserContext);
+  const location = useLocation();
+  const {
+    userLogin,
+    setUserLogin,
+    searchTitle,
+    setSearchTitle,
+    enterHadler,
+    setEnterHandler,
+  } = useContext(UserContext);
 
   const handleSearch = e => {
     e.preventDefault();
     setSearchTitle(e.target.value);
-    if (location.pathname !== '/search') {
-      navigate('/search');
+    // if (location.pathname !== '/search') {
+    //   navigate('/search');
+    // }
+  };
+
+  // if the Enter key is pressed, that is passed to the Search page
+
+  const handleKeyDown = e => {
+    if (e.key === 'Enter') {
+      setEnterHandler('Enter');
+      if (location.pathname !== '/search') {
+        navigate('/search');
+      }
     }
   };
 
@@ -64,6 +82,7 @@ function Navbar() {
             placeholder=' Search by title'
             className='text-neutral-200 mr-3 pl-2 border-2 border-neutral-600 rounded-xl bg-transparent h-8 text-justify'
             onChange={handleSearch}
+            onKeyDown={handleKeyDown}
           />
           {userLogin ? (
             <div className='zoom-container'>

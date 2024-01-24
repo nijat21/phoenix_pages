@@ -149,7 +149,7 @@ function SingleBookPage() {
   };
 
   const removeText = text => {
-    const indexOfSeparationOne = text.indexOf('--');
+    const indexOfSeparationOne = text.indexOf('---');
     const indexOfSeparationTwo = text.indexOf('([');
 
     if (indexOfSeparationTwo !== -1) {
@@ -163,12 +163,12 @@ function SingleBookPage() {
     }
   };
 
-  const showDesc = authorBioLength => {
+  const showDesc = descLength => {
     setDescShow(!descShow);
     if (descShow) {
-      setDescLength(authorBioLength);
+      setDescLength(descLength);
     } else {
-      setDescLength(1140);
+      setDescLength(850);
     }
   };
 
@@ -246,17 +246,17 @@ function SingleBookPage() {
                       book.description.length > 850) ||
                       (typeof book.description === 'object' &&
                         book.description.value.length > 850)) && (
-                        <button
-                          className='ml-1 font-thin text-gray-400 rounded-lg hover:bg-slate-200 hover:px-1'
-                          onClick={e => {
-                            e.stopPropagation();
-                            showDesc(undefined);
-                            e.preventDefault();
-                          }}
-                        >
-                          {descShow ? 'more' : 'less'}
-                        </button>
-                      )}
+                      <button
+                        className='ml-1 font-thin text-gray-400 rounded-lg hover:bg-slate-200 hover:px-1'
+                        onClick={e => {
+                          e.stopPropagation();
+                          showDesc(undefined);
+                          e.preventDefault();
+                        }}
+                      >
+                        {descShow ? 'more' : 'less'}
+                      </button>
+                    )}
                   </p>
                 </div>
 
