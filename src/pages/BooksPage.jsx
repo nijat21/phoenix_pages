@@ -14,40 +14,43 @@ function BooksPage() {
   const [discoverClicked, setDiscoverClicked] = useState(false);
   const { category, setCategory } = useContext(UserContext);
 
-  const claimCategory = () => {
-    localStorage.setItem('selectedCategory', category);
-  }
-
-  const getBooksByCategory = async subj => {
-    try {
-      setLoading(true);
-      const response = await axios.get(
-        `https://openlibrary.org/search.json?subject=${subj}&limit=50`
-      );
-      { response.data && setLoading(false) }
-      setBooks(response.data.docs);
-      setCategory(subj);
-      // Saving category locally
-      localStorage.setItem('selectedCategory', subj);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   // Subject query that will look for top a generic list of top 5 books
   const genericSubject = '*';
 
-  // Books for the page is opened
+  // If any category selected save that, or else save genericSubject in local storage
+  const claimCategory = () => {
+    {
+      category ?
+        localStorage.setItem('selectedCategory', category)
+        :
+        setCategory(category)
+      localStorage.setItem('selectedCategory', genericSubject)
+    }
+
+  }
+
+  const getBooksByCategory = async (cat) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `https://openlibrary.org/search.json?subject=${cat}&limit=50`
+      );
+      setLoading(false);
+      setBooks(response.data.docs);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  // Books updated every time category changes
   useEffect(() => {
     claimCategory();
-    // if there is a selected category, initialCategory gets it's value, if not, it gets genericSubject
     const selectedCategory = localStorage.getItem('selectedCategory');
-    const initialCategory = selectedCategory || genericSubject;
-    getBooksByCategory(initialCategory);
-
-    // if (category !== initialCategory) {
-    //   getBooksByCategory(initialCategory);
-    // }
+    getBooksByCategory(selectedCategory)
   }, [category]);
 
   // Book rating algorithm

@@ -73,7 +73,7 @@ function MyBooks() {
 
   useEffect(() => {
     getList(1);
-  }, []);
+  }, [USERID]);
 
   useEffect(() => {
     const fetchAdditionalInfo = async () => {

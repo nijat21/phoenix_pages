@@ -42,7 +42,7 @@ function Navbar() {
         <div className='mw-1/3 ml-10 w-1/3 '>
           <Link to={'/'} className='flex h-12 place-items-center'>
             <img
-              src='../src/assets/phoenix-removebg-preview.png'
+              src='src/assets/logo.png'
               alt='Home'
               className='w-14'
             />
