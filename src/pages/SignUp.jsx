@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
@@ -102,6 +103,13 @@ function SignUp() {
               </div>
             </div>
           </form>
+          <span className='text-s text-gray-500 mt-4'>
+            Already on Phoenix Pages?
+            <Link to={'/login'} className='text-blue-400 hover:text-gray-500'>
+              {' '}
+              Log In
+            </Link>
+          </span>
         </div>
       </div>
     </div>
