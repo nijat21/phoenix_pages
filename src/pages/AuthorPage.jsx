@@ -137,29 +137,31 @@ function AuthorPage() {
               </p>
 
               <p className='mb-14 pb-10 border-b-2 border-amber-800'>
-                {typeof author.bio === 'object'
-                  ? removeText(`${author.bio.value.slice(0, bioLength)}`)
-                  : removeText(`${author.bio.slice(0, bioLength)}`)}
+                {author.bio &&
+                  (typeof author.bio === 'object'
+                    ? removeText(`${author.bio.value.slice(0, bioLength)}`)
+                    : removeText(`${author.bio.slice(0, bioLength)}`))}
 
-                {((typeof author.bio !== 'object' &&
-                  author.bio.length > 1140) ||
-                  (typeof author.bio === 'object' &&
-                    author.bio.value.length > 1140)) && (
-                  <button
-                    className='ml-1 font-thin text-gray-400 rounded-lg hover:bg-slate-200 hover:px-1'
-                    onClick={e => {
-                      e.stopPropagation();
-                      showBio(undefined);
-                      e.preventDefault();
-                    }}
-                  >
-                    {bioShow ? 'more' : 'less'}
-                  </button>
-                )}
+                {author.bio &&
+                  ((typeof author.bio !== 'object' &&
+                    author.bio.length > 1140) ||
+                    (typeof author.bio === 'object' &&
+                      author.bio.value.length > 1140)) && (
+                    <button
+                      className='ml-1 font-thin text-gray-400 rounded-lg hover:bg-slate-200 hover:px-1'
+                      onClick={e => {
+                        e.stopPropagation();
+                        showBio(undefined);
+                        e.preventDefault();
+                      }}
+                    >
+                      {bioShow ? 'more' : 'less'}
+                    </button>
+                  )}
               </p>
             </div>
           </section>
-          <section className='flex overflow-x-scroll  h-auto gap-5 mr-20 ml-20 pb-5 scrollable-container'>
+          <section className='flex overflow-x-scroll mt-10 h-auto gap-5 mx-20 pb-5 scrollable-container'>
             {authorBooks &&
               topTen.map(book => {
                 return (
