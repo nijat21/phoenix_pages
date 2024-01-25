@@ -12,7 +12,7 @@ function BooksPage() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [booksCount, setBooksCount] = useState(5);
   const [discoverClicked, setDiscoverClicked] = useState(false);
-  const { category, setCategory } = useContext(UserContext);
+  const { category, setCategory, getTopBooks } = useContext(UserContext);
 
 
   // Subject query that will look for top a generic list of top 5 books
@@ -54,27 +54,7 @@ function BooksPage() {
   }, [category]);
 
   // Book rating algorithm
-  const getTopBooks = (input, n) => {
-    const five = input
-      ? input
-        .filter(book => book.readinglog_count > 300)
-        .sort(
-          (a, b) =>
-            b.ratings_average * 0.5 +
-            (b.already_read_count /
-              (b.readinglog_count - b.currently_reading_count)) *
-            5 *
-            0.5 -
-            (a.ratings_average * 0.5 +
-              (a.already_read_count /
-                (a.readinglog_count - a.currently_reading_count)) *
-              5 *
-              0.5)
-        )
-      : [];
-    return five.slice(0, n);
-  };
-  const topBooks = getTopBooks(books, booksCount);
+  const topBooks = getTopBooks(books, booksCount, 300);
 
   const handleDiscoverMore = () => {
     setDiscoverClicked(true);

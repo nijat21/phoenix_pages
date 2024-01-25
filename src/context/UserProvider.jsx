@@ -53,6 +53,27 @@ export const UserProvider = ({ children }) => {
         authenticateUser();
     }, []);
 
+    const getTopBooks = (input, slice, readlog) => {
+        const five = input
+            ? input
+                .filter(book => book.readinglog_count > readlog)
+                .sort(
+                    (a, b) =>
+                        b.ratings_average * 0.5 +
+                        (b.already_read_count /
+                            (b.readinglog_count - b.currently_reading_count)) *
+                        5 *
+                        0.5 -
+                        (a.ratings_average * 0.5 +
+                            (a.already_read_count /
+                                (a.readinglog_count - a.currently_reading_count)) *
+                            5 *
+                            0.5)
+                )
+            : [];
+        return five.slice(0, slice);
+    };
+
     return (
         <UserContext.Provider
             value={{
@@ -65,7 +86,8 @@ export const UserProvider = ({ children }) => {
                 category,
                 setCategory,
                 searchTitle,
-                setSearchTitle
+                setSearchTitle,
+                getTopBooks
             }}
         >
             {children}
