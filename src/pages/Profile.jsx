@@ -14,7 +14,11 @@ function Profile() {
   const [passwordChange, setPasswordChange] = useState(false);
   const [newUsername, setNewUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -33,27 +37,10 @@ function Profile() {
     }
   }, [USERID]);
 
-  const handleUsernameEdit = async () => {
-    setUsernameEdit(true);
-  };
-  const handlePasswordChange = async () => {
-    setPasswordChange(true);
-  };
-
-  const handleSubmit = async e => {
+  const handleSubmitUserEdit = async e => {
     e.preventDefault();
 
     console.log('Start login process');
-
-    // const response = await axios.get(`${API_URL}/users/${USERID}`);
-    // const user = response.data;
-
-    // // Checking if the user exists
-    // const userExists = users.find(
-    //   (user) =>
-    //     user.username === requestBody.username &&
-    //     user.password === requestBody.password
-    // );
 
     if (!newUsername && !password) {
       setErrorMessage('Please input your username and password!');
@@ -72,79 +59,198 @@ function Profile() {
       await axios.put(`${API_URL}/users/${USERID}`, updateUser);
     }
     console.log('End login process');
+    setUsernameEdit(false);
+    setNewUsername('');
+    setPassword('');
+    setErrorMessage('');
+  };
+
+  const handleSubmitPasswordChange = async e => {
+    e.preventDefault();
+
+    console.log('Start login process');
+
+    if (!password) {
+      setErrorMessage('Please input your current password!');
+    } else if (newPassword === userDetails.password) {
+      setErrorMessage('New Password is the same as the current one.');
+    } else if (password !== userDetails.password) {
+      setErrorMessage('Incorrect password, try again.');
+    } else if (!newPassword) {
+      setErrorMessage('To change your password, please input a new one!');
+    } else if (newPassword !== newPasswordConfirm) {
+      setErrorMessage('Please correctly confirm your password.');
+    } else {
+      const updateUser = {
+        username: userDetails.username,
+        password: newPassword,
+      };
+      await axios.put(`${API_URL}/users/${USERID}`, updateUser);
+      setPasswordChange(false);
+      setPassword('');
+      setNewPassword('');
+      setNewPasswordConfirm('');
+      setErrorMessage('');
+    }
+    console.log('End login process');
   };
 
   useEffect(() => {
-    userRef.current.focus();
+    if (usernameEdit) {
+      userRef.current.focus();
+    }
   }, []);
+
+  const handleGoBack = () => {
+    setUsernameEdit(false);
+    setPasswordChange(false);
+  };
 
   return (
     <>
       {userDetails && (
         <div className=' h-screen flex justify-center'>
-          <div className='mb-40 flex items-center'>
+          <div className='mb-40 flex flex-col items-center justify-center'>
             <div className=' w-full flex flex-col px-12 py-10 items-center justify-center border-2 border-slate-400 rounded-md shadow-sm shadow-slate-500'>
-              <h1>Hello, {userDetails.username}</h1>
               {!usernameEdit && !passwordChange && (
-                <button
-                  onClick={handleUsernameEdit}
-                  className='px-4 py-1 mx-2 mb-5 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
-                >
-                  Edit your Username
-                </button>
+                <div className='text-center'>
+                  <h1>Hello, {userDetails.username}</h1>
+                  <p className=' py-8'>
+                    This is your profile's page. Here you can:
+                  </p>
+                </div>
               )}
-              {!passwordChange && !usernameEdit && (
-                <button
-                  onClick={handlePasswordChange}
-                  className='px-4 py-1 mx-2 mb-5 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
+              <div className='flex'>
+                {!usernameEdit && !passwordChange && (
+                  <>
+                    <button
+                      onClick={() => setUsernameEdit(true)}
+                      className='px-4 py-1 mx-2 mb-5 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
+                    >
+                      Edit your Username
+                    </button>
+                  </>
+                )}
+                {!passwordChange && !usernameEdit && (
+                  <button
+                    onClick={() => setPasswordChange(true)}
+                    className='px-4 py-1 mx-2 mb-5 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
+                  >
+                    Change Password
+                  </button>
+                )}
+              </div>
+
+              {usernameEdit && (
+                <form
+                  onSubmit={handleSubmitUserEdit}
+                  className='min-h-72 min-w-72 flex flex-col justify-around'
                 >
-                  Change Password
-                </button>
+                  <div className='flex justify-center mb-8'>
+                    <h1 className='text-3xl'>Edit your Username</h1>
+                  </div>
+                  <label>
+                    <div className='flex items-center justify-between'>
+                      <h3>New Username</h3>
+                    </div>
+                    <input
+                      type='text'
+                      id='newUsername'
+                      name='newUsername'
+                      className='border-solid rounded-md border-2 border-amber-800 min-w-72 min-h-10 pl-1 mb-2'
+                      value={newUsername}
+                      onChange={e => setNewUsername(e.target.value)}
+                      ref={userRef}
+                    />
+                  </label>
+                  <label>
+                    <h3>Password</h3>
+                    <input
+                      type='password'
+                      id='passwordLogin'
+                      name='passwordLogin'
+                      className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1'
+                      value={password}
+                      onChange={e => setPassword(e.target.value)}
+                    />
+                  </label>
+
+                  <label>
+                    <p className='text-s text-red-500'>{errorMessage}</p>
+                  </label>
+
+                  <div className='flex justify-center mt-10'>
+                    <div className='flex flex-col justify-center items-center rounded-md border-solid border-2 border-lime-600 min-w-20 hover:bg-lime-600 hover:text-white'>
+                      <button type='submit'>Confirm</button>
+                    </div>
+                  </div>
+                </form>
               )}
 
-              <form
-                onSubmit={handleSubmit}
-                className='min-h-72 min-w-72 flex flex-col justify-around'
+              {passwordChange && (
+                <form
+                  onSubmit={handleSubmitPasswordChange}
+                  className='min-h-72 min-w-72 flex flex-col justify-around'
+                >
+                  <div className='flex justify-center mb-8'>
+                    <h1 className='text-3xl'>Change your Password</h1>
+                  </div>
+                  <label>
+                    <div className='flex items-center justify-between'>
+                      <h3>Old Password</h3>
+                    </div>
+                    <input
+                      type='password'
+                      id='password'
+                      name='password'
+                      className='border-solid rounded-md border-2 border-amber-800 min-w-72 min-h-10 pl-1 mb-2'
+                      value={password}
+                      onChange={e => setPassword(e.target.value)}
+                      ref={userRef}
+                    />
+                  </label>
+                  <label>
+                    <h3>New Password</h3>
+                    <input
+                      type='password'
+                      id='newPassword'
+                      name='newPassword'
+                      className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1'
+                      value={newPassword}
+                      onChange={e => setNewPassword(e.target.value)}
+                    />
+                  </label>
+                  <label>
+                    <h3 className='mt-2'>Confirm New Password</h3>
+                    <input
+                      type='password'
+                      id='newPasswordConfirm'
+                      name='newPasswordConfirm'
+                      className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1'
+                      value={newPasswordConfirm}
+                      onChange={e => setNewPasswordConfirm(e.target.value)}
+                    />
+                  </label>
+
+                  <label>
+                    <p className='text-s text-red-500'>{errorMessage}</p>
+                  </label>
+
+                  <div className='flex justify-center mt-10'>
+                    <div className='flex flex-col justify-center items-center rounded-md border-solid border-2 border-lime-600 min-w-20 hover:bg-lime-600 hover:text-white'>
+                      <button type='submit'>Confirm</button>
+                    </div>
+                  </div>
+                </form>
+              )}
+            </div>
+            <div className=' self-end flex flex-col mt-4'>
+              <button
+                className=' p-2 rounded-2xl border-2 text-white border-lime-700 text-l bg-lime-700 hover:bg-lime-600 hover:border-lime-600'
+                onClick={handleGoBack}
               >
-                <div className='flex justify-center mb-4'>
-                  <h1 className='text-3xl'>Edit your Username</h1>
-                </div>
-                <label>
-                  <div className='flex items-center justify-between'>
-                    <h3>New Username</h3>
-                  </div>
-                  <input
-                    type='text'
-                    id='newUsername'
-                    name='newUsername'
-                    className='border-solid rounded-md border-2 border-amber-800 min-w-72 min-h-10 pl-1 mb-2'
-                    value={newUsername}
-                    onChange={e => setNewUsername(e.target.value)}
-                    ref={userRef}
-                  />
-                </label>
-                <label>
-                  <h3>Password</h3>
-                  <input
-                    type='password'
-                    id='passwordLogin'
-                    name='passwordLogin'
-                    className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1'
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                  />
-                </label>
-
-                <label>
-                  <p className='text-s text-red-500'>{errorMessage}</p>
-                </label>
-
-                <div className='flex justify-center mt-10'>
-                  <div className='flex flex-col justify-center items-center rounded-md border-solid border-2 border-lime-600 min-w-20 hover:bg-lime-600 hover:text-white'>
-                    <button type='submit'>Create</button>
-                  </div>
-                </div>
-              </form>
+                Go Back
+              </button>
             </div>
           </div>
         </div>

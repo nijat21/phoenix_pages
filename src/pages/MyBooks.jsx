@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserProvider';
 import RatingDisplay from '../components/RatingDisplay';
 
@@ -14,6 +15,8 @@ function MyBooks() {
   const { USERID, setUSERID } = useContext(UserContext);
   const [show, setShow] = useState(true);
   const [length, setLength] = useState(50);
+
+  const navigate = useNavigate();
 
   const showTitle = titleLength => {
     setShow(!show);

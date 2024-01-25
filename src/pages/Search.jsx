@@ -96,7 +96,7 @@ function Search() {
           </section>
           <div className='mt-12 flex justify-center'>
             <button
-              className='p-4 rounded-2xl border-2 text-white border-lime-700 text-xl bg-lime-700 hover:bg-lime-600 hover:border-lime-600'
+              className='p-4 mb-2 rounded-2xl border-2 text-white border-lime-700 text-xl bg-lime-700 hover:bg-lime-600 hover:border-lime-600'
               onClick={() => {
                 navigate(-1);
               }}

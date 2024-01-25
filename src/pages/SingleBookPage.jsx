@@ -194,7 +194,7 @@ function SingleBookPage() {
                 <img
                   src={`https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`}
                   alt='cover'
-                  className='text-center object-contain mb-10 rounded-tr-xl rounded-br-xl shadow-slate-700 shadow-2xl'
+                  className='w-85 text-center object-contain mb-10 rounded-tr-xl rounded-br-xl shadow-slate-700 shadow-2xl'
                   onLoad={() => setImageLoaded(true)}
                 />
                 {USERID && (
