@@ -21,15 +21,12 @@ function BooksPage() {
   // If any category selected save that, or else save genericSubject in local storage
   const claimCategory = () => {
     {
-      category ?
-        localStorage.setItem('selectedCategory', category)
-        :
-        setCategory(genericSubject)
-      localStorage.setItem('selectedCategory', genericSubject)
+      localStorage.setItem('selectedCategory', category)
     }
 
   }
 
+  // Fetching books by category
   const getBooksByCategory = async (cat) => {
     try {
       setLoading(true);
@@ -45,11 +42,18 @@ function BooksPage() {
     }
   };
 
-
   // Books updated every time category changes
   useEffect(() => {
     claimCategory();
-    const selectedCategory = localStorage.getItem('selectedCategory');
+    const initialCategory = localStorage.getItem('selectedCategory');
+    let selectedCategory = '';
+    if (initialCategory) {
+      selectedCategory = initialCategory;
+    } else {
+      setCategory(genericSubject);
+      selectedCategory = genericSubject;
+      localStorage.setItem('selectedCategory', genericSubject);
+    }
     getBooksByCategory(selectedCategory)
   }, [category]);
 

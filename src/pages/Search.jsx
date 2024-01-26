@@ -11,7 +11,7 @@ function Search() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const { searchTitle, setSearchTitle, enterHandler, setEnterHandler } =
+  const { searchTitle, setSearchTitle, enterHandler, setEnterHandler, getTopBooks } =
     useContext(UserContext);
 
   const navigate = useNavigate();
@@ -47,27 +47,7 @@ function Search() {
   }, [enterHandler]);
 
   // Book rating algorithm
-  const rank = input => {
-    const ranked = input
-      ? input
-        .filter(book => book.readinglog_count > 300)
-        .sort(
-          (a, b) =>
-            b.ratings_average * 0.5 +
-            (b.already_read_count /
-              (b.readinglog_count - b.currently_reading_count)) *
-            5 *
-            0.5 -
-            (a.ratings_average * 0.5 +
-              (a.already_read_count /
-                (a.readinglog_count - a.currently_reading_count)) *
-              5 *
-              0.5)
-        )
-      : [];
-    return ranked.slice(0, 15);
-  };
-  const topFifteen = rank(books);
+  const topFifteen = getTopBooks(books, 15, 300);
 
   return (
     <>

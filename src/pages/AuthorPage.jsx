@@ -1,7 +1,8 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import UserContext from '../context/UserProvider';
 import RatingDisplay from '../components/RatingDisplay';
 import Loader from '../components/Loader';
 import LoaderAuthors from '../components/LoaderAuthors';
@@ -16,6 +17,7 @@ function AuthorPage() {
   const [authorImageLoaded, setAuthorImageLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadingAuthor, setLoadingAuthor] = useState(false);
+  const { getTopBooks } = useContext(UserContext);
 
   const [length, setLength] = useState(50);
   const [bioLength, setBioLength] = useState(1140);
@@ -53,29 +55,9 @@ function AuthorPage() {
   }, []);
 
   // Book rating algorithm
-  const getTopTen = input => {
-    const ten = input
-      ? input
-        .filter(book => book.readinglog_count > 50)
-        .sort(
-          (a, b) =>
-            b.ratings_average * 0.5 +
-            (b.already_read_count /
-              (b.readinglog_count - b.currently_reading_count)) *
-            5 *
-            0.5 -
-            (a.ratings_average * 0.5 +
-              (a.already_read_count /
-                (a.readinglog_count - a.currently_reading_count)) *
-              5 *
-              0.5)
-        )
-      : // .slice(0, 5)
-      [];
-    return ten.slice(0, 10);
-  };
-  const topTen = getTopTen(authorBooks);
+  const topTen = getTopBooks(authorBooks, 10, 50);
 
+  // Show and hide full title
   const showTitle = titleLength => {
     setShow(!show);
     if (show) {
@@ -180,9 +162,8 @@ function AuthorPage() {
                   authorBooks &&
                   topTen.map(book => {
                     return (
-                      <>
+                      <div key={book.key}>
                         <Link
-                          key={book.key}
                           to={`/books${book.key}`}
                           className='w-1/6 max-h-min flex-shrink-0 border-2 border-slate-300 hover:border-slate-700'
                         >
@@ -242,7 +223,7 @@ function AuthorPage() {
                             )}
                           </div>
                         </Link>
-                      </>
+                      </div>
                     );
                   })
                 }
