@@ -11,6 +11,7 @@ export const UserProvider = ({ children }) => {
     const [USERID, setUSERID] = useState("");
     const [category, setCategory] = useState('');
     const [searchTitle, setSearchTitle] = useState('');
+    const [enterHandler, setEnterHandler] = useState('');
 
     const storeToken = (userId) => {
         localStorage.setItem("userId", userId);
@@ -87,6 +88,8 @@ export const UserProvider = ({ children }) => {
                 setCategory,
                 searchTitle,
                 setSearchTitle,
+                enterHandler,
+                setEnterHandler,
                 getTopBooks
             }}
         >
