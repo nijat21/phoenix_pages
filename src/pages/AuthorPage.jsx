@@ -55,9 +55,29 @@ function AuthorPage() {
   }, []);
 
   // Book rating algorithm
-  const topTen = getTopBooks(authorBooks, 10, 50);
+  const getTopTen = input => {
+    const ten = input
+      ? input
+        .filter(book => book.readinglog_count > 50)
+        .sort(
+          (a, b) =>
+            b.ratings_average * 0.5 +
+            (b.already_read_count /
+              (b.readinglog_count - b.currently_reading_count)) *
+            5 *
+            0.5 -
+            (a.ratings_average * 0.5 +
+              (a.already_read_count /
+                (a.readinglog_count - a.currently_reading_count)) *
+              5 *
+              0.5)
+        )
+      : // .slice(0, 5)
+      [];
+    return ten.slice(0, 10);
+  };
+  const topTen = getTopTen(authorBooks);
 
-  // Show and hide full title
   const showTitle = titleLength => {
     setShow(!show);
     if (show) {
@@ -97,9 +117,9 @@ function AuthorPage() {
 
   return (
     <>
-      {loading ?
+      {loading ? (
         <Loader />
-        :
+      ) : (
         <div className='mt-6 flex flex-col'>
           {author && (
             <>
@@ -156,9 +176,9 @@ function AuthorPage() {
                 </div>
               </section>
               <section className='flex overflow-x-scroll mt-10 h-auto gap-5 mx-20 pb-5 scrollable-container'>
-                {loadingAuthor ?
+                {loadingAuthor ? (
                   <LoaderAuthors />
-                  :
+                ) : (
                   authorBooks &&
                   topTen.map(book => {
                     return (
@@ -226,7 +246,7 @@ function AuthorPage() {
                       </div>
                     );
                   })
-                }
+                )}
               </section>
               <div className='my-2 mr-20 self-end flex flex-col '>
                 <button
@@ -239,7 +259,7 @@ function AuthorPage() {
             </>
           )}
         </div>
-      }
+      )}
     </>
   );
 }

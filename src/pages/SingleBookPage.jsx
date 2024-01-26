@@ -16,18 +16,18 @@ function SingleBookPage() {
   const [alreadyReadCheck, setAlreadyReadCheck] = useState(false);
   const [wantToReadCheck, setWantToReadCheck] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [descLength, setDescLength] = useState(850);
   const [descShow, setDescShow] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setLoading(true)
+    setLoading(true);
     axios
       .get(`https://openlibrary.org/works/${bookKey}.json`) //this returns a promise
       .then(response => {
         // console.log(response.data);
-        setLoading(false)
+        setLoading(false);
         setBook(response.data);
       })
       .catch(error => {
@@ -183,9 +183,9 @@ function SingleBookPage() {
 
   return (
     <div>
-      {loading ?
+      {loading ? (
         <Loader />
-        :
+      ) : (
         <div className='pt-3'>
           {/* only return books with cover and author information */}
           {book && book.covers[0] && author && (
@@ -201,7 +201,7 @@ function SingleBookPage() {
                 <img
                   src={`https://covers.openlibrary.org/b/id/${book.covers[0]}-L.jpg`}
                   alt='cover'
-                  className='object-contain mb-10 rounded-tr-xl rounded-br-xl shadow-slate-700 shadow-2xl'
+                  className='w-85 text-center object-contain mb-10 rounded-tr-xl rounded-br-xl shadow-slate-700 shadow-2xl'
                   onLoad={() => setImageLoaded(true)}
                 />
                 {USERID && (
@@ -253,17 +253,17 @@ function SingleBookPage() {
                       book.description.length > 850) ||
                       (typeof book.description === 'object' &&
                         book.description.value.length > 850)) && (
-                        <button
-                          className='ml-1 font-thin text-gray-400 rounded-lg hover:bg-slate-200 hover:px-1'
-                          onClick={e => {
-                            e.stopPropagation();
-                            showDesc(undefined);
-                            e.preventDefault();
-                          }}
-                        >
-                          {descShow ? 'more' : 'less'}
-                        </button>
-                      )}
+                      <button
+                        className='ml-1 font-thin text-gray-400 rounded-lg hover:bg-slate-200 hover:px-1'
+                        onClick={e => {
+                          e.stopPropagation();
+                          showDesc(undefined);
+                          e.preventDefault();
+                        }}
+                      >
+                        {descShow ? 'more' : 'less'}
+                      </button>
+                    )}
                   </p>
                 </div>
 
@@ -279,7 +279,7 @@ function SingleBookPage() {
             </section>
           )}
         </div>
-      }
+      )}
     </div>
   );
 }
