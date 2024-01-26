@@ -55,28 +55,7 @@ function AuthorPage() {
   }, []);
 
   // Book rating algorithm
-  const getTopTen = input => {
-    const ten = input
-      ? input
-        .filter(book => book.readinglog_count > 50)
-        .sort(
-          (a, b) =>
-            b.ratings_average * 0.5 +
-            (b.already_read_count /
-              (b.readinglog_count - b.currently_reading_count)) *
-            5 *
-            0.5 -
-            (a.ratings_average * 0.5 +
-              (a.already_read_count /
-                (a.readinglog_count - a.currently_reading_count)) *
-              5 *
-              0.5)
-        )
-      : // .slice(0, 5)
-      [];
-    return ten.slice(0, 10);
-  };
-  const topTen = getTopTen(authorBooks);
+  const topTen = getTopBooks(authorBooks, 10, 50)
 
   const showTitle = titleLength => {
     setShow(!show);
