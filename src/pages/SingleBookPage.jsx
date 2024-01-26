@@ -16,15 +16,18 @@ function SingleBookPage() {
   const [alreadyReadCheck, setAlreadyReadCheck] = useState(false);
   const [wantToReadCheck, setWantToReadCheck] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [descLength, setDescLength] = useState(850);
   const [descShow, setDescShow] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`https://openlibrary.org/works/${bookKey}.json`) //this returns a promise
       .then(response => {
         // console.log(response.data);
+        setLoading(false);
         setBook(response.data);
       })
       .catch(error => {
@@ -34,9 +37,11 @@ function SingleBookPage() {
 
   useEffect(() => {
     if (book && book.authors) {
+      setLoading(true);
       axios
         .get(`https://openlibrary.org${book.authors[0].author.key}.json`)
         .then(response => {
+          setLoading(false);
           setAuthor(response.data);
         })
         .catch(error => {
@@ -178,7 +183,9 @@ function SingleBookPage() {
 
   return (
     <div>
-      {
+      {loading ? (
+        <Loader />
+      ) : (
         <div className='pt-3'>
           {/* only return books with cover and author information */}
           {book && book.covers[0] && author && (
@@ -186,9 +193,9 @@ function SingleBookPage() {
               <figure className='w-1/5 ml-10 flex flex-col justify-center'>
                 {!imageLoaded && (
                   <img
-                    src='../src/assets/coverLoading1.webp'
+                    src='/src/assets/coverLoading1.webp'
                     alt='loading'
-                    className='text-center object-contain w-85 mb-10'
+                    className='object-contain w-85 mb-10'
                   />
                 )}
                 <img
@@ -272,7 +279,7 @@ function SingleBookPage() {
             </section>
           )}
         </div>
-      }
+      )}
     </div>
   );
 }

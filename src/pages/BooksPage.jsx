@@ -24,7 +24,7 @@ function BooksPage() {
       category ?
         localStorage.setItem('selectedCategory', category)
         :
-        setCategory(category)
+        setCategory(genericSubject)
       localStorage.setItem('selectedCategory', genericSubject)
     }
 
