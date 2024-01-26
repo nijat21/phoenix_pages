@@ -37,7 +37,7 @@ function SignUp() {
     } else {
       const requestUser = { username, password };
       await axios.post(`${API_URL}/users`, requestUser);
-      navigate('/');
+      navigate('/login');
     }
   };
 
