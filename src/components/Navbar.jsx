@@ -17,13 +17,17 @@ function Navbar() {
     setEnterHandler,
   } = useContext(UserContext);
 
+
   const handleSearch = e => {
     e.preventDefault();
     setSearchTitle(e.target.value);
+    localStorage.setItem('search', e.target.value);
     // if (location.pathname !== '/search') {
     //   navigate('/search');
     // }
   };
+
+  const selectedSearch = localStorage.getItem('search');
 
   // if the Enter key is pressed, that is passed to the Search page
 
@@ -38,7 +42,7 @@ function Navbar() {
 
   return (
     <>
-      <nav className='h-16 w-screen flex justify-between justify-items-center place-items-center  bg-neutral-900 items-center font-light font-serif fixed'>
+      <nav className='h-16 w-screen flex justify-between justify-items-center place-items-center  bg-neutral-900 items-center font-light font-serif fixed z-10'>
         <div className='mw-1/3 ml-10 w-1/3 '>
           <Link to={'/'} className='flex h-12 place-items-center'>
             <img
@@ -81,6 +85,7 @@ function Navbar() {
             type='text'
             placeholder=' Search by title'
             className='text-neutral-200 mr-3 pl-2 border-2 border-neutral-600 rounded-xl bg-transparent h-8 text-justify'
+            value={selectedSearch}
             onChange={handleSearch}
             onKeyDown={handleKeyDown}
           />
