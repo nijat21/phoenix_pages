@@ -244,27 +244,35 @@ function SingleBookPage() {
                       className='hover:border-b hover:border-neutral-800'
                     >{`${author.name}`}</Link>
                   </p>
-                  <p className='mb-20 pb-3 border-b-2 border-amber-800'>
-                    {typeof book.description === 'object'
-                      ? removeText(book.description.value.slice(0, descLength))
-                      : removeText(book.description.slice(0, descLength))}
+                  {book.description ? (
+                    <p className='mb-20 pb-3 border-b-2 border-amber-800'>
+                      {typeof book.description === 'object'
+                        ? removeText(
+                            book.description.value.slice(0, descLength)
+                          )
+                        : removeText(book.description.slice(0, descLength))}
 
-                    {((typeof book.description !== 'object' &&
-                      book.description.length > 850) ||
-                      (typeof book.description === 'object' &&
-                        book.description.value.length > 850)) && (
-                      <button
-                        className='ml-1 font-thin text-gray-400 rounded-lg hover:bg-slate-200 hover:px-1'
-                        onClick={e => {
-                          e.stopPropagation();
-                          showDesc(undefined);
-                          e.preventDefault();
-                        }}
-                      >
-                        {descShow ? 'more' : 'less'}
-                      </button>
-                    )}
-                  </p>
+                      {((typeof book.description !== 'object' &&
+                        book.description.length > 850) ||
+                        (typeof book.description === 'object' &&
+                          book.description.value.length > 850)) && (
+                        <button
+                          className='ml-1 font-thin text-gray-400 rounded-lg hover:bg-slate-200 hover:px-1'
+                          onClick={e => {
+                            e.stopPropagation();
+                            showDesc(undefined);
+                            e.preventDefault();
+                          }}
+                        >
+                          {descShow ? 'more' : 'less'}
+                        </button>
+                      )}
+                    </p>
+                  ) : (
+                    <p className='text-sm'>
+                      No description available for this book.
+                    </p>
+                  )}
                 </div>
 
                 <div className='my-2 self-end flex flex-col '>

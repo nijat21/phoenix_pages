@@ -55,7 +55,7 @@ function AuthorPage() {
   }, []);
 
   // Book rating algorithm
-  const topTen = getTopBooks(authorBooks, 10, 50)
+  const topTen = getTopBooks(authorBooks, 10, 50);
 
   const showTitle = titleLength => {
     setShow(!show);
@@ -154,75 +154,74 @@ function AuthorPage() {
                   </p>
                 </div>
               </section>
-              <section className='flex overflow-x-scroll mt-10 h-auto gap-5 mx-20 pb-5 scrollable-container'>
+              <section className='flex overflow-x-scroll mt-6 h-auto gap-5 mx-20 pb-5 scrollable-container'>
                 {loadingAuthor ? (
                   <LoaderAuthors />
                 ) : (
                   authorBooks &&
                   topTen.map(book => {
                     return (
-                      <div key={book.key}>
-                        <Link
-                          to={`/books${book.key}`}
-                          className='w-1/6 max-h-min flex-shrink-0 border-2 border-slate-300 hover:border-slate-700'
-                        >
-                          <div className='flex flex-col h-full text-center items-center '>
-                            {book && book.cover_i && (
-                              <>
-                                <div className='min-h-fit pt-3 flex justify-center items-center'>
-                                  {!imageLoaded && (
-                                    <img
-                                      src='../src/assets/coverLoading1.webp'
-                                      alt='loading'
-                                      className='text-center object-cover h-60 w-26'
-                                    />
-                                  )}
+                      <Link
+                        to={`/books${book.key}`}
+                        className='w-1/6 max-h-min flex-shrink-0 border-2 border-slate-300 hover:border-slate-700'
+                        key={book.key}
+                      >
+                        <div className='flex flex-col h-full text-center items-center '>
+                          {book && book.cover_i && (
+                            <>
+                              <div className='min-h-fit pt-3 flex justify-center items-center'>
+                                {!imageLoaded && (
                                   <img
-                                    src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
-                                    alt='cover'
-                                    className='text-center object-cover w-20 rounded-tr-lg rounded-br-lg shadow-slate-400 shadow-sm'
-                                    onLoad={() => setImageLoaded(true)}
+                                    src='../src/assets/coverLoading1.webp'
+                                    alt='loading'
+                                    className='text-center object-cover h-60 w-26'
+                                  />
+                                )}
+                                <img
+                                  src={`https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`}
+                                  alt='cover'
+                                  className='text-center object-cover w-20 rounded-tr-lg rounded-br-lg shadow-slate-400 shadow-sm'
+                                  onLoad={() => setImageLoaded(true)}
+                                />
+                              </div>
+                              <div className='w-auto mr-2 ml-2'>
+                                <div className=' flex justify-center items-center mt-2 max-w-xs'>
+                                  <h2 className='text-xs'>
+                                    <strong className='max-w-xs'>
+                                      {book.title.slice(0, length)}
+                                    </strong>{' '}
+                                    {book.title.length > 50 && (
+                                      <button
+                                        className='ml-1 font-thin text-gray-400 rounded-lg hover:bg-slate-200 hover:px-1'
+                                        onClick={e => {
+                                          e.stopPropagation();
+                                          showTitle(book.title.length);
+                                          e.preventDefault();
+                                        }}
+                                      >
+                                        {show ? 'more' : 'less'}
+                                      </button>
+                                    )}
+                                  </h2>
+                                </div>
+                                <p className='text-xs'>
+                                  ({book.first_publish_year})
+                                </p>
+                                <div className=' flex justify-center items-center '>
+                                  <h4 className='text-xs'>
+                                    {book.author_name[0]}
+                                  </h4>
+                                </div>
+                                <div className=' flex  justify-center items-center mt-2 mb-1'>
+                                  <RatingDisplay
+                                    rating={book.ratings_average.toFixed(1)}
                                   />
                                 </div>
-                                <div className='w-auto mr-2 ml-2'>
-                                  <div className=' flex justify-center items-center mt-2 max-w-xs'>
-                                    <h2 className='text-xs'>
-                                      <strong className='max-w-xs'>
-                                        {book.title.slice(0, length)}
-                                      </strong>{' '}
-                                      {book.title.length > 50 && (
-                                        <button
-                                          className='ml-1 font-thin text-gray-400 rounded-lg hover:bg-slate-200 hover:px-1'
-                                          onClick={e => {
-                                            e.stopPropagation();
-                                            showTitle(book.title.length);
-                                            e.preventDefault();
-                                          }}
-                                        >
-                                          {show ? 'more' : 'less'}
-                                        </button>
-                                      )}
-                                    </h2>
-                                  </div>
-                                  <p className='text-xs'>
-                                    ({book.first_publish_year})
-                                  </p>
-                                  <div className=' flex justify-center items-center '>
-                                    <h4 className='text-xs'>
-                                      {book.author_name[0]}
-                                    </h4>
-                                  </div>
-                                  <div className=' flex  justify-center items-center mt-2 mb-1'>
-                                    <RatingDisplay
-                                      rating={book.ratings_average.toFixed(1)}
-                                    />
-                                  </div>
-                                </div>
-                              </>
-                            )}
-                          </div>
-                        </Link>
-                      </div>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </Link>
                     );
                   })
                 )}
