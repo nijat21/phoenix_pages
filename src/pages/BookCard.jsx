@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import RatingDisplay from '../components/RatingDisplay';
 import { useEffect, useState } from 'react';
+
+
 function BookCard({ book, setImageLoaded, imageLoaded }) {
   const [show, setShow] = useState(true);
   const [length, setLength] = useState(50);

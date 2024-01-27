@@ -24,3 +24,22 @@ body {
   background-color: #888; /* Color of the scroll thumb */
   border-radius: 6px; /* Rounded corners for the thumb */
 }
+
+.star-container {
+  width: 100px; /* Adjust width as needed */
+  height: 20px; /* Adjust height as needed */
+  position: relative;
+}
+
+.star {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.star-filled {
+  fill: rgb(219, 219, 5); /* Color of the filled star */
+}
+
+.star-empty {
+  fill: #ccc; /* Color of the empty part of the star */
+}

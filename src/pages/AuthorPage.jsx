@@ -214,7 +214,7 @@ function AuthorPage() {
                                 </div>
                                 <div className=' flex  justify-center items-center mt-2 mb-1'>
                                   <RatingDisplay
-                                    rating={book.ratings_average.toFixed(1)}
+                                    rating={book.ratings_average.toFixed(2)}
                                   />
                                 </div>
                               </div>
