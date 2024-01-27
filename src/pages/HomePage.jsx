@@ -18,8 +18,8 @@ const parallaxData = [
 
 function HomePage() {
   return (
-    <div className="bg-[url('../src/assets/darkAcademiaLibrary.jpeg')] bg-cover h-screen w-screen  flex items-center justify-center align-middle">
-      <div className='text-white w-fit flex flex-col items-center'>
+    <div className="bg-[url('../src/assets/darkAcademiaLibrary.jpeg')] bg-cover w-screen h-screen flex items-center justify-center align-middle relative">
+      <div className='text-white w-fit flex flex-col items-center '>
         <h1 className='text-8xl pl-8 pr-8'>Phoenix Pages</h1>
         <h3 className='text-2xl mt-16'>
           "In the eternal flames of words, wisdom rises, forever reborn on

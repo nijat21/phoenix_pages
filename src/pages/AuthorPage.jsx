@@ -154,7 +154,7 @@ function AuthorPage() {
                   </p>
                 </div>
               </section>
-              <section className='flex overflow-x-scroll mt-6 h-auto gap-5 mx-20 pb-5 scrollable-container'>
+              <section className='flex overflow-x-scroll mt-2 h-auto gap-5 mx-20 pb-5 scrollable-container'>
                 {loadingAuthor ? (
                   <LoaderAuthors />
                 ) : (
@@ -163,7 +163,7 @@ function AuthorPage() {
                     return (
                       <Link
                         to={`/books${book.key}`}
-                        className='w-1/6 max-h-min flex-shrink-0 border-2 border-slate-300 hover:border-slate-700'
+                        className='w-1/6 min-h-max flex-shrink-0 border-2 border-slate-300 hover:border-slate-700'
                         key={book.key}
                       >
                         <div className='flex flex-col h-full text-center items-center '>

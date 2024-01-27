@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useContext } from 'react';
+import UserContext from '../context/UserProvider';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
@@ -12,6 +13,8 @@ function SignUp() {
   const [passwordConfirmed, setPasswordConfirmed] = useState('');
   const [logInMessage, setLogInMessage] = useState('');
 
+  const { storeToken, authenticateUser, setUSERID } = useContext(UserContext);
+
   const navigate = useNavigate();
 
   const handleSubmit = async e => {
@@ -22,23 +25,70 @@ function SignUp() {
 
     if (!username) {
       setLogInMessage('To Sign up, please input your username!');
+      blankEverything();
     } else if (!password) {
       setLogInMessage('To Sign up, please input your password!');
+      blankPasswords();
     } else if (!passwordConfirmed) {
       setLogInMessage('Please confirm your password!');
+      blankPasswords();
     } else if (passwordConfirmed !== password) {
       setLogInMessage(`Passwords don't match!`);
-    }
-
-    const userCheck = user.find(user => user.username === username);
-
-    if (userCheck) {
-      setLogInMessage('Username is taken. Please try a different one!');
+      blankPasswords();
+    } else if (!checkPasswordConditions(password)) {
+      setLogInMessage(
+        'Password should have at least one upper and lower case letter, a number and a special character.'
+      );
+      blankPasswords();
     } else {
-      const requestUser = { username, password };
-      await axios.post(`${API_URL}/users`, requestUser);
-      navigate('/login');
+      const userCheck = user.find(user => user.username === username);
+
+      if (userCheck) {
+        setLogInMessage('Username is taken. Please try a different one!');
+      } else {
+        const requestUser = { username, password };
+        await axios.post(`${API_URL}/users`, requestUser);
+
+        const response = await axios.get(`${API_URL}/users`);
+        const users = response.data;
+
+        const userExists = users.find(
+          user =>
+            user.username === requestUser.username &&
+            user.password === requestUser.password
+        );
+
+        if (userExists) {
+          storeToken(userExists.id);
+          setUSERID(userExists.id);
+          authenticateUser();
+          navigate('/');
+        } else {
+          setErrorMessage('Username or password is wrong. Please try again.');
+        }
+      }
     }
+  };
+
+  // check if the password follows the conditions
+
+  const checkPasswordConditions = str => {
+    const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+
+    if (/[A-Z]/.test(str) && /[a-z]/.test(str)) {
+      return true;
+    } else if (str.length >= 8) {
+      return true;
+    } else if (specialChars.test(str)) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const blankPasswords = () => {
+    setPassword('');
+    setPasswordConfirmed('');
   };
 
   useEffect(() => {
@@ -51,7 +101,7 @@ function SignUp() {
         <div className=' w-full flex flex-col px-12 py-10 items-center justify-center border-2 border-slate-400 rounded-md shadow-sm shadow-slate-500'>
           <form
             onSubmit={handleSubmit}
-            className='min-h-72 min-w-72 flex flex-col justify-around'
+            className='min-h-72 min-w-72 flex flex-col justify-around items-center'
           >
             <div className='flex justify-center mb-4'>
               <h1 className='text-3xl'>Create an Account</h1>
@@ -93,8 +143,8 @@ function SignUp() {
               />
             </label>
 
-            <label>
-              <p className='text-s text-red-500'>{logInMessage}</p>
+            <label className='flex items-center justify-center'>
+              <p className='text-xs text-red-500 max-w-72'>{logInMessage}</p>
             </label>
 
             <div className='flex justify-center mt-10'>

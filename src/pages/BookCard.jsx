@@ -15,7 +15,7 @@ function BookCard({ book, setImageLoaded, imageLoaded }) {
     }
   };
   return (
-    <div className='flex flex-col h-auto text-center items-center'>
+    <div className='flex flex-col h-auto text-center items-center '>
       {book && book.cover_i && (
         <>
           <div className='h-64 w-40 flex justify-center items-center'>
