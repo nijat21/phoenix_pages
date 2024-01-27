@@ -12,6 +12,7 @@ import DeleteUser from './pages/DeleteUser';
 import Profile from './pages/Profile';
 import MyBooks from './pages/MyBooks';
 import Search from './pages/Search';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
           <Route path='/search' element={<Search />} />
         </Routes>
       </div>
+      <Footer />
     </div>
   );
 }

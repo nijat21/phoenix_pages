@@ -1,25 +1,25 @@
-import axios from "axios";
-import { useState, useEffect, useRef, useContext } from "react";
-import UserContext from "../context/UserProvider";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { useState, useEffect, useRef, useContext } from 'react';
+import UserContext from '../context/UserProvider';
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const API_URL = "https://server-phoenix-pages.adaptable.app";
+const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
 function LogIn() {
   const userRef = useRef(null);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const { storeToken, authenticateUser, setUSERID } = useContext(UserContext);
 
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
-    console.log("Start login process");
+    console.log('Start login process');
 
     const response = await axios.get(`${API_URL}/users`);
     const users = response.data;
@@ -28,29 +28,28 @@ function LogIn() {
 
     // Checking if the user exists
     const userExists = users.find(
-      (user) =>
+      user =>
         user.username === requestBody.username &&
         user.password === requestBody.password
     );
 
-
     if (!username && !password) {
-      setErrorMessage("Please input your username and password!");
+      setErrorMessage('Please input your username and password!');
     } else if (!username) {
-      setErrorMessage("To Log in, please input your username!");
+      setErrorMessage('To Log in, please input your username!');
     } else if (!password) {
-      setErrorMessage("To Log in, please input your password!");
+      setErrorMessage('To Log in, please input your password!');
     } else {
       if (userExists) {
         storeToken(userExists.id);
         setUSERID(userExists.id);
-        authenticateUser()
-        navigate("/");
+        authenticateUser();
+        navigate('/');
       } else {
-        setErrorMessage("Username or password is wrong. Please try again.");
+        setErrorMessage('Username or password is wrong. Please try again.');
       }
     }
-    console.log("End login process");
+    console.log('End login process');
   };
 
   useEffect(() => {
@@ -58,12 +57,12 @@ function LogIn() {
   }, []);
 
   return (
-    <div className='h-screen flex justify-center '>
-      <div className='mb-40 flex items-center'>
+    <div className=' w-screen h-screen flex justify-center '>
+      <div className='mb-40 flex items-center '>
         <div className=' w-full px-12 py-10 flex flex-col items-center justify-center border-2 border-slate-400 rounded-md shadow-sm shadow-slate-500'>
           <form
             onSubmit={handleSubmit}
-            className='min-h-72 min-w-72 flex flex-col justify-around'
+            className='min-h-72 min-w-72 flex flex-col justify-around items-center'
           >
             <div className='flex justify-center mb-4'>
               <h1 className='text-3xl'>Log In</h1>
