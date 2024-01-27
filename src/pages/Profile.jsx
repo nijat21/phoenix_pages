@@ -104,6 +104,7 @@ function Profile() {
   const handleGoBack = () => {
     setUsernameEdit(false);
     setPasswordChange(false);
+    navigate(-1);
   };
 
   return (
