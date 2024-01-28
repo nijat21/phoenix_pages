@@ -8,7 +8,7 @@ function Footer() {
       <div className='w-1/4 text-neutral-200'>&copy; 2024 Phoenix Pages</div>
       <div className='w-1/4  flex justify-center '>
         <img
-          src={'../src/assets/icons8-instagram.png'}
+          src={['../src/assets/icons8-instagram.png']}
           alt='ig'
           className='w-5 h-5 mr-7'
         />
