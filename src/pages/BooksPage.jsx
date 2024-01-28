@@ -12,17 +12,18 @@ function BooksPage() {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [booksCount, setBooksCount] = useState(5);
   const [discoverClicked, setDiscoverClicked] = useState(false);
+
   const navigate = useNavigate();
 
   const { category, setCategory, getTopBooks } = useContext(UserContext);
 
-  // Subject query that will look for top a generic list of top 5 books
-  const genericSubject = '*';
+  // Subject query that will look for a generic list of top 5 books
+  // const genericSubject = '*';
 
   // If any category selected save that, or else save genericSubject in local storage
-  const claimCategory = () => {
+  const claimCategory = cat => {
     {
-      localStorage.setItem('selectedCategory', category);
+      localStorage.setItem('selectedCategory', cat);
     }
   };
 
@@ -33,8 +34,8 @@ function BooksPage() {
       const response = await axios.get(
         `https://openlibrary.org/search.json?subject=${cat}&limit=50`
       );
-      setLoading(false);
       setBooks(response.data.docs);
+      // setLoading(false);
     } catch (error) {
       console.log(error);
       navigate('/server-error');
@@ -45,15 +46,11 @@ function BooksPage() {
 
   // Books updated every time category changes
   useEffect(() => {
-    const decideCategory = async () => {
-      claimCategory();
-    };
-
-    if (category === genericSubject) {
-      getBooksByCategory(category);
-    } else {
-      decideCategory();
-      getBooksByCategory(category);
+    console.log(category);
+    const selectedCat = category;
+    if (selectedCat) {
+      claimCategory(selectedCat);
+      getBooksByCategory(selectedCat);
     }
   }, [category]);
 
@@ -78,46 +75,51 @@ function BooksPage() {
         <div className='mb-10'>
           <div className='py-5 flex flex-row justify-center items-center text-lg'>
             <button
-              className={`m-3 py-1 px-3  ${category === genericSubject
-                ? 'border-b-2 border-black'
-                : 'border-b-2 border-transparent'
-                } hover:border-b-2 hover:border-black`}
-              onClick={() => setCategory(genericSubject)}
+              className={`m-3 py-1 px-3  ${
+                category === '*'
+                  ? 'border-b-2 border-black'
+                  : 'border-b-2 border-transparent'
+              } hover:border-b-2 hover:border-black`}
+              onClick={() => setCategory('*')}
             >
               General
             </button>
             <button
-              className={`m-3 py-1 px-3 ${category === 'science'
-                ? 'border-b-2 border-black'
-                : 'border-b-2 border-transparent'
-                } hover:border-b-2 hover:border-black`}
+              className={`m-3 py-1 px-3 ${
+                category === 'science'
+                  ? 'border-b-2 border-black'
+                  : 'border-b-2 border-transparent'
+              } hover:border-b-2 hover:border-black`}
               onClick={() => setCategory('science')}
             >
               Science
             </button>
             <button
-              className={`m-3 py-1 px-3 ${category === 'crime'
-                ? 'border-b-2 border-black'
-                : 'border-b-2 border-transparent'
-                } hover:border-b-2 hover:border-black`}
+              className={`m-3 py-1 px-3 ${
+                category === 'crime'
+                  ? 'border-b-2 border-black'
+                  : 'border-b-2 border-transparent'
+              } hover:border-b-2 hover:border-black`}
               onClick={() => setCategory('crime')}
             >
               Crime
             </button>
             <button
-              className={`m-3 py-1 px-3 ${category === 'selfhelp'
-                ? 'border-b-2 border-black'
-                : 'border-b-2 border-transparent'
-                } hover:border-b-2 hover:border-black`}
+              className={`m-3 py-1 px-3 ${
+                category === 'selfhelp'
+                  ? 'border-b-2 border-black'
+                  : 'border-b-2 border-transparent'
+              } hover:border-b-2 hover:border-black`}
               onClick={() => setCategory('selfhelp')}
             >
               Self-help
             </button>
             <button
-              className={`m-3 py-1 px-3 ${category === 'poetry&subject:drama'
-                ? 'border-b-2 border-black'
-                : 'border-b-2 border-transparent'
-                } hover:border-b-2 hover:border-black`}
+              className={`m-3 py-1 px-3 ${
+                category === 'poetry&subject:drama'
+                  ? 'border-b-2 border-black'
+                  : 'border-b-2 border-transparent'
+              } hover:border-b-2 hover:border-black`}
               onClick={() => setCategory('poetry&subject:drama')}
             >
               Poetry and Drama

@@ -12,16 +12,35 @@ Online personal library that helps you track your reading journey.
 
 ## Data
 
-Books
+User
 
 ```json
 {
-  "firstName": String,
-  "secondName": String,
-  "gender": Array,
-  "birthDate": date,
-  "email": String,
-  "password": Number,
+  "username": String,
+  "password": String,
+  "id": Number
+}
+
+```
+
+Books To Read
+
+```json
+{
+  "id": Number,
+  "bookKey": String,
+  "userId": Number
+}
+
+```
+
+Books Already Read
+
+```json
+{
+  "id": Number,
+  "bookKey": String,
+  "userId": Number
 }
 
 ```
@@ -30,7 +49,7 @@ Books
 
 ## API's
 
-https://www.googleapis.com/books/v1/volumes/
+https://openlibrary.org/search.json
 
 <br>
 
@@ -44,13 +63,13 @@ https://www.googleapis.com/books/v1/volumes/
 
 The url to your repository and to your deployed project
 
-Frontend: [Repository Link]()
-Backend: [Repository Link]()
+Frontend: [Repository Link](https://github.com/nijat21/phoenix_pages)
+Backend: [Repository Link](https://github.com/luigoncalves/json-server-backend)
 
-[Deploy Link]()
+[Deploy Link](https://phoenix-pages.netlify.app/)
 
 ### Contributors
 
-Luís Gonçalves - [`luigoncalves`](https://github.com/luigoncalves) - [`<linkedin-profile-link>`](https://www.linkedin.com/in/luis-dearaujo-goncalves/)
+Luís Gonçalves - [`luigoncalves`](https://github.com/luigoncalves) - [`<linkedin-profile>`](https://www.linkedin.com/in/luis-dearaujo-goncalves/)
 
-Nijat Ismayilov - [`nijat21`](https://github.com/nijat21) - [`<linkedin-profile-link>`](https://www.linkedin.com/in/nijat-ismayilov/)
+Nijat Ismayilov - [`nijat21`](https://github.com/nijat21) - [`<linkedin-profile>`](https://www.linkedin.com/in/nijat-ismayilov/)
