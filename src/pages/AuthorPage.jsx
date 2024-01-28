@@ -35,6 +35,7 @@ function AuthorPage() {
         setAuthor(response.data);
       })
       .catch(error => {
+        navigate('/server-error');
         console.error('Error fetching author:', error);
       });
   }, []);
@@ -50,6 +51,7 @@ function AuthorPage() {
         setLoadingAuthor(false);
       })
       .catch(error => {
+        navigate('/server-error');
         console.error('Error fetching author:', error);
       });
   }, []);
@@ -214,7 +216,7 @@ function AuthorPage() {
                                 </div>
                                 <div className=' flex  justify-center items-center mt-2 mb-1'>
                                   <RatingDisplay
-                                    rating={book.ratings_average.toFixed(2)}
+                                    rating={book.ratings_average}
                                   />
                                 </div>
                               </div>

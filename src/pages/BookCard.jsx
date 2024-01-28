@@ -58,7 +58,7 @@ function BookCard({ book, setImageLoaded, imageLoaded }) {
               <h4>{book.author_name[0]}</h4>
             </div>
             <div className=' flex justify-center items-center '>
-              <RatingDisplay rating={book.ratings_average.toFixed(1)} />
+              <RatingDisplay rating={book.ratings_average} />
             </div>
           </div>
         </>

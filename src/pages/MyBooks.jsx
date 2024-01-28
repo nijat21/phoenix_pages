@@ -45,6 +45,7 @@ function MyBooks() {
         setMyListOfBooks(response.data.books_already_read);
       }
     } catch (error) {
+      navigate('/server-error');
       console.log(error);
     }
   };
@@ -60,6 +61,7 @@ function MyBooks() {
       response.data.id = id;
       return response.data;
     } catch (error) {
+      navigate('/server-error');
       console.log(error);
     }
   };
@@ -136,22 +138,20 @@ function MyBooks() {
           <section>
             <button
               onClick={() => getList(1)}
-              className={`m-3 py-1 px-3 ${
-                list === 1
-                  ? 'border-b-2 border-black'
-                  : 'border-b-2 border-transparent'
-              } hover:border-b-2 hover:border-black`}
+              className={`m-3 py-1 px-3 ${list === 1
+                ? 'border-b-2 border-black'
+                : 'border-b-2 border-transparent'
+                } hover:border-b-2 hover:border-black`}
             >
               Want to Read
             </button>
 
             <button
               onClick={() => getList(2)}
-              className={`m-3 py-1 px-3 ${
-                list === 2
-                  ? 'border-b-2 border-black'
-                  : 'border-b-2 border-transparent'
-              } hover:border-b-2 hover:border-black`}
+              className={`m-3 py-1 px-3 ${list === 2
+                ? 'border-b-2 border-black'
+                : 'border-b-2 border-transparent'
+                } hover:border-b-2 hover:border-black`}
             >
               Already Read
             </button>

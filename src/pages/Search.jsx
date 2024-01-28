@@ -23,14 +23,15 @@ function Search() {
   const navigate = useNavigate();
 
   const getBooksByCategory = async title => {
-    setLoading(true);
+    // setLoading(true);
     try {
       const response = await axios.get(
         `https://openlibrary.org/search.json?title=${title}&limit=50`
       );
       setBooks(response.data.docs);
-      setLoading(false);
+      // setLoading(false);
     } catch (error) {
+      navigate('/server-error');
       console.log(error);
     } finally {
       setLoading(false);
@@ -63,8 +64,6 @@ function Search() {
   useEffect(() => {
     if (enterHandler === 'Enter') {
       searchMechanism();
-    } else {
-      setLoading(false);
     }
   }, [enterHandler]);
 
@@ -78,7 +77,7 @@ function Search() {
       ) : (
         <div className='flex flex-col mx-16'>
           <div className=' flex justify-center'>
-            <h1 className='text-3xl py-9'>Search Results</h1>
+            <h1 className='text-3xl py-9 font-bold'>Search Results</h1>
           </div>
 
           {books.length > 0 && topFifteen.length > 0 ? (
@@ -103,9 +102,9 @@ function Search() {
             <NotFound />
           )}
 
-          <div className='mt-12 flex justify-center'>
+          <div className='my-12 flex justify-center'>
             <button
-              className='p-4 mb-2 rounded-2xl border-2 text-white border-lime-700 text-xl bg-lime-700 hover:bg-lime-600 hover:border-lime-600'
+              className='p-4 rounded-2xl border-2 text-white border-lime-700 text-xl bg-lime-700 hover:bg-lime-600 hover:border-lime-600'
               onClick={handleGoBack}
             >
               Go Back

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import UserContext from '../context/UserProvider';
 import UserMenu from './UserMenu';
 import CategoriesMenu from './CategoriesMenu';
+import { Switch, FormControl, FormLabel } from '@chakra-ui/react'
 
 function Navbar() {
   const navigate = useNavigate();
@@ -71,6 +72,14 @@ function Navbar() {
               </h2>
             </Link>
           )}
+          <div>
+            <FormControl className='flex items-center'>
+              <h3 className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container text-sm '>
+                Dark mode
+              </h3>
+              <Switch className='border-2 border-neutral-200 rounded-xl ml-1' colorScheme='gray' />
+            </FormControl>
+          </div>
         </div>
         <div className='w-1/3 mr-10 flex text-xl items-center justify-end '>
           <input

@@ -85,7 +85,7 @@ const RatingDisplay = ({ rating }) => {
                     })}
                 </div>
             </div>
-            <p className='pl-2'> {rating}</p>
+            <p className='pl-2'> {rating.toFixed(1)}</p>
         </div>
     );
 }

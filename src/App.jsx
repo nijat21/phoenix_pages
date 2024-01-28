@@ -13,6 +13,8 @@ import Profile from './pages/Profile';
 import MyBooks from './pages/MyBooks';
 import Search from './pages/Search';
 import Footer from './components/Footer';
+import FourOFour from './pages/FourOFour';
+import FiveOFour from './pages/FiveOFour';
 
 function App() {
   return (
@@ -31,6 +33,9 @@ function App() {
           <Route path='/profile' element={<Profile />} />
           <Route path='/deleteuser' element={<DeleteUser />} />
           <Route path='/search' element={<Search />} />
+
+          <Route path='/server-error' element={<FiveOFour />} />
+          <Route path='*' element={<FourOFour />} />
         </Routes>
       </div>
       <Footer />

@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
+* {
   @apply font-serif;
 }
 
@@ -37,9 +37,9 @@ body {
 }
 
 .star-filled {
-  fill: rgb(219, 219, 5); /* Color of the filled star */
+  fill: rgb(242, 242, 2); /* Color of the filled star */
 }
 
 .star-empty {
-  fill: #ccc; /* Color of the empty part of the star */
+  fill: #a7a0a0; /* Color of the empty part of the star */
 }
