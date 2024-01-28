@@ -195,7 +195,7 @@ function SingleBookPage() {
               <figure className='w-1/5 ml-10 flex flex-col justify-center'>
                 {!imageLoaded && (
                   <img
-                    src='../assets/coverLoading1.webp'
+                    src='./coverLoading1.webp'
                     alt=''
                     className='object-contain w-85 mb-10'
                   />

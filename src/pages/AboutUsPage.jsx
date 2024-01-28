@@ -21,7 +21,7 @@ function AboutUsPage() {
       <section className='w-1/4 flex flex-col px-12 py-10 items-center justify-center border-2 border-neutral-800 rounded-md shadow-sm shadow-slate-500'>
         <div className='flex flex-col items-center w-64 py-6 my-4 px-8 border-2 border-lime-700 rounded-xl'>
           <img
-            src='../assets/authorGeneric.png'
+            src='./authorGeneric.png'
             alt='Nijat'
             className=' rounded-xl w-16 h-auto mb-4'
           />
@@ -37,7 +37,7 @@ function AboutUsPage() {
             rel='noopener noreferrer'
           >
             <img
-              src='../assets/linkedin_logo2.webp'
+              src='./linkedin_logo2.webp'
               alt='/in'
               className='text-center rounded-xl w-16 h-auto mb-4'
             />
@@ -51,7 +51,7 @@ function AboutUsPage() {
             rel='noopener noreferrer'
           >
             <img
-              src='../assets/githubLogo2.png'
+              src='./githubLogo2.png'
               alt='/in'
               className='text-center rounded-xl w-16 h-auto mb-4'
             />
@@ -63,7 +63,7 @@ function AboutUsPage() {
       <section className='w-1/4 flex flex-col px-12 py-10 items-center justify-center border-2 border-neutral-800 rounded-md shadow-sm shadow-slate-500'>
         <div className='flex flex-col items-center w-64 py-6 my-4 px-8 border-2 border-lime-500 rounded-xl'>
           <img
-            src='../assets/authorGeneric.png'
+            src='./authorGeneric.png'
             alt='Luís'
             className='text-center rounded-xl w-16 h-auto mb-4'
           />
@@ -79,7 +79,7 @@ function AboutUsPage() {
             rel='noopener noreferrer'
           >
             <img
-              src='../assets/linkedin_logo2.webp'
+              src='./linkedin_logo2.webp'
               alt='/in'
               className='text-center rounded-xl w-16 h-auto mb-4'
             />
@@ -93,7 +93,7 @@ function AboutUsPage() {
             rel='noopener noreferrer'
           >
             <img
-              src='../assets/githubLogo2.png'
+              src='./githubLogo2.png'
               alt='/in'
               className='text-center rounded-xl w-16 h-auto mb-4'
             />

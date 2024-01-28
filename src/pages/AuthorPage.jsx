@@ -107,7 +107,7 @@ function AuthorPage() {
               <section className=' flex flex-start '>
                 {!authorImageLoaded && (
                   <img
-                    src='../assets/authorGeneric.png'
+                    src='./authorGeneric.png'
                     alt='loading'
                     className='text-center object-contain max-w-64 max-h-80 mb-5 ml-10'
                   />
@@ -174,7 +174,7 @@ function AuthorPage() {
                               <div className='min-h-fit pt-3 flex justify-center items-center'>
                                 {!imageLoaded && (
                                   <img
-                                    src='../assets/coverLoading1.webp'
+                                    src='./coverLoading1.webp'
                                     alt='loading'
                                     className='text-center object-cover h-60 w-26'
                                   />

@@ -167,7 +167,7 @@ function Profile() {
               {!usernameEdit && !passwordChange && !deleteProfile && (
                 <div className='flex flex-col justify-evenly items-center mr-10'>
                   <img
-                    src='../assets/authorGeneric.png'
+                    src='./authorGeneric.png'
                     alt='profileImg'
                     className='w-20 mb-5'
                   />
