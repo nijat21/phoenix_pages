@@ -14,7 +14,7 @@ import MyBooks from './pages/MyBooks';
 import Search from './pages/Search';
 import Footer from './components/Footer';
 import FourOFour from './pages/FourOFour';
-import FiveOFour from './pages/FiveOFour';
+import ServerError from './pages/ServerError';
 
 function App() {
   return (
@@ -34,7 +34,7 @@ function App() {
           <Route path='/deleteuser' element={<DeleteUser />} />
           <Route path='/search' element={<Search />} />
 
-          <Route path='/server-error' element={<FiveOFour />} />
+          <Route path='/server-error' element={<ServerError />} />
           <Route path='*' element={<FourOFour />} />
         </Routes>
       </div>

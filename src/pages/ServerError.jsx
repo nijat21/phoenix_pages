@@ -1,5 +1,5 @@
 
-function FiveOFour() {
+function ServerError() {
     return (
         <div className='flex flex-col items-center justify-center mt-20 z-0'>
             <h2 className='text-2xl my-6'>Server Error!</h2>
@@ -9,4 +9,4 @@ function FiveOFour() {
     )
 }
 
-export default FiveOFour;
+export default ServerError;

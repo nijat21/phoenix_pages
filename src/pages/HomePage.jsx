@@ -1,20 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Plx from 'react-plx';
+// import Plx from 'react-plx';
 
-const parallaxData = [
-  {
-    start: 'self',
-    duration: '100vh',
-    properties: [
-      {
-        startValue: 0,
-        endValue: 1,
-        property: 'opacity',
-      },
-    ],
-  },
-];
+// const parallaxData = [
+//   {
+//     start: 'self',
+//     duration: '100vh',
+//     properties: [
+//       {
+//         startValue: 0,
+//         endValue: 1,
+//         property: 'opacity',
+//       },
+//     ],
+//   },
+// ];
 
 function HomePage() {
   return (
