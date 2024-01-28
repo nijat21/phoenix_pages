@@ -19,7 +19,7 @@ const parallaxData = [
 function HomePage() {
   return (
     <div
-      className="bg-[url('../src/assets/darkAcademiaLibrary.jpeg')] bg-cover w-screen h-screen
+      className="bg-[url('../assets/darkAcademiaLibrary.jpeg')] bg-cover w-screen h-screen
      flex items-center justify-center align-middle relative"
     >
       <div className='text-white w-fit flex flex-col items-center '>
