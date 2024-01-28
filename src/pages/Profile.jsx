@@ -60,12 +60,13 @@ function Profile() {
     } else {
       const updateUser = { username: newUsername, password };
       await axios.put(`${API_URL}/users/${USERID}`, updateUser);
+      console.log('End login process');
+      setUsernameEdit(false);
+      setNewUsername('');
+      setPassword('');
+      setErrorMessage('');
+      setUserDetails(updateUser);
     }
-    console.log('End login process');
-    setUsernameEdit(false);
-    setNewUsername('');
-    setPassword('');
-    setErrorMessage('');
   };
 
   const handleSubmitPasswordChange = async e => {
@@ -162,10 +163,15 @@ function Profile() {
       {userDetails && (
         <div className='w-screen h-screen flex justify-center'>
           <div className='mb-40 flex flex-col items-center justify-center'>
-            <div className='w-full px-12 py-10 flex flex-col items-center justify-center border-2 border-slate-400 rounded-md shadow-sm shadow-slate-500'>
+            <div className='w-full px-12 py-10 flex  items-center justify-center border-2 border-slate-400 rounded-md shadow-sm shadow-slate-500'>
               {!usernameEdit && !passwordChange && !deleteProfile && (
-                <div className='flex justify-center mb-8'>
-                  <h1 className='text-3xl'>Hello, {userDetails.username}</h1>
+                <div className='flex flex-col justify-evenly items-center mr-10'>
+                  <img
+                    src='/src/assets/authorGeneric.png'
+                    alt='profileImg'
+                    className='w-20 mb-5'
+                  />
+                  <h1 className='text-3xl'>{userDetails.username}</h1>
                 </div>
               )}
               <div className='flex flex-col'>
