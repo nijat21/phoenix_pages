@@ -19,7 +19,7 @@ function AboutUsPage() {
   return (
     <div className=' flex justify-center items-center'>
       <section className=' flex flex-col px-12 py-10 items-center justify-center '>
-        <div className='flex flex-col items-center w-64 py-6 my-4 px-8 border-2 border-lime-700 rounded-xl'>
+        <div className='flex flex-col items-center w-64 h-96 py-6 my-4 px-8 border-2 border-lime-700 rounded-xl'>
           <img
             src='../assets/NijatPhoto.jpeg'
             alt='Nijat'
@@ -58,7 +58,7 @@ function AboutUsPage() {
       </section>
 
       <section className='w-1/4 flex flex-col px-12 py-10 items-center justify-center '>
-        <div className='flex flex-col items-center w-64 py-6 my-4 px-8 border-2 border-lime-700 rounded-xl'>
+        <div className='flex flex-col items-center w-64 h-96 py-6 my-4 px-8 border-2 border-lime-700 rounded-xl'>
           <img
             src='../assets/LuisPhoto.jpeg'
             alt='Luís'
