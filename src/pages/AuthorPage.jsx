@@ -115,7 +115,7 @@ function AuthorPage() {
                 <img
                   src={`https://covers.openlibrary.org/a/olid/${authorKey}-M.jpg`}
                   alt='cover'
-                  className='text-center object-contain max-w-64 max-h-80 mb-5 ml-10 rounded-tl-lg rounded-tr-lg rounded-br-lg shadow-slate-700 shadow-sm'
+                  className='text-center object-contain max-w-64 max-h-80 mb-5 ml-10 rounded-tl-lg rounded-tr-lg rounded-br-lg'
                   onLoad={() => {
                     setAuthorImageLoaded(true);
                   }}
