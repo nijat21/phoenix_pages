@@ -155,6 +155,7 @@ function Profile() {
     setPasswordChange(false);
     setDeleteProfile(false);
     setErrorMessage('');
+    navigate(-1);
   };
 
   return (

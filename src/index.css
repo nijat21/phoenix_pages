@@ -41,5 +41,32 @@
 }
 
 .star-empty {
-  fill: #a7a0a0;
+  fill: rgb(202, 198, 198);
+}
+
+/* Loader styles */
+.loader {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.loader .spinner {
+  border: 10px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #2a2b2c; /* Default color for light mode */
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  animation: spin 1s linear infinite;
+}
+
+/* Dark mode */
+.loader.dark .spinner {
+  border-left-color: #eaedf1; /* Color for dark mode */
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

@@ -1,10 +1,10 @@
 import { useState, useContext, useRef, useEffect } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import UserContext from '../context/UserProvider';
 import { Switch, FormControl, FormLabel } from '@chakra-ui/react'
 
 function UserMenu({ initial }) {
-    const { logOutUser } = useContext(UserContext);
+    const { logOutUser, darkMode, toggleDarkMode, theme, setTheme } = useContext(UserContext);
     const usrMenu = useRef(null);
     const [open, setOpen] = useState(false)
     const navigate = useNavigate();
@@ -46,11 +46,13 @@ function UserMenu({ initial }) {
                     <ul className='absolute mt-2 flex flex-col justify-center items-center py-4 bg-neutral-900 backdrop-filter backdrop-blur-3xl px-3 border-solid border-2 border-neutral-200 rounded-xl'>
                         <li className='hover:border-b hover:border-neutral-200 zoom-container'><button onClick={handleProfile}>Profile</button></li>
                         <li className='hover:border-b hover:border-neutral-200 zoom-container'><button onClick={handleLogout}>Logout</button></li>
-                        <FormControl className='flex items-center mt-2'>
-                            <FormLabel className='text-xs' mb='0'>
-                                Dark mode
+                        <FormControl className='flex items-center justify-evenly mt-2'>
+                            <FormLabel htmlFor='dark-mode' className='text-xs font-thin' mb='0'>
+                                {darkMode ? "Light mode" : "Dark mode"}
                             </FormLabel>
-                            <Switch className='border-2 border-neutral-200 rounded-xl' colorScheme='neutral-900' />
+                            <Switch className='border-2 border-neutral-200 rounded-xl' colorScheme='black' id='dark-mode' size='md'
+                                onChange={toggleDarkMode} isChecked={darkMode}
+                            />
                         </FormControl>
                     </ul>
                     :

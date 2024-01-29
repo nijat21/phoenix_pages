@@ -25,6 +25,7 @@ function Search() {
   const getBooksByCategory = async title => {
     // setLoading(true);
     try {
+      throw new Error('s');
       const response = await axios.get(
         `https://openlibrary.org/search.json?title=${title}&limit=50`
       );
@@ -87,7 +88,7 @@ function Search() {
                   <Link
                     to={`/books${book.key}`}
                     key={book.key}
-                    className='min-h-max pb-2 px-1  rounded-br-lg shadow-slate-400 shadow-sm  border-2 border-slate-300 hover:border-slate-700'
+                    className='min-h-max pb-2 px-1  rounded-br-lg shadow-slate-400 shadow-sm  border-2 border-slate-300 hover:border-slate-700 dark:hover:border-slate-500'
                   >
                     <BookCard
                       book={book}

@@ -74,12 +74,12 @@ const RatingDisplay = ({ rating }) => {
     return (
         <div className="star-container flex items-center justify-center my-2">
             <div className='flex' style={{ position: 'relative' }}>
-                <div className="grey-stars flex" style={{ position: 'absolute', zIndex: '-1' }}>
+                <div className="grey-stars flex" style={{ position: 'absolute', zIndex: '0' }}>
                     {greyStars.map(star => {
                         return <div key={Math.random(100)} className=''>{star}</div>
                     })}
                 </div>
-                <div className="yellow-stars flex">
+                <div className="yellow-stars flex" style={{ zIndex: '1' }}>
                     {stars.map(star => {
                         return <div key={Math.random(100)} className=''>{star}</div>
                     })}

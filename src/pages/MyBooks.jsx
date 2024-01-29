@@ -139,9 +139,9 @@ function MyBooks() {
             <button
               onClick={() => getList(1)}
               className={`m-3 py-1 px-3 ${list === 1
-                ? 'border-b-2 border-black'
+                ? 'border-b-2 border-black dark:border-neutral-200'
                 : 'border-b-2 border-transparent'
-                } hover:border-b-2 hover:border-black`}
+                } hover:border-b-2 hover:border-black dark:hover:border-neutral-200`}
             >
               Want to Read
             </button>
@@ -149,15 +149,15 @@ function MyBooks() {
             <button
               onClick={() => getList(2)}
               className={`m-3 py-1 px-3 ${list === 2
-                ? 'border-b-2 border-black'
+                ? 'border-b-2 border-black dark:border-neutral-200'
                 : 'border-b-2 border-transparent'
-                } hover:border-b-2 hover:border-black`}
+                } hover:border-b-2 hover:border-black dark:hover:border-neutral-200`}
             >
               Already Read
             </button>
           </section>
 
-          <section className='flex overflow-x-scroll h-auto gap-5 mx-20 my-10 py-8 border-b-2 border-t-2 border-amber-800 '>
+          <section className='flex overflow-x-scroll h-auto gap-5 mx-20 my-10 py-8 border-b-2 border-t-2 border-amber-800 dark:border-amber-600 '>
             {additionalBookInfo &&
               additionalBookInfo.map(book => {
                 return (
@@ -165,7 +165,7 @@ function MyBooks() {
                     <Link
                       key={book.key}
                       to={`/books${book.key}`}
-                      className='min-h-max w-1/5 pb-2 px-3 flex-shrink-0 rounded-br-lg shadow-slate-400 shadow-sm  border-2 border-slate-300 hover:border-slate-700'
+                      className='min-h-max w-1/5 pb-2 px-3 flex-shrink-0 rounded-br-lg shadow-slate-400 shadow-sm  border-2  border-slate-300 hover:border-slate-700 dark:hover:border-slate-500'
                     >
                       <div className='flex flex-col h-auto text-center items-center'>
                         {book && book.covers && (
