@@ -21,7 +21,7 @@ function AboutUsPage() {
       <section className=' flex flex-col px-12 py-10 items-center justify-center '>
         <div className='flex flex-col items-center w-64 py-6 my-4 px-8 border-2 border-lime-700 rounded-xl'>
           <img
-            src='./NijatPhoto.jpeg'
+            src='../assets/NijatPhoto.jpeg'
             alt='Nijat'
             className=' rounded-xl w-40 h-48 mb-4'
           />
@@ -60,7 +60,7 @@ function AboutUsPage() {
       <section className='w-1/4 flex flex-col px-12 py-10 items-center justify-center '>
         <div className='flex flex-col items-center w-64 py-6 my-4 px-8 border-2 border-lime-700 rounded-xl'>
           <img
-            src='./LuisPhoto.jpeg'
+            src='../assets/LuisPhoto.jpeg'
             alt='Luís'
             className='text-center rounded-xl w-40 h-48 mb-4'
           />
