@@ -75,7 +75,7 @@ function LogIn() {
                 type='text'
                 id='username'
                 name='username'
-                className='border-solid rounded-md border-2 border-amber-800 min-w-72 min-h-10 pl-1'
+                className='border-solid rounded-md border-2 border-amber-800 min-w-72 min-h-10 pl-1 text-black'
                 value={username}
                 onChange={e => setUsername(e.target.value)}
                 ref={userRef}
@@ -87,7 +87,7 @@ function LogIn() {
                 type='password'
                 id='passwordLogin'
                 name='passwordLogin'
-                className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1'
+                className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1 text-black'
                 value={password}
                 onChange={e => setPassword(e.target.value)}
               />
