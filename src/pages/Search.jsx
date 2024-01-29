@@ -25,7 +25,6 @@ function Search() {
   const getBooksByCategory = async title => {
     // setLoading(true);
     try {
-      throw new Error('s');
       const response = await axios.get(
         `https://openlibrary.org/search.json?title=${title}&limit=50`
       );

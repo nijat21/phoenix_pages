@@ -44,9 +44,9 @@ function Navbar() {
     <>
       <nav className='h-16 w-screen flex justify-between justify-items-center place-items-center  bg-neutral-800 items-center font-light font-serif fixed top-0 z-20'>
         <div className='mw-1/3 ml-10 w-1/3 '>
-          <button onClick={() => handleClick()}>
+          <button>
             <Link to={'/'} className='flex h-12 place-items-center'>
-              <img src='/src/assets/logo.png' alt='Home' className='w-12' />
+              <img src='./logo.png' alt='Home' className='w-12' />
               <div className='ml-1'>
                 <p className='text-amber-800 text-bold mb-0 text-2xl'>
                   Phoenix Pages

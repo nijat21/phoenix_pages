@@ -19,7 +19,8 @@ import { Link } from 'react-router-dom';
 function HomePage() {
   return (
     <div
-      className="bg-[url('../src/assets/darkAcademiaLibrary.jpeg')] bg-cover bg-no-repeat w-auto h-screen flex items-center justify-center align-middle relative overflow-hidden"
+      className="bg-[url('../assets/darkAcademiaLibrary.jpeg')] bg-cover w-screen h-screen
+     flex items-center justify-center align-middle relative"
     >
       <div className='text-white w-fit flex flex-col items-center '>
         <h1 className='text-8xl pl-8 pr-8'>Phoenix Pages</h1>
