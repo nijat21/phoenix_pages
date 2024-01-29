@@ -40,7 +40,7 @@ function AboutUsPage() {
             <img
               src='./linkedin_logo2.webp'
               alt='/in'
-              className='text-center rounded-xl w-16 h-auto mb-4'
+              className='text-center rounded-xl w-16 h-auto'
             />
           </a>
           <a
@@ -51,7 +51,7 @@ function AboutUsPage() {
             <img
               src='./githubLogo2.png'
               alt='/in'
-              className='text-center rounded-xl w-16 h-auto mb-4'
+              className='text-center rounded-xl w-16 h-auto'
             />
           </a>
         </div>
@@ -79,7 +79,7 @@ function AboutUsPage() {
             <img
               src='./linkedin_logo2.webp'
               alt='/in'
-              className='text-center rounded-xl w-16 h-auto mb-4'
+              className='text-center rounded-xl w-16 h-auto'
             />
           </a>
           <a
@@ -90,7 +90,7 @@ function AboutUsPage() {
             <img
               src='./githubLogo2.png'
               alt='/in'
-              className='text-center rounded-xl w-16 h-auto mb-4'
+              className='text-center rounded-xl w-16 h-auto'
             />
           </a>
         </div>
