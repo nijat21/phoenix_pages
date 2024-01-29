@@ -2,7 +2,6 @@ import { Link } from 'react-router-dom';
 import RatingDisplay from '../components/RatingDisplay';
 import { useEffect, useState } from 'react';
 
-
 function BookCard({ book, setImageLoaded, imageLoaded }) {
   const [show, setShow] = useState(true);
   const [length, setLength] = useState(50);
@@ -21,7 +20,7 @@ function BookCard({ book, setImageLoaded, imageLoaded }) {
           <div className='h-64 w-40 mt-2 flex justify-center items-center'>
             {!imageLoaded && (
               <img
-                src='src/assets/coverLoading1.webp'
+                src='..assets/coverLoading1.webp'
                 alt='loading'
                 className='text-center object-cover h-60 w-26 rounded-tr-lg rounded-br-lg shadow-slate-400 shadow-sm w-40'
               />

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 function FourOFour() {
     return (
@@ -13,4 +13,3 @@ function FourOFour() {
 }
 
 export default FourOFour;
-
