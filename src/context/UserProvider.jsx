@@ -13,38 +13,37 @@ export const UserProvider = ({ children }) => {
   const [searchTitle, setSearchTitle] = useState('');
   const [enterHandler, setEnterHandler] = useState('');
   const [darkMode, setDarkMode] = useState(false);
-  const [theme, setTheme] = useState(null);
+  const [theme, setTheme] = useState('');
 
   // Check preferred color scheme
   useEffect(() => {
     if (window.matchMedia('(prefers-color-scheme:dark').matches) {
       setDarkMode(true);
-      setTheme("dark")
+      setTheme('dark');
     } else {
       setDarkMode(false);
-      setTheme("light")
+      setTheme('light');
     }
-  }, [])
+  }, []);
 
-
-  // 
+  //
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
     if (darkMode) {
-      setTheme("light")
+      setTheme('light');
     } else {
-      setTheme("dark")
+      setTheme('dark');
     }
-  }
+  };
 
-  // Getting the user preference 
+  // Getting the user preference
   useEffect(() => {
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
     } else {
-      document.documentElement.classList.remove("dark");
+      document.documentElement.classList.remove('dark');
     }
-  }, [theme])
+  }, [theme]);
 
   const storeToken = userId => {
     localStorage.setItem('userId', userId);
@@ -90,20 +89,20 @@ export const UserProvider = ({ children }) => {
   const getTopBooks = (input, slice, readlog) => {
     const five = input
       ? input
-        .filter(book => book.readinglog_count > readlog)
-        .sort(
-          (a, b) =>
-            b.ratings_average * 0.5 +
-            (b.already_read_count /
-              (b.readinglog_count - b.currently_reading_count)) *
-            5 *
-            0.5 -
-            (a.ratings_average * 0.5 +
-              (a.already_read_count /
-                (a.readinglog_count - a.currently_reading_count)) *
-              5 *
-              0.5)
-        )
+          .filter(book => book.readinglog_count > readlog)
+          .sort(
+            (a, b) =>
+              b.ratings_average * 0.5 +
+              (b.already_read_count /
+                (b.readinglog_count - b.currently_reading_count)) *
+                5 *
+                0.5 -
+              (a.ratings_average * 0.5 +
+                (a.already_read_count /
+                  (a.readinglog_count - a.currently_reading_count)) *
+                  5 *
+                  0.5)
+          )
       : [];
     return five.slice(0, slice);
   };
@@ -131,7 +130,7 @@ export const UserProvider = ({ children }) => {
         setDarkMode,
         toggleDarkMode,
         theme,
-        setTheme
+        setTheme,
       }}
     >
       {children}

@@ -163,14 +163,14 @@ function Profile() {
     <>
       {userDetails && (
         <div className='w-screen h-screen flex justify-center'>
-          <div className='mb-40 flex flex-col items-center justify-center'>
+          <div className=' flex flex-col items-center justify-center'>
             <div className='w-full px-12 py-10 flex  items-center justify-center border-2 border-slate-400 rounded-md shadow-sm shadow-slate-500'>
               {!usernameEdit && !passwordChange && !deleteProfile && (
                 <div className='flex flex-col justify-evenly items-center mr-10'>
                   <img
                     src='./authorGeneric.png'
                     alt='profileImg'
-                    className='w-20 mb-5'
+                    className='w-20 mb-5 rounded-3xl'
                   />
                   <h1 className='text-3xl'>{userDetails.username}</h1>
                 </div>
@@ -220,7 +220,7 @@ function Profile() {
                       type='text'
                       id='newUsername'
                       name='newUsername'
-                      className='border-solid rounded-md border-2 border-amber-800 min-w-72 min-h-10 pl-1 mb-2'
+                      className='border-solid rounded-md border-2 border-amber-800 min-w-72 min-h-10 pl-1 mb-2 text-black'
                       value={newUsername}
                       onChange={e => setNewUsername(e.target.value)}
                       ref={userRef}
@@ -234,7 +234,7 @@ function Profile() {
                       type='password'
                       id='passwordLogin'
                       name='passwordLogin'
-                      className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1'
+                      className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1 text-black'
                       value={password}
                       onChange={e => setPassword(e.target.value)}
                     />
@@ -270,7 +270,7 @@ function Profile() {
                       type='password'
                       id='password'
                       name='password'
-                      className='border-solid rounded-md border-2 border-amber-800 min-w-72 min-h-10 pl-1 mb-2'
+                      className='border-solid rounded-md border-2 border-amber-800 min-w-72 min-h-10 pl-1 mb-2 text-black'
                       value={password}
                       onChange={e => setPassword(e.target.value)}
                       ref={userRef}
@@ -282,7 +282,7 @@ function Profile() {
                       type='password'
                       id='newPassword'
                       name='newPassword'
-                      className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1 mb-2'
+                      className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1 mb-2 text-black'
                       value={newPassword}
                       onChange={e => setNewPassword(e.target.value)}
                     />
@@ -293,7 +293,7 @@ function Profile() {
                       type='password'
                       id='newPasswordConfirm'
                       name='newPasswordConfirm'
-                      className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1 mb-2'
+                      className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1 mb-2 text-black'
                       value={newPasswordConfirm}
                       onChange={e => setNewPasswordConfirm(e.target.value)}
                     />
@@ -328,7 +328,7 @@ function Profile() {
                       type='password'
                       id='passwordLogin'
                       name='passwordLogin'
-                      className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1 mb-2'
+                      className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1 mb-2 text-black'
                       value={password}
                       onChange={e => setPassword(e.target.value)}
                     />
@@ -340,7 +340,7 @@ function Profile() {
                       type='text'
                       id='deleteConfirm'
                       name='deleteConfirm'
-                      className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1 mb-2'
+                      className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1 mb-2 text-black'
                       value={deleteConfirm}
                       onChange={e => setDeleteConfirm(e.target.value)}
                     />

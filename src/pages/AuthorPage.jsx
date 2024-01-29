@@ -174,7 +174,7 @@ function AuthorPage() {
                               <div className='min-h-fit pt-3 flex justify-center items-center'>
                                 {!imageLoaded && (
                                   <img
-                                    src='../assets/coverLoading1.webp'
+                                    src='./coverLoading1.webp'
                                     alt='loading'
                                     className='text-center object-cover h-60 w-26'
                                   />

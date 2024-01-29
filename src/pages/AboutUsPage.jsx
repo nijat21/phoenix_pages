@@ -68,7 +68,7 @@ function AboutUsPage() {
             <strong>{person2.name}</strong>
           </h1>
           <h2 className='text-center text-sm'>{person2.role}</h2>
-          <p className='text-center text-sm mt-4'>{person1.bio}</p>
+          <p className='text-center text-sm mt-4'>{person2.bio}</p>
         </div>
         <div className='flex items-center w-64 py-6 my-4 px-8 justify-evenly border-2 border-lime-600 rounded-xl'>
           <a
