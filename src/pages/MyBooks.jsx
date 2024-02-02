@@ -152,20 +152,22 @@ function MyBooks() {
           <section>
             <button
               onClick={() => getList(1)}
-              className={`m-3 py-1 px-3 ${list === 1
-                ? 'border-b-2 border-black dark:border-neutral-200'
-                : 'border-b-2 border-transparent'
-                } hover:border-b-2 hover:border-black dark:hover:border-neutral-200`}
+              className={`m-3 py-1 px-3 ${
+                list === 1
+                  ? 'border-b-2 border-black dark:border-neutral-200'
+                  : 'border-b-2 border-transparent'
+              } hover:border-b-2 hover:border-black dark:hover:border-neutral-200`}
             >
               Want to Read
             </button>
 
             <button
               onClick={() => getList(2)}
-              className={`m-3 py-1 px-3 ${list === 2
-                ? 'border-b-2 border-black dark:border-neutral-200'
-                : 'border-b-2 border-transparent'
-                } hover:border-b-2 hover:border-black dark:hover:border-neutral-200`}
+              className={`m-3 py-1 px-3 ${
+                list === 2
+                  ? 'border-b-2 border-black dark:border-neutral-200'
+                  : 'border-b-2 border-transparent'
+              } hover:border-b-2 hover:border-black dark:hover:border-neutral-200`}
             >
               Already Read
             </button>
@@ -181,7 +183,7 @@ function MyBooks() {
                       to={`/books${book.key}`}
                       className='min-h-max w-1/5 pb-2 px-3 flex-shrink-0 rounded-br-lg shadow-slate-400 shadow-sm  border-2  border-slate-300 hover:border-slate-700 dark:hover:border-slate-500'
                     >
-                      <div className='h-full '>
+                      <div className='h-full flex flex-col justify-between'>
                         <div className='flex flex-col  text-center items-center justify-center '>
                           {book && book.covers && (
                             <>

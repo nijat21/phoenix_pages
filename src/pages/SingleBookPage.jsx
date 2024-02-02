@@ -196,7 +196,7 @@ function SingleBookPage() {
                 {!imageLoaded && (
                   <img
                     src='./coverLoading1.webp'
-                    alt=''
+                    alt='cover'
                     className='object-contain w-85 mb-10'
                   />
                 )}
