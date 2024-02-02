@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 // import Plx from 'react-plx';
 
 // const parallaxData = [
@@ -18,26 +19,29 @@ import { Link } from 'react-router-dom';
 
 function HomePage() {
   return (
-    <div
-      className="bg-[url('../assets/darkAcademiaLibrary.jpeg')] bg-cover w-screen h-screen
-     flex items-center justify-center align-middle relative"
-    >
-      <div className='text-white w-fit flex flex-col items-center '>
-        <h1 className='text-8xl pl-8 pr-8'>Phoenix Pages</h1>
-        <h3 className='text-2xl mt-16'>
-          "In the eternal flames of words, wisdom rises, forever reborn on
-          Phoenix Pages."
-        </h3>
-        <div className='mt-16 flex justify-center items-center'>
-          <Link
+    <div className="w-screen h-2screen flex justify-center relative">
+      <div className='bg-bkg bg-cover bg-center w-screen h-screen flex items-center justify-center '>
+        <div className='text-neutral-200 mt-20 w-fit  flex flex-col items-center bg-black bg-opacity-40 p-16 rounded-tl-5xl rounded-br-5xl'>
+          <h1 className='text-8xl pl-8 pr-8'>Phoenix Pages</h1>
+          <h3 className='text-2xl mt-16'>
+            "In the eternal flames of words, wisdom rises, forever reborn on
+            Phoenix Pages."
+          </h3>
+          <div className='mt-16 flex justify-center items-center'>
+            {/* <Link
             to={'/books'}
             className='border-solid border-2 border-amber-800 p-3 ml-4 rounded-tr-lg rounded-bl-lg hover:bg-amber-800 text-xl'
           >
-            Find all our books here
-          </Link>
+          </Link> */}
+            <button className='border-solid border-2 border-amber-800 p-3 ml-4 rounded-tr-lg rounded-bl-lg hover:bg-amber-800 text-xl'>
+              Discover more <ChevronDownIcon className='mx-2' boxSize={7} />
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+      <div>
+      </div>
+    </div >
   );
 }
 

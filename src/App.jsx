@@ -20,7 +20,7 @@ function App() {
   return (
     <div className='bg-bgk dark:bg-neutral-700 dark:text-neutral-200'>
       <Navbar />
-      <div className='pt-16 min-h-screen '>
+      <div className='min-h-screen '>
         <Routes>
           <Route path='/' element={<HomePage />} />
           <Route path='/books' element={<BooksPage />} />

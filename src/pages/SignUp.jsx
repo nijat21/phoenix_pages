@@ -114,7 +114,7 @@ function SignUp() {
                 type='text'
                 id='username'
                 name='username'
-                className='border-solid rounded-md border-2 border-amber-800 min-w-72 min-h-10 pl-1 mb-2'
+                className='border-solid rounded-md border-2 border-amber-800 min-w-72 min-h-10 pl-1 mb-2 dark:text-neutral-900'
                 value={username}
                 onChange={e => setUsername(e.target.value)}
                 ref={userRef}
@@ -126,7 +126,7 @@ function SignUp() {
                 type='password'
                 id='passwordLogin'
                 name='passwordLogin'
-                className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1 mb-2'
+                className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1 mb-2 dark:text-neutral-900'
                 value={password}
                 onChange={e => setPassword(e.target.value)}
               />
@@ -137,7 +137,7 @@ function SignUp() {
                 type='password'
                 id='password1'
                 name='password1'
-                className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1'
+                className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1 dark:text-neutral-900'
                 value={passwordConfirmed}
                 onChange={e => setPasswordConfirmed(e.target.value)}
               />
