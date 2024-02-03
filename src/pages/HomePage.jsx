@@ -1,47 +1,55 @@
-import React from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDownIcon } from '@chakra-ui/icons';
-// import Plx from 'react-plx';
+import { easeInOut, motion as m } from "framer-motion";
+import BooksPage from './BooksPage';
 
-// const parallaxData = [
-//   {
-//     start: 'self',
-//     duration: '100vh',
-//     properties: [
-//       {
-//         startValue: 0,
-//         endValue: 1,
-//         property: 'opacity',
-//       },
-//     ],
-//   },
-// ];
 
 function HomePage() {
+
+  const [scrolled, setScrolled] = useState(false);
+
+  const scrollEffect = () => {
+    setScrolled(true);
+    const booksPageOffset = document.getElementById('books-page').offsetTop;
+    window.scrollTo({
+      top: booksPageOffset,
+      behavior: 'smooth',
+      duration: 0.75
+    })
+  }
+
+
   return (
-    <div className="w-screen h-2screen flex justify-center relative">
-      <div className='bg-bkg bg-cover bg-center w-screen h-screen flex items-center justify-center '>
-        <div className='text-neutral-200 mt-20 w-fit  flex flex-col items-center bg-black bg-opacity-40 p-16 rounded-tl-5xl rounded-br-5xl'>
-          <h1 className='text-8xl pl-8 pr-8'>Phoenix Pages</h1>
-          <h3 className='text-2xl mt-16'>
-            "In the eternal flames of words, wisdom rises, forever reborn on
-            Phoenix Pages."
-          </h3>
-          <div className='mt-16 flex justify-center items-center'>
-            {/* <Link
-            to={'/books'}
-            className='border-solid border-2 border-amber-800 p-3 ml-4 rounded-tr-lg rounded-bl-lg hover:bg-amber-800 text-xl'
-          >
-          </Link> */}
-            <button className='border-solid border-2 border-amber-800 p-3 ml-4 rounded-tr-lg rounded-bl-lg hover:bg-amber-800 text-xl'>
-              Discover more <ChevronDownIcon className='mx-2' boxSize={7} />
-            </button>
+    <div className="w-screen h-2screen flex flex-col relative">
+      <div className='bg-bkg bg-cover bg-center w-screen h-screen flex items-center justify-center mt-0'>
+        <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, ease: "easeIn" }} exit={{ opacity: 0 }}
+          className='overflow-hidden text-neutral-200 mt-20 w-fit  flex flex-col items-center bg-black bg-opacity-40 p-8 rounded-tl-5xl rounded-br-5xl backdrop-blur-sm'>
+          <div className='overflow-hidden'>
+            <m.h1 className='text-8xl p-8'
+              initial={{ y: "100%" }} animate={{ y: 0 }} transition={{ delay: 0.5, duration: 0.75 }}
+            >Phoenix Pages
+            </m.h1>
           </div>
-        </div>
+          <m.h3 className='text-2xl p-6'
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.75, duration: 1 }}>
+            "In the eternal flames of words, wisdom rises, forever reborn on Phoenix Pages."
+          </m.h3>
+          <m.div className='p-6 flex justify-center items-center'
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.75, duration: 1 }}>
+            <button className='border-solid border-2 border-amber-800 p-3 ml-4 rounded-tr-lg rounded-bl-lg hover:bg-amber-800 text-xl'
+              onClick={scrollEffect}>
+              Discover books <ChevronDownIcon className='mx-2' boxSize={7} />
+            </button>
+          </m.div>
+        </m.div>
       </div>
-      <div>
+      <div id='books-page' className='h-screen w-screen'>
+        {scrolled &&
+          <BooksPage />
+        }
       </div>
-    </div >
+    </div>
   );
 }
 

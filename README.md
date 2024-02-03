@@ -53,7 +53,12 @@ https://openlibrary.org/search.json
 
 <br>
 
-## Packages
+## Packages & Libraries
+
+Tailwind
+Chakra UI
+Fontawesome
+Framer Motion
 
 <br>
 

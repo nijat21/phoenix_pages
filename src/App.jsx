@@ -1,5 +1,7 @@
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion as m } from 'framer-motion';
+
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import AboutUsPage from './pages/AboutUsPage';
@@ -17,27 +19,31 @@ import FourOFour from './pages/FourOFour';
 import ServerError from './pages/ServerError';
 
 function App() {
+  const location = useLocation();
+
   return (
     <div className='bg-bgk dark:bg-neutral-700 dark:text-neutral-200'>
       <Navbar />
-      <div className='min-h-screen '>
-        <Routes>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/books' element={<BooksPage />} />
-          <Route path='books/works/:bookKey' element={<SingleBookPage />} />
-          <Route path='/authors/:authorKey' element={<AuthorPage />} />
-          <Route path='/mybooks' element={<MyBooks />} />
-          <Route path='/aboutus' element={<AboutUsPage />} />
-          <Route path='/login' element={<LogIn />} />
-          <Route path='/signup' element={<SignUp />} />
-          <Route path='/profile' element={<Profile />} />
-          <Route path='/deleteuser' element={<DeleteUser />} />
-          <Route path='/search' element={<Search />} />
+      <AnimatePresence>
+        <div className='min-h-screen overflow-x-hidden'>
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/books' element={<BooksPage />} />
+            <Route path='books/works/:bookKey' element={<SingleBookPage />} />
+            <Route path='/authors/:authorKey' element={<AuthorPage />} />
+            <Route path='/mybooks' element={<MyBooks />} />
+            <Route path='/aboutus' element={<AboutUsPage />} />
+            <Route path='/login' element={<LogIn />} />
+            <Route path='/signup' element={<SignUp />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='/deleteuser' element={<DeleteUser />} />
+            <Route path='/search' element={<Search />} />
 
-          <Route path='/server-error' element={<ServerError />} />
-          <Route path='*' element={<FourOFour />} />
-        </Routes>
-      </div>
+            <Route path='/server-error' element={<ServerError />} />
+            <Route path='*' element={<FourOFour />} />
+          </Routes>
+        </div>
+      </AnimatePresence>
       <Footer />
     </div>
   );

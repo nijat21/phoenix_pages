@@ -1,10 +1,12 @@
 import { useState, useEffect, useContext } from 'react';
-import UserContext from '../context/UserProvider';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { motion as m } from "framer-motion";
+import UserContext from '../context/UserProvider';
 import RatingDisplay from '../components/RatingDisplay';
 import Loader from '../components/Loader';
 import BookCard from './BookCard';
+
 
 function BooksPage() {
   const [books, setBooks] = useState([]);
@@ -72,7 +74,7 @@ function BooksPage() {
       {loading ? (
         <Loader />
       ) : (
-        <div className='mb-10'>
+        <m.div initial={{ y: "100%" }} animate={{ y: "0%" }} transition={{ duration: 0.75, ease: "easeIn" }} exit={{ opacity: 1 }} className='mb-10 overflow-hidden'>
           <div className='py-5 flex flex-row justify-center items-center text-lg'>
             <button
               className={`m-3 py-1 px-3  ${category === '*'
@@ -157,7 +159,7 @@ function BooksPage() {
               )}
             </div>
           </div>
-        </div>
+        </m.div>
       )}
     </>
   );

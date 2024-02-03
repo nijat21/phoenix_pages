@@ -1,3 +1,5 @@
+import { motion as m } from 'framer-motion';
+import { container, item } from '../animation/animation.js'
 
 function SinglePerson({ person }) {
     return (
@@ -10,30 +12,37 @@ function SinglePerson({ person }) {
                 <h2 className='text-center text-md'>{person.role}</h2>
                 <h2 className='text-center text-sm'>{person.bio}</h2>
             </div>
-            <div className="my-8">
-                <p className="text-center"><strong>Recent reads:</strong>
-                    <br />
-                    {person.recentReads.map(book => {
-                        return <div>"{book}"</div>;
-                    })}
-                </p>
-            </div>
-            <div className='flex items-center w-40 justify-around'>
-                <a
-                    href={person.linkedIn}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                >
-                    <i className="fa-brands fa-linkedin fa-3x"></i>
-                </a>
-                <a
-                    href={person.github}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                >
-                    <i className="fa-brands fa-square-github fa-3x"></i>
-                </a>
-            </div>
+            <m.div className='flex flex-col items-center'
+                variants={container} initial='hidden' animate='show'>
+                <div className='overflow-hidden'>
+                    <m.div variants={item} className="my-8">
+                        <p className="text-center"><strong>Recent reads:</strong>
+                            <br />
+                            {person.recentReads.map(book => {
+                                return <div>"{book}"</div>;
+                            })}
+                        </p>
+                    </m.div>
+                </div>
+                <div className='overflow-hidden'>
+                    <m.div variants={item} className='flex items-center w-40 justify-around'>
+                        <a
+                            href={person.linkedIn}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                        >
+                            <i className="fa-brands fa-linkedin fa-3x"></i>
+                        </a>
+                        <a
+                            href={person.github}
+                            target='_blank'
+                            rel='noopener noreferrer'
+                        >
+                            <i className="fa-brands fa-square-github fa-3x"></i>
+                        </a>
+                    </m.div>
+                </div>
+            </m.div>
         </section>
     )
 }
