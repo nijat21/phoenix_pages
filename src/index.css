@@ -53,7 +53,7 @@
 }
 .loader .spinner {
   border: 10px solid rgba(0, 0, 0, 0.1);
-  border-left-color: #2a2b2c; /* Default color for light mode */
+  border-left-color: #2a2b2c;
   border-radius: 50%;
   width: 80px;
   height: 80px;
@@ -62,7 +62,7 @@
 
 /* Dark mode */
 .loader.dark .spinner {
-  border-left-color: #eaedf1; /* Color for dark mode */
+  border-left-color: #eaedf1;
 }
 
 @keyframes spin {

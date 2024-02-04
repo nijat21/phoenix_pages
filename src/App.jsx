@@ -1,5 +1,5 @@
 import './App.css';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { AnimatePresence, motion as m } from 'framer-motion';
 
 import Navbar from './components/Navbar';
@@ -19,13 +19,12 @@ import FourOFour from './pages/FourOFour';
 import ServerError from './pages/ServerError';
 
 function App() {
-  const location = useLocation();
 
   return (
     <div className='bg-bgk dark:bg-neutral-700 dark:text-neutral-200'>
       <Navbar />
       <AnimatePresence>
-        <div className='min-h-screen overflow-x-hidden'>
+        <div className='min-h-screen overflow-x-hidden overflow-y-hidden pt-16'>
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/books' element={<BooksPage />} />

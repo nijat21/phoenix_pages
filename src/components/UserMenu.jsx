@@ -2,6 +2,7 @@ import { useState, useContext, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import UserContext from '../context/UserProvider';
 import { Switch, FormControl, FormLabel } from '@chakra-ui/react'
+import { motion as m } from 'framer-motion';
 
 function UserMenu({ initial }) {
     const { logOutUser, darkMode, toggleDarkMode, theme, setTheme } = useContext(UserContext);
@@ -43,7 +44,8 @@ function UserMenu({ initial }) {
             </div>
             <div className='flex justify-center'>
                 {open ?
-                    <ul className='absolute mt-2 flex flex-col justify-center items-center py-4 bg-neutral-900 backdrop-filter backdrop-blur-3xl px-3 border-solid border-2 border-neutral-200 rounded-xl'>
+                    <m.ul initial={{ opacity: 0, y: "0%" }} animate={{ opacity: 1, y: '2.5%' }} transition={{ duration: 0.30, ease: "easeOut" }} exit={{ opacity: 0 }}
+                        className='absolute mt-2 flex flex-col justify-center items-center py-4 bg-neutral-900 backdrop-filter backdrop-blur-3xl px-3 border-solid border-2 border-neutral-200 rounded-xl'>
                         <li className='hover:border-b hover:border-neutral-200 zoom-container'><button onClick={handleProfile}>Profile</button></li>
                         <li className='hover:border-b hover:border-neutral-200 zoom-container'><button onClick={handleLogout}>Logout</button></li>
                         <FormControl className='flex items-center justify-evenly mt-2'>
@@ -54,7 +56,7 @@ function UserMenu({ initial }) {
                                 onChange={toggleDarkMode} isChecked={darkMode}
                             />
                         </FormControl>
-                    </ul>
+                    </m.ul>
                     :
                     null}
             </div>

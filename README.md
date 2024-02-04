@@ -56,9 +56,15 @@ https://openlibrary.org/search.json
 ## Packages & Libraries
 
 Tailwind
+<br/>
 Chakra UI
+<br/>
 Fontawesome
+<br/>
 Framer Motion
+<br/>
+React-scroll
+<br/>
 
 <br>
 
