@@ -28,7 +28,7 @@ function AboutUsPage() {
 
   return (
     <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.75, ease: "easeIn" }} exit={{ opacity: 0 }}
-      className='w-screen min-h-screen flex items-center justify-center'>
+      className='w-screen h-screen flex items-center justify-center'>
       <div className=' flex justify-center items-center w-3/5  border-2 border-transparent rounded-xl bg-black bg-opacity-20'>
         <SinglePerson person={person1} />
         <SinglePerson person={person2} />

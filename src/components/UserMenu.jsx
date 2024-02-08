@@ -44,7 +44,7 @@ function UserMenu({ initial }) {
             </div>
             <div className='flex justify-center'>
                 {open ?
-                    <m.ul initial={{ opacity: 0, y: "0%" }} animate={{ opacity: 1, y: '2.5%' }} transition={{ duration: 0.30, ease: "easeOut" }} exit={{ opacity: 0 }}
+                    <m.ul initial={{ opacity: 0, y: "0%" }} animate={{ opacity: 1, y: '2.5%' }} transition={{ duration: 0.30, ease: "easeInOut" }} exit={{ opacity: 0 }}
                         className='absolute mt-2 flex flex-col justify-center items-center py-4 bg-neutral-900 backdrop-filter backdrop-blur-3xl px-3 border-solid border-2 border-neutral-200 rounded-xl'>
                         <li className='hover:border-b hover:border-neutral-200 zoom-container'><button onClick={handleProfile}>Profile</button></li>
                         <li className='hover:border-b hover:border-neutral-200 zoom-container'><button onClick={handleLogout}>Logout</button></li>

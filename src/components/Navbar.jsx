@@ -42,13 +42,13 @@ function Navbar() {
 
   return (
     <>
-      <nav className='h-16 w-screen flex justify-between justify-items-center place-items-center items-center  bg-neutral-800 font-light font-serif fixed top-0 z-20'>
+      <nav className='h-16 w-screen flex justify-between justify-items-center place-items-center items-center  bg-neutral-800 font-light font-serif fixed top-0 z-50 bg-opacity-90 backdrop-blur-2xl'>
         <div className='mw-1/3 ml-10 w-1/3 '>
           <button>
             <Link to={'/'} className='flex h-12 place-items-center'>
               <img src='../assets/logo.png' alt='Home' className='w-12' />
               <div className='ml-1'>
-                <p className='text-amber-800 text-bold mb-0 text-2xl'>
+                <p className='text-amber-800 text-bold mb-0 text-3xl'>
                   Phoenix Pages
                 </p>
               </div>
@@ -64,11 +64,11 @@ function Navbar() {
               </h2>
             </Link>
           </button>
-          <button onClick={() => handleClick()}>
-            <div className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
+          <div className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
+            <div tabIndex='0' role='button' onClick={() => handleClick()}>
               <CategoriesMenu />
             </div>
-          </button>
+          </div>
           <button onClick={() => handleClick()}>
             <Link to={'/aboutus'}>
               <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
@@ -77,13 +77,11 @@ function Navbar() {
             </Link>
           </button>
           {userLogin && (
-            <button onClick={() => handleClick()}>
-              <Link to={'/mybooks'}>
-                <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
-                  My Books
-                </h2>
-              </Link>
-            </button>
+            <Link to={'/mybooks'} onClick={() => handleClick()}>
+              <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
+                My Books
+              </h2>
+            </Link>
           )}
         </div>
         <div className='w-1/3 mr-10 flex text-xl items-center justify-end '>

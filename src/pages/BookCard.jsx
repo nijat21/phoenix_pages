@@ -14,7 +14,7 @@ function BookCard({ book, setImageLoaded, imageLoaded }) {
     }
   };
   return (
-    <div className='flex flex-col h-auto text-center items-center '>
+    <div className='flex flex-col h-auto text-center items-center'>
       {book && book.cover_i && (
         <>
           <div className='h-64 w-40 mt-2 flex justify-center items-center'>
@@ -53,7 +53,7 @@ function BookCard({ book, setImageLoaded, imageLoaded }) {
               </h2>
             </div>
             <p className='text-sm'>({book.first_publish_year})</p>
-            <div className='mh-10 flex justify-center items-center '>
+            <div className='flex justify-center items-center '>
               <h4>{book.author_name[0]}</h4>
             </div>
             <div className=' flex justify-center items-center '>

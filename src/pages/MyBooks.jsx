@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { motion as m } from 'framer-motion';
 import UserContext from '../context/UserProvider';
-import RatingDisplay from '../components/RatingDisplay';
 import Loader from '../components/Loader';
 
 const API_URL = 'https://server-phoenix-pages.adaptable.app';
@@ -148,32 +148,31 @@ function MyBooks() {
       {loading ? (
         <Loader />
       ) : (
-        <div className='py-5 flex flex-col text-center'>
+        <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.75, ease: "easeOut" }} exit={{ opacity: 0 }}
+          className='h-screen py-5 flex flex-col text-center overflow-hidden'>
           <section>
             <button
               onClick={() => getList(1)}
-              className={`m-3 py-1 px-3 ${
-                list === 1
-                  ? 'border-b-2 border-black dark:border-neutral-200'
-                  : 'border-b-2 border-transparent'
-              } hover:border-b-2 hover:border-black dark:hover:border-neutral-200`}
+              className={`m-3 py-1 px-3 ${list === 1
+                ? 'border-b-2 border-black dark:border-neutral-200'
+                : 'border-b-2 border-transparent'
+                } hover:border-b-2 hover:border-black dark:hover:border-neutral-200`}
             >
               Want to Read
             </button>
 
             <button
               onClick={() => getList(2)}
-              className={`m-3 py-1 px-3 ${
-                list === 2
-                  ? 'border-b-2 border-black dark:border-neutral-200'
-                  : 'border-b-2 border-transparent'
-              } hover:border-b-2 hover:border-black dark:hover:border-neutral-200`}
+              className={`m-3 py-1 px-3 ${list === 2
+                ? 'border-b-2 border-black dark:border-neutral-200'
+                : 'border-b-2 border-transparent'
+                } hover:border-b-2 hover:border-black dark:hover:border-neutral-200`}
             >
               Already Read
             </button>
           </section>
 
-          <section className='flex overflow-x-scroll h-auto gap-5 mx-20 my-10 py-8 border-b-2 border-t-2 border-amber-800 dark:border-amber-600 '>
+          <section className='flex overflow-x-scroll h-4/6 gap-8 mx-20 my-10 py-8 border-b-2 border-t-2 border-amber-800 dark:border-amber-600'>
             {additionalBookInfo &&
               additionalBookInfo.map(book => {
                 return (
@@ -181,7 +180,8 @@ function MyBooks() {
                     <Link
                       key={book.key}
                       to={`/books${book.key}`}
-                      className='min-h-max w-1/5 pb-2 px-3 flex-shrink-0 rounded-br-lg shadow-slate-400 shadow-sm  border-2  border-slate-300 hover:border-slate-700 dark:hover:border-slate-500'
+                      className='min-h-max w-1/5 pb-2 px-3 flex-shrink-0 rounded-br-lg shadow-slate-400 shadow-md border border-slate-300 hover:border-slate-700 
+                    dark:shadow-neutral-900 dark:hover:border-slate-500'
                     >
                       <div className='h-full flex flex-col justify-between'>
                         <div className='flex flex-col  text-center items-center justify-center '>
@@ -194,7 +194,7 @@ function MyBooks() {
                                   className='text-center object-cover h-60 w-26 rounded-tr-lg rounded-br-lg shadow-slate-400 shadow-sm w-40 '
                                 />
                               </div>
-                              <div className='mb-4 mw-44 mt-2'>
+                              <div className='mw-44 my-2'>
                                 <div className=' flex justify-center items-center'>
                                   <h2>
                                     <strong className='max-w-xs'>
@@ -214,7 +214,7 @@ function MyBooks() {
                                     )}
                                   </h2>
                                 </div>
-                                <div className='mt-2 flex justify-center items-center '>
+                                <div className='flex justify-center items-center '>
                                   <h4>{book.authorName}</h4>
                                 </div>
                               </div>
@@ -253,14 +253,16 @@ function MyBooks() {
           </section>
           <div className='my-2 mr-20 self-end flex flex-col '>
             <button
-              className=' p-2 rounded-2xl border-2 text-white border-lime-700 text-l bg-lime-700 hover:bg-lime-600 hover:border-lime-600'
+              className=' p-2 rounded-2xl text-white shadow-slate-400 shadow-md bg-lime-700 
+              hover:bg-lime-600  dark:shadow-neutral-900'
               onClick={handleGoBack}
             >
               Go Back
             </button>
           </div>
-        </div>
-      )}
+        </m.div >
+      )
+      }
     </>
   );
 }

@@ -1,5 +1,6 @@
 import { motion as m } from 'framer-motion';
-import { container, item } from '../animation/animation.js'
+import { container, item } from '../animation/animation.js';
+import { v4 as uuidv4 } from 'uuid';
 
 function SinglePerson({ person }) {
     return (
@@ -16,12 +17,11 @@ function SinglePerson({ person }) {
                 variants={container} initial='hidden' animate='show'>
                 <div className='overflow-hidden'>
                     <m.div variants={item} className="my-8">
-                        <p className="text-center"><strong>Recent reads:</strong>
-                            <br />
-                            {person.recentReads.map(book => {
-                                return <div>"{book}"</div>;
-                            })}
-                        </p>
+                        <p className="text-center"><strong>Recent reads:</strong></p>
+                        {person.recentReads.map(book => {
+                            let uniqueKey = uuidv4();
+                            return <div key={uniqueKey}>"{book}"</div>;
+                        })}
                     </m.div>
                 </div>
                 <div className='overflow-hidden'>
