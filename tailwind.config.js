@@ -19,12 +19,6 @@ module.exports = {
       borderRadius: {
         '5xl': '2.5rem',
       },
-      scrollbar: {
-        width: '12px',
-        track: 'transparent',
-        thumb: 'rgba(156, 163, 175, var(--scrollbar-thumb-opacity))',
-        thumbHover: 'rgba(138, 145, 156, var(--scrollbar-thumb-opacity))',
-      },
     },
   },
   plugins: [],

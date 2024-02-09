@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { motion as m } from 'framer-motion';
 import UserContext from '../context/UserProvider';
 import Loader from '../components/Loader';
+import '/src/Scrollbar.css';
 
 const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
@@ -172,7 +173,7 @@ function MyBooks() {
             </button>
           </section>
 
-          <section className='flex overflow-x-scroll h-4/6 gap-8 mx-20 my-10 py-8 border-b-2 border-t-2 border-amber-800 dark:border-amber-600'>
+          <section className='flex overflow-x-scroll h-4/6 gap-8 mx-20 my-10 py-8 border-b-2 border-t-2 border-amber-800 dark:border-amber-600 scrollbar-track'>
             {additionalBookInfo &&
               additionalBookInfo.map(book => {
                 return (
@@ -229,7 +230,7 @@ function MyBooks() {
                                 addToAlreadyRead(book.key, book.id);
                                 e.preventDefault();
                               }}
-                              className='w-1/2 px-2 py-1 mx-2 mb-3 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
+                              className='h-12 w-1/2 px-2 py-1 mx-2 mb-3 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
                             >
                               Already Read
                             </button>
@@ -240,7 +241,7 @@ function MyBooks() {
                               removeFromList(book.id);
                               e.preventDefault();
                             }}
-                            className='w-1/2 px-2 py-1 mx-1 mb-3 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
+                            className='h-12 w-1/2 px-2 py-1 mx-1 mb-3 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
                           >
                             Remove
                           </button>

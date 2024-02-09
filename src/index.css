@@ -70,8 +70,3 @@
     transform: rotate(360deg);
   }
 }
-
-/* Scroll bar transparent background */
-::-webkit-scrollbar-track {
-  background-color: transparent;
-}
