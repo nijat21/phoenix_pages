@@ -74,7 +74,7 @@ function BooksPage() {
 
   return (
     <div className={`h-${homeHeight} px-20`}>
-      <div className='py-5 h-24 flex flex-row justify-center items-center text-lg'>
+      <div className='py-5 h-24 flex flex-row justify-center items-center text-xl'>
         <button
           className={`m-3 py-1 px-3  ${category === '*'
             ? 'border-b-2 border-black dark:border-neutral-200'

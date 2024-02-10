@@ -1,11 +1,14 @@
+import { useContext } from "react";
+import UserContext from "../context/UserProvider";
+
 function LoaderAuthors() {
+  const { theme } = useContext(UserContext);
+
   return (
-    <div className='flex items-center justify-center w-screen'>
-      <img
-        src='./loader.gif'
-        alt=''
-        className='w-1/6 max-h-min flex-shrink-0 flex '
-      />
+    <div className='flex items-center justify-center w-screen h-96'>
+      <div className={`loader ${theme} items-center`}>
+        <div className="spinner" alt=''></div>
+      </div>
     </div>
   );
 }
