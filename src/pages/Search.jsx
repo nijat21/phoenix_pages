@@ -1,9 +1,10 @@
 import { useState, useEffect, useContext } from 'react';
 import UserContext from '../context/UserProvider';
 import axios from 'axios';
+import { motion as m } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import RatingDisplay from '../components/RatingDisplay';
-import Loader from '../components/Loader';
+import LoaderFull from '../components/LoaderFull';
 import BookCard from '../pages/BookCard';
 import NotFound from '../components/NotFound';
 
@@ -73,15 +74,15 @@ function Search() {
   return (
     <>
       {loading ? (
-        <Loader />
+        <LoaderFull />
       ) : (
-        <div className='flex flex-col mx-16'>
+        <m.div className='flex flex-col px-20' initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.75, ease: "easeOut" }} exit={{ opacity: 0 }}>
           <div className=' flex justify-center'>
             <h1 className='text-3xl py-9 font-bold'>Search Results</h1>
           </div>
 
           {books.length > 0 && topFifteen.length > 0 ? (
-            <section className='grid grid-cols-5 gap-x-5 gap-y-8 auto-rows-auto '>
+            <section className='grid grid-cols-5 gap-x-8 gap-y-8 auto-rows-auto'>
               {topFifteen.map(book => {
                 return (
                   <Link
@@ -110,8 +111,9 @@ function Search() {
               Go Back
             </button>
           </div>
-        </div>
-      )}
+        </m.div >
+      )
+      }
     </>
   );
 }

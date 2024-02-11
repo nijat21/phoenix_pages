@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { motion as m } from "framer-motion";
 import BooksPage from './BooksPage';
@@ -6,7 +5,7 @@ import { Link as ScrollLink } from 'react-scroll';
 
 
 function HomePage() {
-  const [scrolled, setScrolled] = useState(false);
+  // const [scrolled, setScrolled] = useState(false);
 
   // const handleScroll = () => {
   //   const homePageOffset = document.getElementById('home-page').offsetTop;
@@ -38,19 +37,21 @@ function HomePage() {
 
 
   return (
-    <div className="w-screen min-h-screen flex flex-col relative overflow-hidden">
+    <div className="w-screen min-h-screen flex flex-col relative overflow-hidden scrollbar scrollbar-thumb-neutral-600 dark:scrollbar-thumb-neutral-800 scrollbar-track-transparent">
       <div id='home-page' className='bg-bkg bg-cover bg-center w-screen h-screen flex items-center justify-center mt-0 z-20'>
         <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, ease: "easeIn" }} exit={{ opacity: 0 }}
-          className='overflow-hidden text-neutral-200 mt-20 w-fit  flex flex-col items-center bg-black bg-opacity-40 p-8 rounded-tl-5xl rounded-br-5xl backdrop-blur-sm'>
+          className='w-3/5 overflow-hidden text-neutral-200 mt-20 flex flex-col items-center bg-black bg-opacity-40 p-8 rounded-tl-5xl rounded-br-5xl backdrop-blur-sm'>
           <div className='overflow-hidden'>
             <m.h1 className='text-8xl p-8'
               initial={{ y: "100%" }} animate={{ y: 0 }} transition={{ delay: 0.5, duration: 0.75 }}
             >Phoenix Pages
             </m.h1>
           </div>
-          <m.h3 className='text-2xl p-6'
+          <m.h3 className='text-2xl p-6 text-center'
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.75, duration: 1 }}>
-            "In the eternal flames of words, wisdom rises, forever reborn on Phoenix Pages."
+            <i>Eternity of knowledge is preserved in books and guested in memories of people from generation to generation.</i>
+            <br />
+            <p className='pt-2 text-2xl'>Find your next books, plan and track your reading!</p>
           </m.h3>
           <m.div className='p-6 flex justify-center items-center'
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.75, duration: 1 }}>

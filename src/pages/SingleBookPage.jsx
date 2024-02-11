@@ -3,26 +3,24 @@ import { useParams, useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserProvider';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import Loader from '../components/Loader';
+import LoaderFull from '../components/LoaderFull';
 
 const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
 function SingleBookPage() {
   const { bookKey } = useParams();
-  const { USERID, setUSERID } = useContext(UserContext);
+  const { USERID, setUSERID, loading, setLoading } = useContext(UserContext);
 
   const [book, setBook] = useState(null);
   const [author, setAuthor] = useState(null);
   const [alreadyReadCheck, setAlreadyReadCheck] = useState(false);
   const [wantToReadCheck, setWantToReadCheck] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [descLength, setDescLength] = useState(850);
   const [descShow, setDescShow] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    setLoading(true);
     axios
       .get(`https://openlibrary.org/works/${bookKey}.json`) //this returns a promise
       .then(response => {
@@ -186,7 +184,7 @@ function SingleBookPage() {
   return (
     <div>
       {loading ? (
-        <Loader />
+        <LoaderFull />
       ) : (
         <div className='pt-3'>
           {/* only return books with cover and author information */}
@@ -195,7 +193,7 @@ function SingleBookPage() {
               <figure className='w-1/5 ml-10 flex flex-col justify-center'>
                 {!imageLoaded && (
                   <img
-                    src='./coverLoading1.webp'
+                    src='/public/coverLoading1.webp'
                     alt='cover'
                     className='object-contain w-85 mb-10'
                   />
@@ -211,7 +209,8 @@ function SingleBookPage() {
                     {!wantToReadCheck ? (
                       <button
                         onClick={() => wantToRead()}
-                        className='px-4 py-1 mx-2 mb-5 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
+                        className='px-4 py-1 mx-2 mb-5 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700
+                        shadow-md shadow-slate-400 dark:shadow-neutral-900'
                       >
                         Want to Read
                       </button>
@@ -223,7 +222,8 @@ function SingleBookPage() {
                     {!alreadyReadCheck ? (
                       <button
                         onClick={() => alreadyRead()}
-                        className='px-4 py-1 mx-2 rounded-2xl border-solid bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
+                        className='px-4 py-1 mx-2 rounded-2xl border-solid bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700
+                        shadow-md shadow-slate-400 dark:shadow-neutral-900'
                       >
                         Already Read
                       </button>
@@ -250,25 +250,25 @@ function SingleBookPage() {
                     <p className='mb-20 pb-3 border-b-2 border-amber-800'>
                       {typeof book.description === 'object'
                         ? removeText(
-                            book.description.value.slice(0, descLength)
-                          )
+                          book.description.value.slice(0, descLength)
+                        )
                         : removeText(book.description.slice(0, descLength))}
 
                       {((typeof book.description !== 'object' &&
                         book.description.length > 850) ||
                         (typeof book.description === 'object' &&
                           book.description.value.length > 850)) && (
-                        <button
-                          className='ml-1 font-thin text-gray-400 rounded-lg hover:bg-slate-200 hover:px-1'
-                          onClick={e => {
-                            e.stopPropagation();
-                            showDesc(undefined);
-                            e.preventDefault();
-                          }}
-                        >
-                          {descShow ? 'more' : 'less'}
-                        </button>
-                      )}
+                          <button
+                            className='ml-1 font-thin text-gray-400 rounded-lg hover:bg-slate-200 hover:px-1'
+                            onClick={e => {
+                              e.stopPropagation();
+                              showDesc(undefined);
+                              e.preventDefault();
+                            }}
+                          >
+                            {descShow ? 'more' : 'less'}
+                          </button>
+                        )}
                     </p>
                   ) : (
                     <p className='text-sm'>
@@ -279,7 +279,7 @@ function SingleBookPage() {
 
                 <div className='my-2 self-end flex flex-col '>
                   <button
-                    className='mt-4 p-2 rounded-2xl border-2 text-white border-lime-700 text-l bg-lime-700 hover:bg-lime-600 hover:border-lime-600'
+                    className='w-20 p-2 rounded-2xl text-white shadow-slate-400 dark:shadow-neutral-900 shadow-md bg-lime-700 hover:bg-lime-600'
                     onClick={handleGoBack}
                   >
                     Go Back

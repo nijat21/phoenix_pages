@@ -11,8 +11,7 @@ function MyBooks() {
   const [myListOfBooks, setMyListOfBooks] = useState(null);
   const [additionalBookInfo, setAdditionalBookInfo] = useState([]);
   const [list, setList] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const { USERID, setUSERID } = useContext(UserContext);
+  const { USERID, setUSERID, loading, setLoading } = useContext(UserContext);
   const [show, setShow] = useState(true);
   const [length, setLength] = useState(25);
   const navigate = useNavigate();
@@ -21,14 +20,13 @@ function MyBooks() {
 
   const getList = async v => {
     try {
+      setLoading(true);
       if (v === 1) {
-        setLoading(true);
         const response = await axios.get(
           `${API_URL}/users/${USERID}?_embed=books_to_read`
         );
         setList(1);
         setMyListOfBooks(response.data.books_to_read);
-        setLoading(false);
       } else if (v === 2) {
         const response = await axios.get(
           `${API_URL}/users/${USERID}?_embed=books_already_read`
@@ -47,7 +45,6 @@ function MyBooks() {
 
   const getBooksByKey = async (bookKey, id) => {
     try {
-      setLoading(true);
       const response = await axios.get(
         `https://openlibrary.org/works/${bookKey}.json`
       );
@@ -56,7 +53,6 @@ function MyBooks() {
       response.data.authorName = await getAuthorByKey(
         response.data.authors[0].author.key
       );
-      setLoading(false);
 
       console.log(response.data);
       return response.data;
@@ -88,7 +84,6 @@ function MyBooks() {
   useEffect(() => {
     const fetchAdditionalInfo = async () => {
       try {
-        setLoading(true);
         const promises = myListOfBooks.map(async book => {
           const info = await getBooksByKey(book.bookKey, book.id);
 
@@ -145,129 +140,130 @@ function MyBooks() {
   };
 
   return (
-    <>
-      {loading ? (
-        <Loader />
-      ) : (
-        <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.75, ease: "easeOut" }} exit={{ opacity: 0 }}
-          className='h-screen py-5 flex flex-col text-center overflow-hidden'>
-          <section className='text-xl'>
-            <button
-              onClick={() => getList(1)}
-              className={`m-3 py-1 px-3 ${list === 1
-                ? 'border-b-2 border-black dark:border-neutral-200'
-                : 'border-b-2 border-transparent'
-                } hover:border-b-2 hover:border-black dark:hover:border-neutral-200`}
-            >
-              Want to Read
-            </button>
+    <div className='h-screen'>
+      <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.75, ease: "easeOut" }} exit={{ opacity: 0 }}
+        className='h-screen py-5 flex flex-col text-center overflow-hidden'>
+        <section className='text-xl'>
+          <button
+            onClick={() => getList(1)}
+            className={`m-3 py-1 px-3 ${list === 1
+              ? 'border-b-2 border-black dark:border-neutral-200'
+              : 'border-b-2 border-transparent'
+              } hover:border-b-2 hover:border-black dark:hover:border-neutral-200`}
+          >
+            Want to Read
+          </button>
 
-            <button
-              onClick={() => getList(2)}
-              className={`m-3 py-1 px-3 ${list === 2
-                ? 'border-b-2 border-black dark:border-neutral-200'
-                : 'border-b-2 border-transparent'
-                } hover:border-b-2 hover:border-black dark:hover:border-neutral-200`}
-            >
-              Already Read
-            </button>
-          </section>
-
-          <div className='min-h-4/6 mx-20 my-10 pt-8 pb-3 border-y-2 border-amber-800 dark:border-amber-600'>
-            <section className='flex overflow-x-scroll pb-5 gap-8 scrollbar scrollbar-thumb-neutral-600 dark:scrollbar-thumb-neutral-800 scrollbar-track-transparent'>
-              {additionalBookInfo.length === 0 ?
-                <div className='text-3xl w-full h-96 flex justify-center items-center'>
-                  <h1>No books in your library!</h1>
-                </div>
-                :
-                additionalBookInfo.map(book => {
-                  return (
-                    book && (
-                      <Link
-                        key={book.key}
-                        to={`/books${book.key}`}
-                        className='min-h-max w-1/5 pb-2 px-3 flex-shrink-0 rounded-br-lg shadow-slate-400 shadow-md border border-slate-300 hover:border-slate-700 
+          <button
+            onClick={() => getList(2)}
+            className={`m-3 py-1 px-3 ${list === 2
+              ? 'border-b-2 border-black dark:border-neutral-200'
+              : 'border-b-2 border-transparent'
+              } hover:border-b-2 hover:border-black dark:hover:border-neutral-200`}
+          >
+            Already Read
+          </button>
+        </section>
+        {loading ?
+          <Loader />
+          :
+          <div>
+            <div className='min-h-4/6 mx-20 my-10 pt-8 pb-3 border-y-2 border-amber-800 dark:border-amber-600'>
+              <section className='flex overflow-x-scroll pb-5 gap-8 scrollbar scrollbar-thumb-neutral-600 dark:scrollbar-thumb-neutral-800 scrollbar-track-transparent'>
+                {additionalBookInfo.length === 0 ?
+                  <div className='text-3xl w-full h-96 flex justify-center items-center'>
+                    <h1>No books in your library!</h1>
+                  </div>
+                  :
+                  additionalBookInfo.map(book => {
+                    return (
+                      book && (
+                        <Link
+                          key={book.key}
+                          to={`/books${book.key}`}
+                          className='min-h-max w-1/5 pb-2 px-3 flex-shrink-0 rounded-br-lg shadow-slate-400 shadow-md border border-slate-300 hover:border-slate-700 
                     dark:shadow-neutral-900 dark:hover:border-slate-500'
-                      >
-                        <div className='h-full flex flex-col justify-between'>
-                          <div className='flex flex-col  text-center items-center justify-center '>
-                            {book && book.covers && (
-                              <>
-                                <div className='h-64 flex justify-center items-center mt-2'>
-                                  <img
-                                    src={`https://covers.openlibrary.org/b/id/${book.covers[0]}-M.jpg`}
-                                    alt='cover'
-                                    className='text-center object-cover h-60 w-26 rounded-tr-lg rounded-br-lg shadow-slate-400 shadow-sm w-40 '
-                                  />
-                                </div>
-                                <div className='mw-44 my-2'>
-                                  <div className=' flex justify-center items-center'>
-                                    <h2>
-                                      <strong className='max-w-xs'>
-                                        {book.title.slice(0, length)}
-                                      </strong>
-                                      {book.title.length > 25 && (
-                                        <button
-                                          className='ml-1 font-thin text-gray-400 hover:bg-slate-200 hover:px-1'
-                                          onClick={e => {
-                                            e.stopPropagation();
-                                            showTitle(book.title.length);
-                                            e.preventDefault();
-                                          }}
-                                        >
-                                          {show ? 'more' : 'less'}
-                                        </button>
-                                      )}
-                                    </h2>
+                        >
+                          <div className='h-full flex flex-col justify-between'>
+                            <div className='flex flex-col  text-center items-center justify-center '>
+                              {book && book.covers && (
+                                <>
+                                  <div className='h-64 flex justify-center items-center mt-2'>
+                                    <img
+                                      src={`https://covers.openlibrary.org/b/id/${book.covers[0]}-M.jpg`}
+                                      alt='cover'
+                                      className='text-center object-cover h-60 w-26 rounded-tr-lg rounded-br-lg shadow-slate-400 shadow-sm w-40 '
+                                    />
                                   </div>
-                                  <div className='flex justify-center items-center '>
-                                    <h4>{book.authorName}</h4>
+                                  <div className='mw-44 my-2'>
+                                    <div className=' flex justify-center items-center'>
+                                      <h2>
+                                        <strong className='max-w-xs'>
+                                          {book.title.slice(0, length)}
+                                        </strong>
+                                        {book.title.length > 25 && (
+                                          <button
+                                            className='ml-1 font-thin text-gray-400 hover:bg-slate-200 hover:px-1'
+                                            onClick={e => {
+                                              e.stopPropagation();
+                                              showTitle(book.title.length);
+                                              e.preventDefault();
+                                            }}
+                                          >
+                                            {show ? 'more' : 'less'}
+                                          </button>
+                                        )}
+                                      </h2>
+                                    </div>
+                                    <div className='flex justify-center items-center '>
+                                      <h4>{book.authorName}</h4>
+                                    </div>
                                   </div>
-                                </div>
-                              </>
-                            )}
-                          </div>
-                          <div className='flex justify-center text-sm'>
-                            {list === 1 && (
+                                </>
+                              )}
+                            </div>
+                            <div className='flex justify-center text-sm'>
+                              {list === 1 && (
+                                <button
+                                  onClick={e => {
+                                    e.stopPropagation();
+                                    addToAlreadyRead(book.key, book.id);
+                                    e.preventDefault();
+                                  }}
+                                  className='h-10 w-1/2 px-2 py-1 mx-2 mb-3 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
+                                >
+                                  Finished
+                                </button>
+                              )}
                               <button
                                 onClick={e => {
                                   e.stopPropagation();
-                                  addToAlreadyRead(book.key, book.id);
+                                  removeFromList(book.id);
                                   e.preventDefault();
                                 }}
-                                className='h-10 w-1/2 px-2 py-1 mx-2 mb-3 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
+                                className='h-10 w-1/2 px-2 py-1 mx-1 mb-3 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
                               >
-                                Finished
+                                Remove
                               </button>
-                            )}
-                            <button
-                              onClick={e => {
-                                e.stopPropagation();
-                                removeFromList(book.id);
-                                e.preventDefault();
-                              }}
-                              className='h-10 w-1/2 px-2 py-1 mx-1 mb-3 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
-                            >
-                              Remove
-                            </button>
+                            </div>
                           </div>
-                        </div>
-                      </Link>
-                    ))
-                })}
-            </section>
-          </div>
-          <div className='my-2 mr-20 self-end flex flex-col '>
-            <button className=' p-2 rounded-2xl text-white shadow-slate-400 shadow-md bg-lime-700 
+                        </Link>
+                      ))
+                  })}
+              </section>
+            </div>
+            <div className='my-2 mr-20 w-auto flex justify-end'>
+              <button className='w-20 p-2 rounded-2xl text-white shadow-slate-400 shadow-md bg-lime-700 
               hover:bg-lime-600  dark:shadow-neutral-900'
-              onClick={handleGoBack}>
-              Go Back
-            </button>
+                onClick={handleGoBack}>
+                Go Back
+              </button>
+            </div>
           </div>
-        </m.div >
+        }
+      </m.div>
       )
-      }
-    </>
+    </div>
   );
 }
 

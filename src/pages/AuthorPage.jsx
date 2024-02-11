@@ -4,8 +4,8 @@ import axios from 'axios';
 import { useEffect, useState, useContext } from 'react';
 import UserContext from '../context/UserProvider';
 import RatingDisplay from '../components/RatingDisplay';
+import LoaderFull from '../components/LoaderFull';
 import Loader from '../components/Loader';
-import LoaderAuthors from '../components/LoaderAuthors';
 
 function AuthorPage() {
   const { authorKey } = useParams();
@@ -25,12 +25,10 @@ function AuthorPage() {
   const [bioShow, setBioShow] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
     axios
       .get(`https://openlibrary.org/authors/${authorKey}.json`) //this returns a promise
       .then(response => {
         console.log(response.data);
-        setLoading(false);
 
         setAuthor(response.data);
       })
@@ -41,7 +39,6 @@ function AuthorPage() {
   }, []);
 
   useEffect(() => {
-    setLoadingAuthor(true);
     axios
       .get(
         `https://openlibrary.org/search.json?q=author_key:${authorKey}&limit=50`
@@ -99,7 +96,7 @@ function AuthorPage() {
   return (
     <>
       {loading ? (
-        <Loader />
+        <LoaderFull />
       ) : (
         <div className='mt-6 flex flex-col'>
           {author && (
@@ -107,7 +104,7 @@ function AuthorPage() {
               <section className=' flex flex-start '>
                 {!authorImageLoaded && (
                   <img
-                    src='./authorGeneric.png'
+                    src='/public/authorGeneric.png'
                     alt='loading'
                     className='text-center object-contain max-w-64 max-h-80 mb-5 ml-10'
                   />
@@ -158,7 +155,7 @@ function AuthorPage() {
               </section>
               <section className='flex overflow-x-scroll mt-2 h-auto gap-5 mx-20 pb-5 scrollable-container'>
                 {loadingAuthor ? (
-                  <LoaderAuthors />
+                  <Loader />
                 ) : (
                   authorBooks &&
                   topTen.map(book => {

@@ -46,7 +46,7 @@ function Navbar() {
         <div className='mw-1/3 ml-10 w-1/3 '>
           <button>
             <Link to={'/'} className='flex h-12 place-items-center'>
-              <img src='../assets/logo.png' alt='Home' className='w-12' />
+              <img src='/public/assets/logo.png' alt='Home' className='w-12' />
               <div className='ml-1'>
                 <p className='text-amber-800 text-bold mb-0 text-3xl'>
                   Phoenix Pages

@@ -9,16 +9,14 @@ import BookCard from './BookCard';
 
 function BooksPage() {
   const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [booksCount, setBooksCount] = useState(5);
   const [discoverClicked, setDiscoverClicked] = useState(false);
   const [homeHeight, setHomeHeight] = useState('screen');
-
-
   const navigate = useNavigate();
 
-  const { category, setCategory, getTopBooks } = useContext(UserContext);
+  const { category, setCategory, getTopBooks, loading, setLoading } = useContext(UserContext);
 
   // Subject query that will look for a generic list of top 5 books
   // const genericSubject = '*';
@@ -38,7 +36,6 @@ function BooksPage() {
         `https://openlibrary.org/search.json?subject=${cat}&limit=50`
       );
       setBooks(response.data.docs);
-      // setLoading(false);
     } catch (error) {
       console.log(error);
       navigate('/server-error');
@@ -52,6 +49,7 @@ function BooksPage() {
     console.log(category);
     const selectedCat = category;
     if (selectedCat) {
+      setLoading(true);
       claimCategory(selectedCat);
       getBooksByCategory(selectedCat);
     }
@@ -74,7 +72,7 @@ function BooksPage() {
 
   return (
     <div className={`h-${homeHeight} px-20`}>
-      <div className='py-5 h-24 flex flex-row justify-center items-center text-xl'>
+      <div className='py-5 h-24 flex flex-row justify-center items-center text-xl z-20'>
         <button
           className={`m-3 py-1 px-3  ${category === '*'
             ? 'border-b-2 border-black dark:border-neutral-200'
@@ -125,23 +123,17 @@ function BooksPage() {
       {loading ? (
         <Loader />
       ) : (
-        <div className='flex flex-col'>
+        <m.div className='flex flex-col' initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.75, ease: "easeOut" }} exit={{ opacity: 0 }}>
           <section className='grid grid-cols-5 gap-x-8 gap-y-8 auto-rows-auto'>
             {books &&
               topBooks.map(book => {
                 return (
-                  <Link
-                    key={book.key}
-                    to={`/books${book.key}`}
-                    className='min-h-max pb-2 px-1 flex-shrink-0 rounded-br-lg shadow-slate-400 shadow-md border border-slate-300 hover:border-slate-700 
-                    dark:shadow-neutral-900 dark:hover:border-slate-500'
-                  >
-                    <BookCard
-                      book={book}
-                      setImageLoaded={setImageLoaded}
-                      imageLoaded={imageLoaded}
-                    />
-                  </Link>
+                  <BookCard
+                    key={book._id}
+                    book={book}
+                    setImageLoaded={setImageLoaded}
+                    imageLoaded={imageLoaded}
+                  />
                 );
               })}
           </section>
@@ -163,7 +155,7 @@ function BooksPage() {
               </button>
             )}
           </div>
-        </div>
+        </m.div>
       )}
 
     </div>
