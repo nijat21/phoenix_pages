@@ -5,13 +5,13 @@ import { motion as m } from "framer-motion";
 
 function BookCard({ book, setImageLoaded, imageLoaded }) {
   const [show, setShow] = useState(true);
-  const [length, setLength] = useState(50);
+  const [length, setLength] = useState(24);
   const showTitle = titleLength => {
     setShow(!show);
     if (show) {
       setLength(titleLength);
     } else {
-      setLength(50);
+      setLength(24);
     }
   };
   return (

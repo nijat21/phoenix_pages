@@ -85,17 +85,12 @@ function Search() {
             <section className='grid grid-cols-5 gap-x-8 gap-y-8 auto-rows-auto'>
               {topFifteen.map(book => {
                 return (
-                  <Link
-                    to={`/books${book.key}`}
+                  <BookCard
                     key={book.key}
-                    className='min-h-max pb-2 px-1  rounded-br-lg shadow-slate-400 shadow-sm  border-2 border-slate-300 hover:border-slate-700 dark:hover:border-slate-500'
-                  >
-                    <BookCard
-                      book={book}
-                      setImageLoaded={setImageLoaded}
-                      imageLoaded={imageLoaded}
-                    />
-                  </Link>
+                    book={book}
+                    setImageLoaded={setImageLoaded}
+                    imageLoaded={imageLoaded}
+                  />
                 );
               })}
             </section>
@@ -105,7 +100,7 @@ function Search() {
 
           <div className='my-12 flex justify-center'>
             <button
-              className='p-4 rounded-2xl border-2 text-white border-lime-700 text-xl bg-lime-700 hover:bg-lime-600 hover:border-lime-600'
+              className='p-4 rounded-2xl text-white text-xl shadow-slate-400 dark:shadow-neutral-900 shadow-md bg-lime-700 hover:bg-lime-600'
               onClick={handleGoBack}
             >
               Go Back

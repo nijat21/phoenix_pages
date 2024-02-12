@@ -129,7 +129,7 @@ function BooksPage() {
               topBooks.map(book => {
                 return (
                   <BookCard
-                    key={book._id}
+                    key={book.key}
                     book={book}
                     setImageLoaded={setImageLoaded}
                     imageLoaded={imageLoaded}

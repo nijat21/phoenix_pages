@@ -1,6 +1,7 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
 import { AnimatePresence, motion as m } from 'framer-motion';
+import { Toaster, toast } from 'sonner';
 
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
@@ -23,6 +24,7 @@ function App() {
   return (
     <div className='bg-bgk dark:bg-neutral-700 dark:text-neutral-200'>
       <Navbar />
+      <Toaster richColors position='bottom-right' />
       <AnimatePresence>
         <div className='min-h-screen overflow-x-hidden overflow-y-hidden pt-16'>
           <Routes>

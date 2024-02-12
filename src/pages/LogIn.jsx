@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Toaster, toast } from 'sonner';
 import { useState, useEffect, useRef, useContext } from 'react';
 import UserContext from '../context/UserProvider';
 import { Link } from 'react-router-dom';
@@ -44,6 +45,7 @@ function LogIn() {
         storeToken(userExists.id);
         setUSERID(userExists.id);
         authenticateUser();
+        toast.success('You are successfully logged in!')
         navigate('/');
       } else {
         setErrorMessage('Username or password is wrong. Please try again.');
@@ -57,58 +59,57 @@ function LogIn() {
   }, []);
 
   return (
-    <div className=' w-screen h-screen flex justify-center '>
-      <div className='mb-40 flex items-center '>
-        <div className=' w-full px-12 py-10 flex flex-col items-center justify-center border-2 border-slate-400 rounded-md shadow-sm shadow-slate-500'>
-          <form
-            onSubmit={handleSubmit}
-            className='min-h-72 min-w-72 flex flex-col justify-around items-center'
-          >
-            <div className='flex justify-center mb-4'>
-              <h1 className='text-3xl'>Log In</h1>
+    <div className='h-screen flex justify-center items-center'>
+      <div className='min-w-max min-h-max px-12 py-10 flex flex-col items-center justify-center rounded-md shadow-sm bg-black bg-opacity-20'>
+        <form
+          onSubmit={handleSubmit}
+          className='min-h-72 min-w-72 flex flex-col justify-around items-center'
+        >
+          <div className='flex justify-center mb-4'>
+            <h1 className='text-3xl'>Log In</h1>
+          </div>
+          <label>
+            <div className='flex items-center justify-between'>
+              <h3>Username</h3>
             </div>
-            <label>
-              <div className='flex items-center justify-between'>
-                <h3>Username</h3>
-              </div>
-              <input
-                type='text'
-                id='username'
-                name='username'
-                className='border-solid rounded-md border-2 border-amber-800 min-w-72 min-h-10 pl-1 text-black'
-                value={username}
-                onChange={e => setUsername(e.target.value)}
-                ref={userRef}
-              />
-            </label>
-            <label>
-              <h3>Password</h3>
-              <input
-                type='password'
-                id='passwordLogin'
-                name='passwordLogin'
-                className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1 text-black'
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-              />
-            </label>
-            <label>
-              <p className='text-s text-red-500'>{errorMessage}</p>
-            </label>
-            <div className='flex justify-center'>
-              <div className='flex flex-col justify-center items-center rounded-md border-solid border-2 border-lime-600 min-w-20 hover:bg-lime-600 hover:text-white'>
-                <button type='submit'>Log In</button>
-              </div>
+            <input
+              type='text'
+              id='username'
+              name='username'
+              className='shadow-slate-400 shadow-md dark:shadow-neutral-900 rounded-md min-w-72 min-h-10 pl-1 text-black'
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              ref={userRef}
+            />
+          </label>
+          <label>
+            <h3>Password</h3>
+            <input
+              type='password'
+              id='passwordLogin'
+              name='passwordLogin'
+              className='shadow-slate-400 shadow-md dark:shadow-neutral-900 rounded-md min-w-72  min-h-10 pl-1 text-black'
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
+          </label>
+          <label>
+            <p className='text-s text-red-500'>{errorMessage}</p>
+          </label>
+          <div className='flex justify-center'>
+            <div className='flex flex-col justify-center items-center rounded-md border-solid border-2 border-lime-600 min-w-20 hover:text-white
+              shadow-slate-400 shadow-md hover:bg-lime-600  dark:shadow-neutral-900'>
+              <button type='submit'>Log In</button>
             </div>
-          </form>
-          <span className='text-s text-gray-500 mt-4'>
-            Need an account?
-            <Link to={'/signup'} className='text-blue-400 hover:text-gray-500'>
-              {' '}
-              Sign up
-            </Link>
-          </span>
-        </div>
+          </div>
+        </form>
+        <span className='text-s text-gray-500 mt-4'>
+          Need an account?
+          <Link to={'/signup'} className='text-blue-400 hover:text-gray-500'>
+            {' '}
+            Sign up
+          </Link>
+        </span>
       </div>
     </div>
   );

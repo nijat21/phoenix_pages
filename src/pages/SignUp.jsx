@@ -3,6 +3,7 @@ import { useState, useEffect, useRef, useContext } from 'react';
 import UserContext from '../context/UserProvider';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { Toaster, toast } from 'sonner';
 
 const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
@@ -62,6 +63,7 @@ function SignUp() {
           storeToken(userExists.id);
           setUSERID(userExists.id);
           authenticateUser();
+          toast.success('You have successfully created your profile!')
           navigate('/');
         } else {
           setErrorMessage('Username or password is wrong. Please try again.');
@@ -96,71 +98,69 @@ function SignUp() {
   }, []);
 
   return (
-    <div className=' h-screen flex justify-center'>
-      <div className='mb-40 flex items-center'>
-        <div className=' w-full flex flex-col px-12 py-10 items-center justify-center border-2 border-slate-400 rounded-md shadow-sm shadow-slate-500'>
-          <form
-            onSubmit={handleSubmit}
-            className='min-h-72 min-w-72 flex flex-col justify-around items-center'
-          >
-            <div className='flex justify-center mb-4'>
-              <h1 className='text-3xl'>Create an Account</h1>
-            </div>
-            <label>
-              <div className='flex items-center justify-between'>
-                <h3>Username</h3>
-              </div>
-              <input
-                type='text'
-                id='username'
-                name='username'
-                className='border-solid rounded-md border-2 border-amber-800 min-w-72 min-h-10 pl-1 mb-2 text-black'
-                value={username}
-                onChange={e => setUsername(e.target.value)}
-                ref={userRef}
-              />
-            </label>
-            <label>
-              <h3>Password</h3>
-              <input
-                type='password'
-                id='passwordLogin'
-                name='passwordLogin'
-                className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1 mb-2 text-black'
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-              />
-            </label>
-            <label>
-              <h3>Confirm Password:</h3>
-              <input
-                type='password'
-                id='password1'
-                name='password1'
-                className='border-solid rounded-md border-2 border-amber-800 min-w-72  min-h-10 pl-1 text-black'
-                value={passwordConfirmed}
-                onChange={e => setPasswordConfirmed(e.target.value)}
-              />
-            </label>
-
-            <label className='flex items-center justify-center'>
-              <p className='text-xs text-red-500 max-w-72'>{logInMessage}</p>
-            </label>
-
-            <div className='flex justify-center mt-10'>
-              <div className='flex flex-col justify-center items-center rounded-md border-solid border-2 border-lime-600 min-w-20 hover:bg-lime-600 hover:text-white'>
-                <button type='submit'>Create</button>
-              </div>
-            </div>
-          </form>
-          <span className='text-s text-gray-500 mt-4'>
-            Already on Phoenix Pages?
-            <Link to={'/login'} className='text-blue-400 hover:text-gray-500'>
-              {' '}
-              Log In
-            </Link>
-          </span>
+    <div className=' h-screen flex justify-center items-center'>
+      <div className='min-w-max flex flex-col px-12 py-10 items-center justify-center rounded-md shadow-sm bg-black bg-opacity-20'>
+        <div className='flex justify-center mb-4'>
+          <h1 className='text-3xl'>Create an Account</h1>
         </div>
+        <form
+          onSubmit={handleSubmit}
+          className='min-h-72 min-w-72 flex flex-col justify-around items-center'
+        >
+          <label className='p-2'>
+            <div className='flex items-center justify-between'>
+              <h3>Username</h3>
+            </div>
+            <input
+              type='text'
+              id='username'
+              name='username'
+              className='shadow-slate-400 shadow-md dark:shadow-neutral-900 rounded-md min-w-72 min-h-10 pl-1 text-black'
+              value={username}
+              onChange={e => setUsername(e.target.value)}
+              ref={userRef}
+            />
+          </label>
+          <label className='p-2'>
+            <h3>Password</h3>
+            <input
+              type='password'
+              id='passwordLogin'
+              name='passwordLogin'
+              className='shadow-slate-400 shadow-md dark:shadow-neutral-900 rounded-md min-w-72 min-h-10 pl-1 text-black'
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
+          </label>
+          <label className='p-2'>
+            <h3>Confirm Password:</h3>
+            <input
+              type='password'
+              id='password1'
+              name='password1'
+              className='shadow-slate-400 shadow-md dark:shadow-neutral-900 rounded-md min-w-72 min-h-10 pl-1 text-black'
+              value={passwordConfirmed}
+              onChange={e => setPasswordConfirmed(e.target.value)}
+            />
+          </label>
+
+          <label className='flex items-center justify-center'>
+            <p className='text-xs text-red-500 max-w-72'>{logInMessage}</p>
+          </label>
+
+          <div className='flex justify-center mt-10'>
+            <div className='flex flex-col justify-center items-center rounded-md border-solid border-2 border-lime-600 min-w-20 hover:bg-lime-600 hover:text-white'>
+              <button type='submit'>Create</button>
+            </div>
+          </div>
+        </form>
+        <span className='text-s text-gray-500 mt-4'>
+          Already on Phoenix Pages?
+          <Link to={'/login'} className='text-blue-400 hover:text-gray-500'>
+            {' '}
+            Log In
+          </Link>
+        </span>
       </div>
     </div>
   );

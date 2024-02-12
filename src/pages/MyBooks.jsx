@@ -184,69 +184,71 @@ function MyBooks() {
                           className='min-h-max w-1/5 pb-2 px-3 flex-shrink-0 rounded-br-lg shadow-slate-400 shadow-md border border-slate-300 hover:border-slate-700 
                     dark:shadow-neutral-900 dark:hover:border-slate-500'
                         >
-                          <div className='h-full flex flex-col justify-between'>
-                            <div className='flex flex-col  text-center items-center justify-center '>
-                              {book && book.covers && (
-                                <>
-                                  <div className='h-64 flex justify-center items-center mt-2'>
-                                    <img
-                                      src={`https://covers.openlibrary.org/b/id/${book.covers[0]}-M.jpg`}
-                                      alt='cover'
-                                      className='text-center object-cover h-60 w-26 rounded-tr-lg rounded-br-lg shadow-slate-400 shadow-sm w-40 '
-                                    />
-                                  </div>
-                                  <div className='mw-44 my-2'>
-                                    <div className=' flex justify-center items-center'>
-                                      <h2>
-                                        <strong className='max-w-xs'>
-                                          {book.title.slice(0, length)}
-                                        </strong>
-                                        {book.title.length > 25 && (
-                                          <button
-                                            className='ml-1 font-thin text-gray-400 hover:bg-slate-200 hover:px-1'
-                                            onClick={e => {
-                                              e.stopPropagation();
-                                              showTitle(book.title.length);
-                                              e.preventDefault();
-                                            }}
-                                          >
-                                            {show ? 'more' : 'less'}
-                                          </button>
-                                        )}
-                                      </h2>
+                          <m.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.75, ease: "easeOut" }} exit={{ opacity: 0 }}>
+                            <div className='h-full flex flex-col justify-between'>
+                              <div className='flex flex-col  text-center items-center justify-center '>
+                                {book && book.covers && (
+                                  <>
+                                    <div className='h-64 flex justify-center items-center mt-2'>
+                                      <img
+                                        src={`https://covers.openlibrary.org/b/id/${book.covers[0]}-M.jpg`}
+                                        alt='cover'
+                                        className='text-center object-cover h-60 w-26 rounded-tr-lg rounded-br-lg shadow-slate-400 shadow-sm w-40 '
+                                      />
                                     </div>
-                                    <div className='flex justify-center items-center '>
-                                      <h4>{book.authorName}</h4>
+                                    <div className='mw-44 my-2'>
+                                      <div className=' flex justify-center items-center'>
+                                        <h2>
+                                          <strong className='max-w-xs'>
+                                            {book.title.slice(0, length)}
+                                          </strong>
+                                          {book.title.length > 25 && (
+                                            <button
+                                              className='ml-1 font-thin text-gray-400 hover:bg-slate-200 hover:px-1'
+                                              onClick={e => {
+                                                e.stopPropagation();
+                                                showTitle(book.title.length);
+                                                e.preventDefault();
+                                              }}
+                                            >
+                                              {show ? 'more' : 'less'}
+                                            </button>
+                                          )}
+                                        </h2>
+                                      </div>
+                                      <div className='flex justify-center items-center '>
+                                        <h4>{book.authorName}</h4>
+                                      </div>
                                     </div>
-                                  </div>
-                                </>
-                              )}
-                            </div>
-                            <div className='flex justify-center text-sm'>
-                              {list === 1 && (
+                                  </>
+                                )}
+                              </div>
+                              <div className='flex justify-center text-sm'>
+                                {list === 1 && (
+                                  <button
+                                    onClick={e => {
+                                      e.stopPropagation();
+                                      addToAlreadyRead(book.key, book.id);
+                                      e.preventDefault();
+                                    }}
+                                    className='h-10 w-1/2 px-2 py-1 mx-2 mb-3 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
+                                  >
+                                    Finished
+                                  </button>
+                                )}
                                 <button
                                   onClick={e => {
                                     e.stopPropagation();
-                                    addToAlreadyRead(book.key, book.id);
+                                    removeFromList(book.id);
                                     e.preventDefault();
                                   }}
-                                  className='h-10 w-1/2 px-2 py-1 mx-2 mb-3 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
+                                  className='h-10 w-1/2 px-2 py-1 mx-1 mb-3 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
                                 >
-                                  Finished
+                                  Remove
                                 </button>
-                              )}
-                              <button
-                                onClick={e => {
-                                  e.stopPropagation();
-                                  removeFromList(book.id);
-                                  e.preventDefault();
-                                }}
-                                className='h-10 w-1/2 px-2 py-1 mx-1 mb-3 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700'
-                              >
-                                Remove
-                              </button>
+                              </div>
                             </div>
-                          </div>
+                          </m.div>
                         </Link>
                       ))
                   })}

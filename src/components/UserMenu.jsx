@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import UserContext from '../context/UserProvider';
 import { Switch, FormControl, FormLabel } from '@chakra-ui/react'
 import { motion as m } from 'framer-motion';
+import { Toaster, toast } from 'sonner';
 
 function UserMenu({ initial }) {
     const { logOutUser, darkMode, toggleDarkMode, theme, setTheme } = useContext(UserContext);
@@ -21,6 +22,7 @@ function UserMenu({ initial }) {
 
     const handleLogout = () => {
         logOutUser()
+        toast.success('You have successfully logged out!')
         navigate('/');
     }
 

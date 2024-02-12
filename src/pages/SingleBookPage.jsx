@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import UserContext from '../context/UserProvider';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { motion as m } from 'framer-motion';
 import LoaderFull from '../components/LoaderFull';
 
 const API_URL = 'https://server-phoenix-pages.adaptable.app';
@@ -186,7 +187,7 @@ function SingleBookPage() {
       {loading ? (
         <LoaderFull />
       ) : (
-        <div className='pt-3'>
+        <m.div className='pt-3' initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.75, ease: "easeOut" }} exit={{ opacity: 0 }}>
           {/* only return books with cover and author information */}
           {book && book.covers[0] && author && (
             <section className='flex  justify-items-center m-10 items-center '>
@@ -288,7 +289,7 @@ function SingleBookPage() {
               </div>
             </section>
           )}
-        </div>
+        </m.div>
       )}
     </div>
   );

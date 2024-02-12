@@ -28,6 +28,7 @@
     "react-router-dom": "^6.21.0",
     "react-scroll": "^1.9.0",
     "react-simple-star-rating": "^5.1.7",
+    "sonner": "^1.4.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

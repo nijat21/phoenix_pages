@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { motion as m } from 'framer-motion';
 import { useEffect, useState, useContext } from 'react';
 import UserContext from '../context/UserProvider';
 import RatingDisplay from '../components/RatingDisplay';
@@ -15,16 +16,15 @@ function AuthorPage() {
   const [authorBooks, setAuthorBooks] = useState([]);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [authorImageLoaded, setAuthorImageLoaded] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [loadingAuthor, setLoadingAuthor] = useState(false);
-  const { getTopBooks } = useContext(UserContext);
+  const { getTopBooks, loading, setLoading } = useContext(UserContext);
 
-  const [length, setLength] = useState(50);
+  const [length, setLength] = useState(24);
   const [bioLength, setBioLength] = useState(1140);
   const [show, setShow] = useState(true);
   const [bioShow, setBioShow] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`https://openlibrary.org/authors/${authorKey}.json`) //this returns a promise
       .then(response => {
@@ -45,9 +45,10 @@ function AuthorPage() {
       )
       .then(response => {
         setAuthorBooks(response.data.docs);
-        setLoadingAuthor(false);
+        setLoading(false);
       })
       .catch(error => {
+        setLoading(false);
         navigate('/server-error');
         console.error('Error fetching author:', error);
       });
@@ -61,7 +62,7 @@ function AuthorPage() {
     if (show) {
       setLength(titleLength);
     } else {
-      setLength(50);
+      setLength(24);
     }
   };
 
@@ -101,13 +102,9 @@ function AuthorPage() {
         <div className='mt-6 flex flex-col'>
           {author && (
             <>
-              <section className=' flex flex-start '>
-                {!authorImageLoaded && (
-                  <img
-                    src='/public/authorGeneric.png'
-                    alt='loading'
-                    className='text-center object-contain max-w-64 max-h-80 mb-5 ml-10'
-                  />
+              <m.section className=' flex flex-start ' initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.75, ease: "easeOut" }} exit={{ opacity: 0 }}>
+                {!authorImageLoaded || !author.photos && (
+                  <i className="fa-regular fa-user fa-10x py-14 pl-16"></i>
                 )}
                 <img
                   src={`https://covers.openlibrary.org/a/olid/${authorKey}-M.jpg`}
@@ -128,7 +125,7 @@ function AuthorPage() {
                     {author.death_date ? `- ${author.death_date}` : ' '}
                   </p>
 
-                  <p className='mb-14 pb-10 border-b-2 border-amber-800'>
+                  <p className='mb-14 pb-10 border-b-2 min-h-44 border-amber-800'>
                     {author.bio &&
                       (typeof author.bio === 'object'
                         ? removeText(`${author.bio.value.slice(0, bioLength)}`)
@@ -138,34 +135,38 @@ function AuthorPage() {
                       ((typeof author.bio !== 'object' &&
                         author.bio.length > 1140) ||
                         (typeof author.bio === 'object' &&
-                          author.bio.value.length > 1140)) && (
-                        <button
-                          className='ml-1 font-thin text-gray-400 rounded-lg hover:bg-slate-200 hover:px-1'
-                          onClick={e => {
-                            e.stopPropagation();
-                            showBio(undefined);
-                            e.preventDefault();
-                          }}
-                        >
-                          {bioShow ? 'more' : 'less'}
-                        </button>
-                      )}
+                          author.bio.value.length > 1140)) ? (
+                      <button
+                        className='ml-1 font-thin text-gray-400 rounded-lg hover:bg-slate-200 hover:px-1'
+                        onClick={e => {
+                          e.stopPropagation();
+                          showBio(undefined);
+                          e.preventDefault();
+                        }}
+                      >
+                        {bioShow ? 'more' : 'less'}
+                      </button>
+                    )
+                      :
+                      <div className='text-2xl h-44 flex items-center'>
+                        <h2>This author doesn't have information!</h2>
+                      </div>}
                   </p>
                 </div>
-              </section>
-              <section className='flex overflow-x-scroll mt-2 h-auto gap-5 mx-20 pb-5 scrollable-container'>
-                {loadingAuthor ? (
-                  <Loader />
-                ) : (
-                  authorBooks &&
+              </m.section>
+              <m.section className='flex overflow-x-scroll mt-2 h-auto gap-5 mx-20 pb-5 scrollable-container'
+                initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.75, ease: "easeOut" }} exit={{ opacity: 0 }}>
+                {authorBooks &&
                   topTen.map(book => {
                     return (
                       <Link
                         to={`/books${book.key}`}
-                        className='w-1/6 min-h-max flex-shrink-0 border-2 border-slate-300 hover:border-slate-700'
+                        className='w-1/6 min-h-max flex-shrink-0 shadow-slate-400 shadow-md border border-slate-300 hover:border-slate-700 
+                        dark:shadow-neutral-900 dark:hover:border-slate-500'
                         key={book.key}
                       >
-                        <div className='flex flex-col h-full text-center items-center '>
+                        <m.div className='flex flex-col h-full text-center items-center '
+                          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.75, ease: "easeOut" }} exit={{ opacity: 0 }}>
                           {book && book.cover_i && (
                             <>
                               <div className='min-h-fit pt-3 flex justify-center items-center'>
@@ -219,15 +220,16 @@ function AuthorPage() {
                               </div>
                             </>
                           )}
-                        </div>
+                        </m.div>
                       </Link>
                     );
                   })
-                )}
-              </section>
+                }
+              </m.section>
               <div className='my-2 mr-20 self-end flex flex-col '>
                 <button
-                  className='mt-4 p-2 rounded-2xl border-2 text-white border-lime-700 text-l bg-lime-700 hover:bg-lime-600 hover:border-lime-600'
+                  className='mt-4 p-2 rounded-2xl text-lg text-white shadow-slate-400 shadow-md bg-lime-700 
+              hover:bg-lime-600  dark:shadow-neutral-900'
                   onClick={handleGoBack}
                 >
                   Go Back
@@ -235,8 +237,9 @@ function AuthorPage() {
               </div>
             </>
           )}
-        </div>
-      )}
+        </div >
+      )
+      }
     </>
   );
 }
