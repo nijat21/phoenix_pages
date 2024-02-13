@@ -1,0 +1,52 @@
+.navbar {
+  @apply h-16 w-screen flex justify-between justify-items-center place-items-center items-center  bg-neutral-800 font-light font-serif fixed top-0 z-50 bg-opacity-90 backdrop-blur-2xl;
+}
+
+.logo-img {
+  @apply w-12;
+}
+
+.first-div {
+  @apply ml-10 w-1/3;
+}
+
+.first-div-link {
+  @apply flex h-12 place-items-center;
+}
+
+.third-div {
+  @apply w-1/3 mr-10 flex text-xl items-center justify-end;
+}
+
+.login {
+  @apply text-neutral-200 hover:border-b hover:border-neutral-200;
+}
+
+/***********************************-----------MOBILE----------*******************************/
+
+@media only screen and (max-width: 680px) {
+  .navbar {
+    @apply h-10 w-screen flex justify-between justify-items-center place-items-center content-center  bg-neutral-800 font-light font-serif fixed top-0 z-50 bg-opacity-90 backdrop-blur-2xl;
+  }
+  .logo-img {
+    @apply w-8;
+  }
+  .first-div {
+    @apply mx-2 w-1/3 h-8 flex justify-center;
+  }
+  .first-div-link {
+    @apply flex w-8 h-8 justify-center;
+  }
+  .third-div {
+    @apply w-1/3 mr-4 flex text-sm items-center justify-end;
+  }
+  .user-symbol {
+    @apply flex justify-end;
+  }
+  .login {
+    @apply text-neutral-200 hover:border-b hover:border-neutral-200 mr-4;
+  }
+  .dropdown {
+    @apply w-6 ml-4;
+  }
+}
