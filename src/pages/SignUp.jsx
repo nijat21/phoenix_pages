@@ -3,7 +3,7 @@ import { useState, useEffect, useRef, useContext } from 'react';
 import UserContext from '../context/UserProvider';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { Toaster, toast } from 'sonner';
+import { toast } from 'sonner';
 
 const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
@@ -26,7 +26,7 @@ function SignUp() {
 
     if (!username) {
       setLogInMessage('To Sign up, please input your username!');
-      blankEverything();
+      // blankEverything();
     } else if (!password) {
       setLogInMessage('To Sign up, please input your password!');
       blankPasswords();
@@ -49,6 +49,7 @@ function SignUp() {
       } else {
         const requestUser = { username, password };
         await axios.post(`${API_URL}/users`, requestUser);
+        toast.success('You have successfully created your profile!');
 
         const response = await axios.get(`${API_URL}/users`);
         const users = response.data;
@@ -63,10 +64,9 @@ function SignUp() {
           storeToken(userExists.id);
           setUSERID(userExists.id);
           authenticateUser();
-          toast.success('You have successfully created your profile!')
           navigate('/');
         } else {
-          setErrorMessage('Username or password is wrong. Please try again.');
+          // setErrorMessage('Username or password is wrong. Please try again.');
         }
       }
     }
@@ -75,18 +75,23 @@ function SignUp() {
   // check if the password follows the conditions
 
   const checkPasswordConditions = str => {
-    const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-
-    if (/[A-Z]/.test(str) && /[a-z]/.test(str)) {
-      return true;
-    } else if (str.length >= 8) {
-      return true;
-    } else if (specialChars.test(str)) {
-      return true;
-    } else {
-      return false;
-    }
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]).{6,}$/;
+    return passwordRegex.test(str);
   };
+
+  // const checkPasswordConditions = str => {
+  //   const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+
+  //   if (/[A-Z]/.test(str) && /[a-z]/.test(str)) {
+  //     return true;
+  //   } else if (str.length >= 8) {
+  //     return true;
+  //   } else if (specialChars.test(str)) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // };
 
   const blankPasswords = () => {
     setPassword('');

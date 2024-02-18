@@ -1,18 +1,16 @@
-# Project Name
-
-Phoenix Pages
-
-<br>
+# Phoenix Pages
 
 ## Description
 
-Online personal library that helps you track your reading journey.
+Phoenix Pages is a WebApp that allows users to browse books and add them into their Want to Read or Already Read lists. This way, it helps users to track their reading journey.
 
 <br>
 
 ## Data
 
-User
+### Fake Backend
+
+#### User
 
 ```json
 {
@@ -23,7 +21,7 @@ User
 
 ```
 
-Books To Read
+#### Books To Read
 
 ```json
 {
@@ -34,7 +32,7 @@ Books To Read
 
 ```
 
-Books Already Read
+#### Books Already Read
 
 ```json
 {
@@ -74,17 +72,16 @@ Sonner
 
 ## Links
 
-### Git
+### Repositories and links related to the project
 
-The url to your repository and to your deployed project
+Github: [Frontend,](https://github.com/nijat21/phoenix_pages)
+[Fake Backend](https://github.com/luigoncalves/json-server-backend)
+<br/>
 
-Frontend: [Repository Link](https://github.com/nijat21/phoenix_pages)
-Backend: [Repository Link](https://github.com/luigoncalves/json-server-backend)
-
-[Deploy Link](https://phoenix-pages.netlify.app/)
+Netlify: [Phoenix Pages](https://phoenix-pages.netlify.app/)
 
 ### Contributors
 
-Luís Gonçalves - [`luigoncalves`](https://github.com/luigoncalves) - [`<linkedin-profile>`](https://www.linkedin.com/in/luis-dearaujo-goncalves/)
+Luís Gonçalves - [GitHub](https://github.com/luigoncalves) - [LinkedIn](https://www.linkedin.com/in/luis-dearaujo-goncalves/)
 
-Nijat Ismayilov - [`nijat21`](https://github.com/nijat21) - [`<linkedin-profile>`](https://www.linkedin.com/in/nijat-ismayilov/)
+Nijat Ismayilov - [GitHub](https://github.com/nijat21) - [LinkedIn](https://www.linkedin.com/in/nijat-ismayilov/)
