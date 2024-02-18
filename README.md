@@ -2,7 +2,7 @@
 
 ## Description
 
-Phoenix Pages is a WebApp that allows users to browse books and add them into their Want to Read or Already Read lists. This way, it helps users to track their reading journey.
+Phoenix Pages is a WebApp that allows users to browse books and add them into their "Want to Read" or "Already Read" lists. This way, it helps users to track their reading journey.
 
 <br>
 
