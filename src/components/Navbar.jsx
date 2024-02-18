@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import UserContext from '../context/UserProvider';
 import UserMenu from './UserMenu';
 import CategoriesMenu from './CategoriesMenu';
+import DropdownMobile from './DropdownMobile';
+import '../styles/navbar.styles.css';
 
 function Navbar() {
   const navigate = useNavigate();
@@ -16,6 +18,26 @@ function Navbar() {
     enterHadler,
     setEnterHandler,
   } = useContext(UserContext);
+
+  /////////////////////////
+
+  // This code will make update the window size variable everytime the page is loaded and update the component taking that into account
+
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  ////////////////////////
 
   const handleSearch = e => {
     e.preventDefault();
@@ -42,66 +64,80 @@ function Navbar() {
 
   return (
     <>
-      <nav className='h-16 w-screen flex justify-between justify-items-center place-items-center items-center  bg-neutral-800 font-light font-serif fixed top-0 z-50 bg-opacity-90 backdrop-blur-2xl'>
-        <div className='mw-1/3 ml-10 w-1/3 '>
-          <button>
-            <Link to={'/'} className='flex h-12 place-items-center'>
-              <img src='/public/assets/logo.png' alt='Home' className='w-12' />
+      <nav className='navbar'>
+        {windowWidth < 680 && (
+          <div className='w-1/3 ml-4 '>
+            <button className='dropdown'>
+              <DropdownMobile />
+            </button>
+          </div>
+        )}
+
+        <div className='first-div '>
+          <Link to={'/'} className='first-div-link '>
+            <img
+              src='/public/assets/logo.png'
+              alt='Home'
+              className='logo-img'
+            />
+            {windowWidth > 680 && (
               <div className='ml-1'>
                 <p className='text-amber-800 text-bold mb-0 text-3xl'>
                   Phoenix Pages
                 </p>
               </div>
-            </Link>
-          </button>
+            )}
+          </Link>
         </div>
 
-        <div className='w-1/3 flex justify-around text-center text-xl '>
-          <button onClick={() => handleClick()}>
-            <Link to={'/'}>
-              <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
-                Home
-              </h2>
-            </Link>
-          </button>
-          <div className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
-            <div tabIndex='0' role='button' onClick={() => handleClick()}>
-              <CategoriesMenu />
+        {windowWidth > 680 && (
+          <div className='w-1/3 flex justify-around text-center text-xl '>
+            <button onClick={() => handleClick()}>
+              <Link to={'/'}>
+                <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
+                  Home
+                </h2>
+              </Link>
+            </button>
+            <div className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
+              <div tabIndex='0' role='button' onClick={() => handleClick()}>
+                <CategoriesMenu />
+              </div>
             </div>
+            <button onClick={() => handleClick()}>
+              <Link to={'/aboutus'}>
+                <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
+                  About Us
+                </h2>
+              </Link>
+            </button>
+            {userLogin && (
+              <Link to={'/mybooks'} onClick={() => handleClick()}>
+                <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
+                  My Books
+                </h2>
+              </Link>
+            )}
           </div>
-          <button onClick={() => handleClick()}>
-            <Link to={'/aboutus'}>
-              <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
-                About Us
-              </h2>
-            </Link>
-          </button>
-          {userLogin && (
-            <Link to={'/mybooks'} onClick={() => handleClick()}>
-              <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
-                My Books
-              </h2>
-            </Link>
+        )}
+
+        <div className='third-div'>
+          {windowWidth > 680 && (
+            <input
+              type='text'
+              placeholder='Search by title'
+              className='text-neutral-200 mr-3 pl-2 border-2 border-neutral-600 rounded-xl bg-transparent h-8 text-justify'
+              value={searchTitle}
+              onChange={handleSearch}
+              onKeyDown={handleKeyDown}
+            />
           )}
-        </div>
-        <div className='w-1/3 mr-10 flex text-xl items-center justify-end '>
-          <input
-            type='text'
-            placeholder='Search by title'
-            className='text-neutral-200 mr-3 pl-2 border-2 border-neutral-600 rounded-xl bg-transparent h-8 text-justify'
-            value={searchTitle}
-            onChange={handleSearch}
-            onKeyDown={handleKeyDown}
-          />
           {userLogin ? (
-            <div className='zoom-container'>
+            <div className='user-symbol zoom-container'>
               <UserMenu initial={userLogin[0].toUpperCase()} />
             </div>
           ) : (
-            <Link
-              to={'/login'}
-              className=' text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'
-            >
+            <Link to={'/login'} className='login zoom-container'>
               <h2>Log In</h2>
             </Link>
           )}

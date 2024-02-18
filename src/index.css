@@ -70,3 +70,15 @@
     transform: rotate(360deg);
   }
 }
+
+/* For mobile view */
+
+.page-elements {
+  @apply min-h-screen overflow-x-hidden overflow-y-hidden pt-16;
+}
+
+@media only screen and (max-width: 680px) {
+  .page-elements {
+    @apply min-h-screen overflow-x-hidden overflow-y-hidden pt-8;
+  }
+}

@@ -20,13 +20,12 @@ import FourOFour from './pages/FourOFour';
 import ServerError from './pages/ServerError';
 
 function App() {
-
   return (
     <div className='bg-bgk dark:bg-neutral-700 dark:text-neutral-200'>
       <Navbar />
       <Toaster richColors position='bottom-right' />
       <AnimatePresence>
-        <div className='min-h-screen overflow-x-hidden overflow-y-hidden pt-16'>
+        <div className='page-elements'>
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/books' element={<BooksPage />} />
