@@ -82,12 +82,12 @@ function CategoriesMenu() {
             >
               About Us
             </Link>
-            <button
+            {/* <button
               className='hover:border-b hover:border-neutral-200 zoom-container'
               onClick={() => handleCategoryClick('selfhelp')}
             >
               Search
-            </button>
+            </button> */}
           </m.div>
         ) : null}
       </div>

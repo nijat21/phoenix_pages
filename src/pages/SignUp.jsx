@@ -4,6 +4,7 @@ import UserContext from '../context/UserProvider';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
+import '../styles/login.styles.css';
 
 const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
@@ -75,23 +76,10 @@ function SignUp() {
   // check if the password follows the conditions
 
   const checkPasswordConditions = str => {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]).{6,}$/;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]).{6,}$/;
     return passwordRegex.test(str);
   };
-
-  // const checkPasswordConditions = str => {
-  //   const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-
-  //   if (/[A-Z]/.test(str) && /[a-z]/.test(str)) {
-  //     return true;
-  //   } else if (str.length >= 8) {
-  //     return true;
-  //   } else if (specialChars.test(str)) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // };
 
   const blankPasswords = () => {
     setPassword('');
@@ -104,7 +92,7 @@ function SignUp() {
 
   return (
     <div className=' h-screen flex justify-center items-center'>
-      <div className='min-w-max flex flex-col px-12 py-10 items-center justify-center rounded-md shadow-sm bg-black bg-opacity-20'>
+      <div className='canva-signup'>
         <div className='flex justify-center mb-4'>
           <h1 className='text-3xl'>Create an Account</h1>
         </div>

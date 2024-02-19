@@ -75,11 +75,7 @@ function Navbar() {
 
         <div className='first-div '>
           <Link to={'/'} className='first-div-link '>
-            <img
-              src='/public/assets/logo.png'
-              alt='Home'
-              className='logo-img'
-            />
+            <img src='/assets/logo.png' alt='Home' className='logo-img' />
             {windowWidth > 680 && (
               <div className='ml-1'>
                 <p className='text-amber-800 text-bold mb-0 text-3xl'>

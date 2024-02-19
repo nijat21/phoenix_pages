@@ -117,7 +117,12 @@ function HomePage() {
           </m.div>
         </m.div>
       </div>
-      <div id='books-page' className='min-h-home-screen overflow-hidden'>
+      <div
+        id='books-page'
+        className={`${
+          windowWidth > 680 ? 'min-h-home-screen' : 'min-h-home-screen-mobile'
+        } overflow-hidden`}
+      >
         <BooksPage />
       </div>
     </div>

@@ -1,0 +1,32 @@
+.main-div {
+  @apply px-20;
+}
+
+.categories {
+  @apply py-5 h-24 flex flex-row justify-center items-center text-xl z-20;
+}
+
+.categories-buttons {
+  @apply m-3 py-1 px-3;
+}
+
+.books {
+  @apply grid grid-cols-5 gap-x-8 gap-y-8 auto-rows-auto;
+}
+
+/***********************************-----------MOBILE----------*******************************/
+
+@media only screen and (max-width: 680px) {
+  .main-div {
+    @apply px-2  pt-2;
+  }
+  .categories {
+    @apply flex overflow-x-auto my-1 h-auto gap-2 pb-5 justify-start items-center z-20;
+  }
+  .categories-buttons {
+    @apply m-3 py-1 px-2 min-w-max;
+  }
+  .books {
+    @apply flex flex-col overflow-y-auto justify-start min-w-max mx-6;
+  }
+}
