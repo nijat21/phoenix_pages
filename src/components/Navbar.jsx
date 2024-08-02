@@ -12,10 +12,8 @@ function Navbar() {
   const location = useLocation();
   const {
     userLogin,
-    setUserLogin,
     searchTitle,
     setSearchTitle,
-    enterHadler,
     setEnterHandler,
   } = useContext(UserContext);
 
@@ -64,7 +62,7 @@ function Navbar() {
 
   return (
     <>
-      <nav className='navbar'>
+      <nav className='navbar w-full'>
         {windowWidth < 680 && (
           <div className='w-1/3 ml-4 '>
             <button className='dropdown'>
@@ -75,14 +73,9 @@ function Navbar() {
 
         <div className='first-div '>
           <Link to={'/'} className='first-div-link '>
-            <img
-              src='/public/assets/logo.png'
-              alt='Home'
-              className='logo-img'
-            />
             {windowWidth > 680 && (
-              <div className='ml-1'>
-                <p className='text-amber-800 text-bold mb-0 text-3xl'>
+              <div>
+                <p className='text-red-800 text-bold text-4xl'>
                   Phoenix Pages
                 </p>
               </div>

@@ -6,36 +6,6 @@ import { Link as ScrollLink } from 'react-scroll';
 import '../styles/homepage.styles.css';
 
 function HomePage() {
-  // const [scrolled, setScrolled] = useState(false);
-
-  // const handleScroll = () => {
-  //   const homePageOffset = document.getElementById('home-page').offsetTop;
-  //   const scrollPosition = window.scrollY;
-  //   const booksPageOffset = document.getElementById('books-page').offsetTop;
-  //   if (scrollPosition > homePageOffset && !scrolled) {
-  //     setScrolled(true);
-  //     window.scrollTo({
-  //       top: booksPageOffset,
-  //       behavior: 'smooth',
-  //       duration: 1000
-  //     });
-  //     window.removeEventListener('scroll', handleScroll);
-  //   } else if (scrollPosition < homePageOffset && scrolled) {
-  //     setScrolled(false);
-  //     window.addEventListener('scroll', handleScroll);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   // Attach scroll event listener
-  //   window.addEventListener('scroll', handleScroll);
-  //   // Remove event listener to avoid memory leaks
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, [scrolled])
-
-  /////////////////////////
 
   // This code will make update the window size variable everytime the page is loaded and update the component taking that into account
 
