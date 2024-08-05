@@ -10,7 +10,7 @@ const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
 function SingleBookPage() {
   const { bookKey } = useParams();
-  const { USERID, loading, setLoading } = useContext(UserContext);
+  const { user, loading, setLoading } = useContext(UserContext);
 
   const [book, setBook] = useState(null);
   const [author, setAuthor] = useState(null);
@@ -57,14 +57,14 @@ function SingleBookPage() {
   useEffect(() => {
     const initializeListButtons = async () => {
       const responseToRead = await axios.get(
-        `${API_URL}/users/${USERID}?_embed=books_to_read`
+        `${API_URL}/users/${user._id}?_embed=books_to_read`
       );
       console.log("Books to read", responseToRead);
       const responseAlreadyRead = await axios.get(
-        `${API_URL}/users/${USERID}?_embed=books_already_read`
+        `${API_URL}/users/${user._id}?_embed=books_already_read`
       );
 
-      if (USERID) {
+      if (user._id) {
         const bookCheckToRead = await responseToRead.data.books_to_read.find(
           book => book.bookKey === bookKey
         );
@@ -90,14 +90,14 @@ function SingleBookPage() {
 
   // when this function is called, it will add the given book to the Want To Read List
   const wantToRead = async () => {
-    const requestBook = { bookKey, userId: USERID };
+    const requestBook = { bookKey, userId: user._id };
 
     const responseToRead = await axios.get(
-      `${API_URL}/users/${USERID}?_embed=books_to_read`
+      `${API_URL}/users/${user._id}?_embed=books_to_read`
     );
 
     const responseAlreadyRead = await axios.get(
-      `${API_URL}/users/${USERID}?_embed=books_already_read`
+      `${API_URL}/users/${user._id}?_embed=books_already_read`
     );
 
     const bookCheckToRead = responseToRead.data.books_to_read.find(
@@ -128,14 +128,14 @@ function SingleBookPage() {
 
   // when this function is called, it will add the given book to the Already Read List
   const alreadyRead = async () => {
-    const requestBook = { bookKey, userId: USERID };
+    const requestBook = { bookKey, userId: user._id };
 
     const responseToRead = await axios.get(
-      `${API_URL}/users/${USERID}?_embed=books_to_read`
+      `${API_URL}/users/${user._id}?_embed=books_to_read`
     );
 
     const responseAlreadyRead = await axios.get(
-      `${API_URL}/users/${USERID}?_embed=books_already_read`
+      `${API_URL}/users/${user._id}?_embed=books_already_read`
     );
 
     const bookCheckToRead = responseToRead.data.books_to_read.find(
@@ -209,7 +209,7 @@ function SingleBookPage() {
                   className='w-85 text-center object-contain mb-10 rounded-tr-xl rounded-br-xl shadow-slate-700 shadow-2xl'
                   onLoad={() => setImageLoaded(true)}
                 />
-                {USERID && (
+                {user._id && (
                   <div className='flex justify-evenly flex-col '>
                     {!wantToReadCheck ? (
                       <button

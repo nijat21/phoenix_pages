@@ -7,15 +7,8 @@ function CategoriesMenu() {
   const catMenu = useRef(null);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const { category, setCategory } = useContext(UserContext);
-  const {
-    userLogin,
-    setUserLogin,
-    searchTitle,
-    setSearchTitle,
-    enterHadler,
-    setEnterHandler,
-  } = useContext(UserContext);
+  const { user, setCategory } = useContext(UserContext);
+
 
   const handleOpen = () => {
     setOpen(prevOpen => !prevOpen);
@@ -68,7 +61,7 @@ function CategoriesMenu() {
             >
               Categories
             </Link>
-            {userLogin && (
+            {user && (
               <Link
                 className='hover:border-b hover:border-neutral-200 zoom-container'
                 to={'/mybooks'}

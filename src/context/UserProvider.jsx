@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { verify } from '../API/auth.api';
+
 
 const UserContext = React.createContext();
-const API_URL = import.meta.env.VITE_PP_API;
-
 
 export const UserProvider = ({ children }) => {
-  const [userLogin, setUserLogin] = useState('');
+  const [user, setUser] = useState(null);
   const [userLogged, setUserLogged] = useState(false);
-  const [USERID, setUSERID] = useState('');
   const [category, setCategory] = useState('*');
   const [searchTitle, setSearchTitle] = useState('');
   const [enterHandler, setEnterHandler] = useState('');
@@ -47,39 +45,43 @@ export const UserProvider = ({ children }) => {
     }
   }, [theme]);
 
-  const storeToken = userId => {
-    localStorage.setItem('userId', userId);
+  // Store token
+  const storeToken = token => {
+    localStorage.setItem('authToken', token);
   };
 
+  // Authentication
   const authenticateUser = async () => {
-    const userId = localStorage.getItem('userId');
+    const storedToken = localStorage.getItem('authToken');
     // If userId
-    if (userId) {
+    if (storedToken) {
       try {
-        console.log('Authenticate true', userId);
-        const response = await axios.get(`${API_URL}/users/${userId}`);
-        setUserLogin(response.data.username);
+        // Verify token
+        const verified = await verify(storedToken);
+        setUser(verified.data);
         setUserLogged(true);
-        setUSERID(Number(userId));
       } catch (error) {
-        console.log(error);
+        console.log('Not able to authenticate the user', error);
+        setUserLogged(false);
+        setUser(null);
       }
     } else {
       // If userId is not available (or is removed)
       setUserLogged(false);
+      setUser(null);
     }
   };
 
-  const removeId = () => {
+  const clearUser = () => {
     // Upon logout, remove the id from the localStorage
-    localStorage.removeItem('userId');
-    setUSERID('');
-    setUserLogin('');
+    localStorage.removeItem('authToken');
+    setUserLogged(false);
+    setUser(null);
   };
 
   const logOutUser = () => {
     // To log out the user, remove the id
-    removeId();
+    clearUser();
     // and update the state variables
     authenticateUser();
   };
@@ -112,29 +114,11 @@ export const UserProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
-        userLogin,
-        setUserLogin,
-        userLogged,
-        setUserLogged,
-        USERID,
-        setUSERID,
-        storeToken,
-        authenticateUser,
-        logOutUser,
-        category,
-        setCategory,
-        searchTitle,
-        setSearchTitle,
-        enterHandler,
-        setEnterHandler,
-        getTopBooks,
-        darkMode,
-        setDarkMode,
-        toggleDarkMode,
-        theme,
-        setTheme,
-        loading,
-        setLoading
+        user, setUser, userLogged, setUserLogged, storeToken, category, setCategory, searchTitle, setSearchTitle,
+        enterHandler, setEnterHandler, getTopBooks, darkMode, setDarkMode, toggleDarkMode, theme, setTheme, loading,
+        setLoading,
+        // functions
+        authenticateUser, logOutUser,
       }}
     >
       {children}

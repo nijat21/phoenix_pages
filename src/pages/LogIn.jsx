@@ -13,7 +13,7 @@ function LogIn() {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
-  const { storeToken, authenticateUser, setUSERID } = useContext(UserContext);
+  const { storeToken, authenticateUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -43,9 +43,8 @@ function LogIn() {
     } else {
       if (userExists) {
         storeToken(userExists.id);
-        setUSERID(userExists.id);
         authenticateUser();
-        toast.success('You are successfully logged in!')
+        toast.success('You are successfully logged in!');
         navigate('/');
       } else {
         setErrorMessage('Username or password is wrong. Please try again.');

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useState, useEffect, useRef, useContext } from 'react';
 import UserContext from '../context/UserProvider';
 import { useNavigate } from 'react-router-dom';
@@ -6,7 +5,6 @@ import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
 import { signup } from '../API/auth.api';
 
-const API_URL = import.meta.env.VITE_PP_API;
 
 function SignUp() {
   const [name, setName] = useState('');
@@ -43,6 +41,7 @@ function SignUp() {
         navigate('/');
       } catch (error) {
         console.log('Error signing up.', error);
+        setErrorMessage(`Error signing up, ${error}`);
       }
     }
   };

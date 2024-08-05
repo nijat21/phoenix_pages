@@ -8,7 +8,7 @@ import { motion as m } from 'framer-motion';
 const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
 function Profile() {
-  const { userLogged, setUserLogged, USERID, setUSERID, logOutUser } =
+  const { userLogged, setUserLogged, user, logOutUser } =
     useContext(UserContext);
   const userRef = useRef(null);
   const [userDetails, setUserDetails] = useState([]);
@@ -27,9 +27,9 @@ function Profile() {
   useEffect(() => {
     const getUserInfo = async () => {
       try {
-        const response = await axios.get(`${API_URL}/users/${USERID}`);
+        const response = await axios.get(`${API_URL}/users/${user._id}`);
         console.log(response.data);
-        console.log(USERID);
+        console.log(user._id);
         setUserDetails(response.data);
       } catch (error) {
         console.error('Error fetching User info:', error);
@@ -39,7 +39,7 @@ function Profile() {
     if (userLogged) {
       getUserInfo();
     }
-  }, [USERID]);
+  }, [user._id]);
 
   const handleSubmitUserEdit = async e => {
     e.preventDefault();
@@ -61,8 +61,8 @@ function Profile() {
       blankPasswords();
     } else {
       const updateUser = { username: newUsername, password };
-      await axios.put(`${API_URL}/users/${USERID}`, updateUser);
-      toast.success('You have successfully modified your username!')
+      await axios.put(`${API_URL}/users/${user._id}`, updateUser);
+      toast.success('You have successfully modified your username!');
       console.log('End login process');
       setUsernameEdit(false);
       setNewUsername('');
@@ -98,8 +98,8 @@ function Profile() {
         username: userDetails.username,
         password: newPassword,
       };
-      await axios.put(`${API_URL}/users/${USERID}`, updateUser);
-      toast.success('You have successfully modified your password!')
+      await axios.put(`${API_URL}/users/${user._id}`, updateUser);
+      toast.success('You have successfully modified your password!');
       setPasswordChange(false);
       blankPasswords();
       setErrorMessage('');
@@ -119,8 +119,8 @@ function Profile() {
     } else if (deleteConfirm !== 'delete') {
       setErrorMessage(`Please write 'delete' in order to remove your profile`);
     } else {
-      await axios.delete(`${API_URL}/users/${USERID}`);
-      toast.success('You have successfully deleted your profile!')
+      await axios.delete(`${API_URL}/users/${user._id}`);
+      toast.success('You have successfully deleted your profile!');
       setPassword('');
       setErrorMessage('');
       setDeleteConfirm('');

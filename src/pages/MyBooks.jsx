@@ -11,7 +11,7 @@ function MyBooks() {
   const [myListOfBooks, setMyListOfBooks] = useState(null);
   const [additionalBookInfo, setAdditionalBookInfo] = useState([]);
   const [list, setList] = useState(null);
-  const { USERID, setUSERID, loading, setLoading } = useContext(UserContext);
+  const { user, loading, setLoading } = useContext(UserContext);
   const [show, setShow] = useState(true);
   const [length, setLength] = useState(25);
   const navigate = useNavigate();
@@ -23,13 +23,13 @@ function MyBooks() {
       setLoading(true);
       if (v === 1) {
         const response = await axios.get(
-          `${API_URL}/users/${USERID}?_embed=books_to_read`
+          `${API_URL}/users/${user._id}?_embed=books_to_read`
         );
         setList(1);
         setMyListOfBooks(response.data.books_to_read);
       } else if (v === 2) {
         const response = await axios.get(
-          `${API_URL}/users/${USERID}?_embed=books_already_read`
+          `${API_URL}/users/${user._id}?_embed=books_already_read`
         );
 
         setList(2);
@@ -77,7 +77,7 @@ function MyBooks() {
 
   useEffect(() => {
     getList(1);
-  }, [USERID]);
+  }, [user._id]);
 
   // update the list everytime a book is added
 
@@ -118,7 +118,7 @@ function MyBooks() {
 
   const addToAlreadyRead = async (key, id) => {
     const newKey = key.slice(7);
-    const requestBook = { bookKey: newKey, userId: USERID };
+    const requestBook = { bookKey: newKey, userId: user._id };
     await axios.post(`${API_URL}/books_already_read`, requestBook);
     await axios.delete(`${API_URL}/books_to_read/${id}`);
     getList(1);
@@ -250,7 +250,7 @@ function MyBooks() {
                             </div>
                           </m.div>
                         </Link>
-                      ))
+                      ));
                   })}
               </section>
             </div>

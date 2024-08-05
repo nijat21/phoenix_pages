@@ -11,7 +11,7 @@ function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const {
-    userLogin,
+    user,
     searchTitle,
     setSearchTitle,
     setEnterHandler,
@@ -104,7 +104,7 @@ function Navbar() {
                 </h2>
               </Link>
             </button>
-            {userLogin && (
+            {user && (
               <Link to={'/mybooks'} onClick={() => handleClick()}>
                 <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
                   My Books
@@ -125,9 +125,9 @@ function Navbar() {
               onKeyDown={handleKeyDown}
             />
           )}
-          {userLogin ? (
+          {user ? (
             <div className='user-symbol zoom-container'>
-              <UserMenu initial={userLogin[0].toUpperCase()} />
+              <UserMenu initial={user[0].toUpperCase()} />
             </div>
           ) : (
             <Link to={'/login'} className='login zoom-container'>
