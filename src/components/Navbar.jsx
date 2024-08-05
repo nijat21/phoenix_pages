@@ -75,7 +75,7 @@ function Navbar() {
           <Link to={'/'} className='first-div-link '>
             {windowWidth > 680 && (
               <div>
-                <p className='text-red-800 text-bold text-4xl'>
+                <p className='text-amber-700 text-bold text-4xl'>
                   Phoenix Pages
                 </p>
               </div>

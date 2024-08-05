@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const UserContext = React.createContext();
+const API_URL = import.meta.env.VITE_PP_API;
 
-const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
 export const UserProvider = ({ children }) => {
   const [userLogin, setUserLogin] = useState('');

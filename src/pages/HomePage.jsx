@@ -26,7 +26,8 @@ function HomePage() {
   ////////////////////////
 
   return (
-    <div className='w-screen min-h-screen flex flex-col relative overflow-hidden scrollbar scrollbar-thumb-neutral-600 dark:scrollbar-thumb-neutral-800 scrollbar-track-transparent'>
+    <div className='w-screen min-h-screen flex flex-col relative overflow-hidden scrollbar scrollbar-thumb-neutral-600
+     dark:scrollbar-thumb-neutral-800 scrollbar-track-transparent'>
       <div
         id='home-page'
         className='bg-bkg bg-cover bg-center w-screen h-screen flex items-center justify-center mt-0 z-20'

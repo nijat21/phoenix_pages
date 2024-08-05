@@ -10,7 +10,7 @@ const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
 function SingleBookPage() {
   const { bookKey } = useParams();
-  const { USERID, setUSERID, loading, setLoading } = useContext(UserContext);
+  const { USERID, loading, setLoading } = useContext(UserContext);
 
   const [book, setBook] = useState(null);
   const [author, setAuthor] = useState(null);
@@ -20,6 +20,7 @@ function SingleBookPage() {
   const [descLength, setDescLength] = useState(850);
   const [descShow, setDescShow] = useState(true);
   const navigate = useNavigate();
+
 
   useEffect(() => {
     axios
@@ -34,6 +35,7 @@ function SingleBookPage() {
         console.error('Error fetching book:', error);
       });
   }, []);
+
 
   useEffect(() => {
     if (book && book.authors) {
@@ -51,11 +53,13 @@ function SingleBookPage() {
     }
   }, [book]);
 
+  // Checks books and updates buttons' look
   useEffect(() => {
     const initializeListButtons = async () => {
       const responseToRead = await axios.get(
         `${API_URL}/users/${USERID}?_embed=books_to_read`
       );
+      console.log("Books to read", responseToRead);
       const responseAlreadyRead = await axios.get(
         `${API_URL}/users/${USERID}?_embed=books_already_read`
       );
@@ -83,8 +87,8 @@ function SingleBookPage() {
     }
   }, [book]);
 
-  // when this function is called, it will add the given book to the Want To Read List
 
+  // when this function is called, it will add the given book to the Want To Read List
   const wantToRead = async () => {
     const requestBook = { bookKey, userId: USERID };
 
@@ -107,7 +111,7 @@ function SingleBookPage() {
     // console.log(bookCheckAlreadyRead);
 
     if (bookCheckToRead) {
-      // console.log('This book is already on the list');
+      console.log('This book is already on the list');
     } else {
       await axios.post(`${API_URL}/books_to_read`, requestBook);
       setWantToReadCheck(true);
@@ -121,8 +125,8 @@ function SingleBookPage() {
     }
   };
 
-  // when this function is called, it will add the given book to the Already Read List
 
+  // when this function is called, it will add the given book to the Already Read List
   const alreadyRead = async () => {
     const requestBook = { bookKey, userId: USERID };
 

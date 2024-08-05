@@ -4,103 +4,53 @@ import UserContext from '../context/UserProvider';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { toast } from 'sonner';
+import { signup } from '../API/auth.api';
 
-const API_URL = 'https://server-phoenix-pages.adaptable.app';
+const API_URL = import.meta.env.VITE_PP_API;
 
 function SignUp() {
-  const userRef = useRef(null);
-  const [username, setUsername] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordConfirmed, setPasswordConfirmed] = useState('');
-  const [logInMessage, setLogInMessage] = useState('');
-
-  const { storeToken, authenticateUser, setUSERID } = useContext(UserContext);
+  const [errorMessage, setErrorMessage] = useState('');
+  const userRef = useRef(null);
+  const { storeToken, authenticateUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
+  // Check for regex
+  function validatePassword(password) {
+    const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+    return passwordPattern.test(password);
+  }
+
   const handleSubmit = async e => {
     e.preventDefault();
+    if (!name || !password) {
+      setErrorMessage('All fields must be filled!');
 
-    const response = await axios.get(`${API_URL}/users`);
-    const user = response.data;
-
-    if (!username) {
-      setLogInMessage('To Sign up, please input your username!');
-      // blankEverything();
-    } else if (!password) {
-      setLogInMessage('To Sign up, please input your password!');
-      blankPasswords();
-    } else if (!passwordConfirmed) {
-      setLogInMessage('Please confirm your password!');
-      blankPasswords();
-    } else if (passwordConfirmed !== password) {
-      setLogInMessage(`Passwords don't match!`);
-      blankPasswords();
-    } else if (!checkPasswordConditions(password)) {
-      setLogInMessage(
-        'Password should have at least one upper and lower case letter, a number and a special character.'
-      );
-      blankPasswords();
     } else {
-      const userCheck = user.find(user => user.username === username);
-
-      if (userCheck) {
-        setLogInMessage('Username is taken. Please try a different one!');
-      } else {
-        const requestUser = { username, password };
-        await axios.post(`${API_URL}/users`, requestUser);
+      if (!validatePassword(password)) {
+        setErrorMessage('Password must be at least 8 characters long and include one uppercase letter, one lowercase letter, and one number.');
+        return;
+      }
+      const user = { name, email, password };
+      try {
+        const response = await signup(user);
+        storeToken(response.data.authToken);
+        authenticateUser();
         toast.success('You have successfully created your profile!');
-
-        const response = await axios.get(`${API_URL}/users`);
-        const users = response.data;
-
-        const userExists = users.find(
-          user =>
-            user.username === requestUser.username &&
-            user.password === requestUser.password
-        );
-
-        if (userExists) {
-          storeToken(userExists.id);
-          setUSERID(userExists.id);
-          authenticateUser();
-          navigate('/');
-        } else {
-          // setErrorMessage('Username or password is wrong. Please try again.');
-        }
+        navigate('/');
+      } catch (error) {
+        console.log('Error signing up.', error);
       }
     }
-  };
-
-  // check if the password follows the conditions
-
-  const checkPasswordConditions = str => {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]).{6,}$/;
-    return passwordRegex.test(str);
-  };
-
-  // const checkPasswordConditions = str => {
-  //   const specialChars = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
-
-  //   if (/[A-Z]/.test(str) && /[a-z]/.test(str)) {
-  //     return true;
-  //   } else if (str.length >= 8) {
-  //     return true;
-  //   } else if (specialChars.test(str)) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // };
-
-  const blankPasswords = () => {
-    setPassword('');
-    setPasswordConfirmed('');
   };
 
   useEffect(() => {
     userRef.current.focus();
   }, []);
+
 
   return (
     <div className=' h-screen flex justify-center items-center'>
@@ -114,43 +64,32 @@ function SignUp() {
         >
           <label className='p-2'>
             <div className='flex items-center justify-between'>
-              <h3>Username</h3>
+              <h3>Name</h3>
             </div>
-            <input
-              type='text'
-              id='username'
-              name='username'
+            <input type='text' id='username' name='username' value={name} ref={userRef}
               className='shadow-slate-400 shadow-md dark:shadow-neutral-900 rounded-md min-w-72 min-h-10 pl-1 text-black'
-              value={username}
-              onChange={e => setUsername(e.target.value)}
-              ref={userRef}
+              onChange={e => setName(e.target.value)}
+            />
+          </label>
+          <label className='p-2'>
+            <div className='flex items-center justify-between'>
+              <h3>Email</h3>
+            </div>
+            <input type='email' id='email' name='email' value={email} ref={userRef}
+              className='shadow-slate-400 shadow-md dark:shadow-neutral-900 rounded-md min-w-72 min-h-10 pl-1 text-black'
+              onChange={e => setEmail(e.target.value)}
             />
           </label>
           <label className='p-2'>
             <h3>Password</h3>
-            <input
-              type='password'
-              id='passwordLogin'
-              name='passwordLogin'
+            <input type='password' id='password' name='password' value={password}
               className='shadow-slate-400 shadow-md dark:shadow-neutral-900 rounded-md min-w-72 min-h-10 pl-1 text-black'
-              value={password}
               onChange={e => setPassword(e.target.value)}
-            />
-          </label>
-          <label className='p-2'>
-            <h3>Confirm Password:</h3>
-            <input
-              type='password'
-              id='password1'
-              name='password1'
-              className='shadow-slate-400 shadow-md dark:shadow-neutral-900 rounded-md min-w-72 min-h-10 pl-1 text-black'
-              value={passwordConfirmed}
-              onChange={e => setPasswordConfirmed(e.target.value)}
             />
           </label>
 
           <label className='flex items-center justify-center'>
-            <p className='text-xs text-red-500 max-w-72'>{logInMessage}</p>
+            <p className='text-xs text-red-500 max-w-72'>{errorMessage}</p>
           </label>
 
           <div className='flex justify-center mt-10'>
@@ -167,7 +106,7 @@ function SignUp() {
           </Link>
         </span>
       </div>
-    </div>
+    </div >
   );
 }
 
