@@ -1,56 +1,29 @@
-import axios from 'axios';
-import { Toaster, toast } from 'sonner';
 import { useState, useEffect, useRef, useContext } from 'react';
 import UserContext from '../context/UserProvider';
 import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-
-const API_URL = 'https://server-phoenix-pages.adaptable.app';
+import { login } from '../API/auth.api';
 
 function LogIn() {
   const userRef = useRef(null);
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-
   const { storeToken, authenticateUser } = useContext(UserContext);
 
-  const navigate = useNavigate();
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const user = { username: email, password };
 
-    console.log('Start login process');
-
-    const response = await axios.get(`${API_URL}/users`);
-    const users = response.data;
-    const requestBody = { username, password };
-    console.log(response);
-
-    // Checking if the user exists
-    const userExists = users.find(
-      user =>
-        user.username === requestBody.username &&
-        user.password === requestBody.password
-    );
-
-    if (!username && !password) {
-      setErrorMessage('Please input your username and password!');
-    } else if (!username) {
-      setErrorMessage('To Log in, please input your username!');
-    } else if (!password) {
-      setErrorMessage('To Log in, please input your password!');
-    } else {
-      if (userExists) {
-        storeToken(userExists.id);
-        authenticateUser();
-        toast.success('You are successfully logged in!');
-        navigate('/');
-      } else {
-        setErrorMessage('Username or password is wrong. Please try again.');
-      }
+    try {
+      const response = await login(user);
+      console.log("Response to login", response.data);
+      storeToken(response.data.access_token);
+      authenticateUser();
+    } catch (error) {
+      console.log('Error logging in', error);
+      setErrorMessage(error.response.data.message);
     }
-    console.log('End login process');
   };
 
   useEffect(() => {
@@ -72,12 +45,12 @@ function LogIn() {
               <h3>Username</h3>
             </div>
             <input
-              type='text'
-              id='username'
-              name='username'
+              type='email'
+              id='email'
+              name='email'
               className='shadow-slate-400 shadow-md dark:shadow-neutral-900 rounded-md min-w-72 min-h-10 pl-1 text-black'
-              value={username}
-              onChange={e => setUsername(e.target.value)}
+              value={email}
+              onChange={e => setEmail(e.target.value)}
               ref={userRef}
             />
           </label>

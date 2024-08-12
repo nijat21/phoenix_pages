@@ -34,14 +34,18 @@ function SignUp() {
       }
       const user = { name, email, password };
       try {
-        const response = await signup(user);
-        storeToken(response.data.authToken);
+        const result = await signup(user);
+        storeToken(result.data.access_token);
+        // console.log("Access token", result.data.access_token);
         authenticateUser();
         toast.success('You have successfully created your profile!');
         navigate('/');
       } catch (error) {
-        console.log('Error signing up.', error);
-        setErrorMessage(`Error signing up, ${error}`);
+        const errorDetail = error.response && error.response.data && error.response.data.detail
+          ? error.response.data.detail
+          : 'An unknown error occurred.';
+        console.log('Error signing up.', errorDetail);
+        setErrorMessage(`Error signing up. ${errorDetail}`);
       }
     }
   };
@@ -74,7 +78,7 @@ function SignUp() {
             <div className='flex items-center justify-between'>
               <h3>Email</h3>
             </div>
-            <input type='email' id='email' name='email' value={email} ref={userRef}
+            <input type='email' id='email' name='email' value={email}
               className='shadow-slate-400 shadow-md dark:shadow-neutral-900 rounded-md min-w-72 min-h-10 pl-1 text-black'
               onChange={e => setEmail(e.target.value)}
             />
@@ -88,7 +92,7 @@ function SignUp() {
           </label>
 
           <label className='flex items-center justify-center'>
-            <p className='text-xs text-red-500 max-w-72'>{errorMessage}</p>
+            {errorMessage && <p className='text-xs text-red-500 max-w-72'>{errorMessage}</p>}
           </label>
 
           <div className='flex justify-center mt-10'>

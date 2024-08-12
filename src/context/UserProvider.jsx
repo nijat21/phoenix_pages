@@ -58,17 +58,16 @@ export const UserProvider = ({ children }) => {
       try {
         // Verify token
         const verified = await verify(storedToken);
-        setUser(verified.data);
+        console.log("Verified user", verified.data);
+        setUser(verified.data.User);
         setUserLogged(true);
       } catch (error) {
         console.log('Not able to authenticate the user', error);
-        setUserLogged(false);
-        setUser(null);
+        clearUser();
       }
     } else {
       // If userId is not available (or is removed)
-      setUserLogged(false);
-      setUser(null);
+      clearUser();
     }
   };
 

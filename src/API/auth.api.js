@@ -1,13 +1,20 @@
 import axios from "axios";
-const baseUrl = `${import.meta.env.VITE_PP_API}`;
+import qs from "qs";
+const baseUrl = `${import.meta.env.VITE_PP_API}/auth`;
 
 
 export const signup = user => {
     return axios.post(`${baseUrl}/signup`, user);
 };
 
+// As the endpoint requires OAuth2PasswordForm, the data passed in req should be urlencoded
 export const login = user => {
-    return axios.post(`${baseUrl}/login`, user);
+    const data = qs.stringify(user);
+    return axios.post(`${baseUrl}/login`, data, {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
+    });
 };
 
 // Verify the token 
@@ -56,7 +63,7 @@ setAuthorizationHeaders();
 //     return axios.put(`${baseUrl}/updateUserDetails`, reqBody);
 // };
 
-// // Delete user and all bank accounts
-// export const deleteUser = async (user_id) => {
-//     return axios.delete(`${baseUrl}/deleteUser/${user_id}`);
-// };
+// Delete user and all bank accounts
+export const deleteUser = async (user_id) => {
+    return axios.delete(`${baseUrl}/deleteUser/${user_id}`);
+};

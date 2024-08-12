@@ -22,6 +22,7 @@
     "axios": "^1.6.5",
     "esbuild": "^0.19.11",
     "framer-motion": "^11.0.3",
+    "qs": "^6.13.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-plx": "^2.1.2",

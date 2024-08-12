@@ -8,7 +8,7 @@ import { motion as m } from 'framer-motion';
 const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
 function Profile() {
-  const { userLogged, setUserLogged, user, logOutUser } =
+  const { userLogged, user, logOutUser } =
     useContext(UserContext);
   const userRef = useRef(null);
   const [userDetails, setUserDetails] = useState([]);
@@ -23,23 +23,6 @@ function Profile() {
   const [errorMessage, setErrorMessage] = useState('');
 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const getUserInfo = async () => {
-      try {
-        const response = await axios.get(`${API_URL}/users/${user._id}`);
-        console.log(response.data);
-        console.log(user._id);
-        setUserDetails(response.data);
-      } catch (error) {
-        console.error('Error fetching User info:', error);
-      }
-    };
-
-    if (userLogged) {
-      getUserInfo();
-    }
-  }, [user._id]);
 
   const handleSubmitUserEdit = async e => {
     e.preventDefault();
@@ -109,9 +92,6 @@ function Profile() {
 
   const handleDeleteProfile = async e => {
     e.preventDefault();
-
-    console.log('Start login process');
-
     if (!password) {
       setErrorMessage('Please input your password!');
     } else if (password !== userDetails.password) {
@@ -127,7 +107,6 @@ function Profile() {
       logOutUser();
       navigate('/');
     }
-    console.log('End login process');
   };
 
   const checkPasswordConditions = str => {

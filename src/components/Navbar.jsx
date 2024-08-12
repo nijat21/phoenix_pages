@@ -10,12 +10,7 @@ import '../styles/navbar.styles.css';
 function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
-  const {
-    user,
-    searchTitle,
-    setSearchTitle,
-    setEnterHandler,
-  } = useContext(UserContext);
+  const { user, searchTitle, setSearchTitle, setEnterHandler, } = useContext(UserContext);
 
   /////////////////////////
 
@@ -127,7 +122,7 @@ function Navbar() {
           )}
           {user ? (
             <div className='user-symbol zoom-container'>
-              <UserMenu initial={user[0].toUpperCase()} />
+              <UserMenu initial={user.name[0].toUpperCase()} />
             </div>
           ) : (
             <Link to={'/login'} className='login zoom-container'>
