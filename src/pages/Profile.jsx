@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 import { motion as m } from 'framer-motion';
 import { deleteUser } from '../API/auth.api';
 import { updateEmail } from '../API/auth.api';
+import { updatePass } from '../API/auth.api';
 
 const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
@@ -39,39 +40,25 @@ function Profile() {
     }
   };
 
-  const handleSubmitPasswordChange = async e => {
+  const handlePasswordChange = async e => {
     e.preventDefault();
 
-    console.log('Start login process');
-
-    if (!password) {
-      setErrorMessage('Please input your current password!');
-    } else if (newPassword === userDetails.password) {
-      setErrorMessage('New Password cannot the same as the current one.');
-    } else if (password !== userDetails.password) {
-      setErrorMessage('Incorrect password, try again.');
-      blankPasswords();
-    } else if (!newPassword) {
-      setErrorMessage('To change your password, please input a new one!');
+    if (!password || !newPassword) {
+      setErrorMessage('Please fill all the fields to proceed');
     } else if (newPassword !== newPasswordConfirm) {
-      setErrorMessage('Please correctly confirm your password.');
+      setErrorMessage("Passwords don't match");
     } else if (!checkPasswordConditions(newPassword)) {
       setErrorMessage(
         'Password should have at least one upper and lower case letter, a number and a special character.'
       );
       blankPasswords();
     } else {
-      const updateUser = {
-        username: userDetails.username,
-        password: newPassword,
-      };
-      await axios.put(`${API_URL}/users/${user._id}`, updateUser);
+      await updatePass({ user_id: user.id, new_password: newPassword, password: password });
       toast.success('You have successfully modified your password!');
       setPasswordChange(false);
       blankPasswords();
       setErrorMessage('');
     }
-    console.log('End login process');
   };
 
   const handleDeleteProfile = async e => {
@@ -222,7 +209,7 @@ function Profile() {
 
               {passwordChange && (
                 <m.form
-                  onSubmit={handleSubmitPasswordChange}
+                  onSubmit={handlePasswordChange}
                   className='min-h-72 min-w-72 flex flex-col justify-around items-center'
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.75, ease: "easeOut" }} exit={{ opacity: 0 }}
                 >

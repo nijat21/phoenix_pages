@@ -22,7 +22,7 @@ function LogIn() {
       authenticateUser();
     } catch (error) {
       console.log('Error logging in', error);
-      setErrorMessage(error.response.data.message);
+      setErrorMessage(error.response.data.detail);
     }
   };
 
