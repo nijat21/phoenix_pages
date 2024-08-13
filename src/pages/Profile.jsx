@@ -1,57 +1,41 @@
 import axios from 'axios';
 import { useState, useEffect, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import UserContext from '../context/UserProvider';
+import UserContext, { UserProvider } from '../context/UserProvider';
 import { toast } from 'sonner';
 import { motion as m } from 'framer-motion';
+import { deleteUser } from '../API/auth.api';
+import { updateEmail } from '../API/auth.api';
 
 const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
 function Profile() {
-  const { userLogged, user, logOutUser } =
-    useContext(UserContext);
   const userRef = useRef(null);
   const [userDetails, setUserDetails] = useState([]);
   const [usernameEdit, setUsernameEdit] = useState(false);
   const [passwordChange, setPasswordChange] = useState(false);
   const [deleteProfile, setDeleteProfile] = useState(false);
-  const [newUsername, setNewUsername] = useState('');
+  const [newEmail, setNewEmail] = useState('');
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [newPasswordConfirm, setNewPasswordConfirm] = useState('');
   const [deleteConfirm, setDeleteConfirm] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const { user, logOutUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
-  const handleSubmitUserEdit = async e => {
+  const handleEditEmail = async e => {
     e.preventDefault();
-
-    console.log('Start login process');
-
-    if (!newUsername && !password) {
-      setErrorMessage('Please input your username and password!');
-    } else if (!newUsername) {
-      setErrorMessage(
-        'To change your Username, please input your new Username!'
-      );
-    } else if (newUsername === userDetails.username) {
-      setErrorMessage('New Username is the same as the current one');
-    } else if (!password) {
-      setErrorMessage('To change your Username, please input your password!');
-    } else if (password !== userDetails.password) {
-      setErrorMessage(`Passwords don't match!`);
-      blankPasswords();
+    if (!newEmail && !password) {
+      setErrorMessage('Please input all the fields to proceed');
     } else {
-      const updateUser = { username: newUsername, password };
-      await axios.put(`${API_URL}/users/${user._id}`, updateUser);
-      toast.success('You have successfully modified your username!');
-      console.log('End login process');
+      await updateEmail({ user_id: user.id, new_email: newEmail, password });
+      toast.success('You have successfully modified your email!');
       setUsernameEdit(false);
-      setNewUsername('');
+      setNewEmail('');
       setPassword('');
       setErrorMessage('');
-      setUserDetails(updateUser);
     }
   };
 
@@ -92,14 +76,10 @@ function Profile() {
 
   const handleDeleteProfile = async e => {
     e.preventDefault();
-    if (!password) {
-      setErrorMessage('Please input your password!');
-    } else if (password !== userDetails.password) {
-      setErrorMessage(`Put the correct password!`);
-    } else if (deleteConfirm !== 'delete') {
-      setErrorMessage(`Please write 'delete' in order to remove your profile`);
+    if (!password || !deleteConfirm) {
+      setErrorMessage(`Please input all the fields to proceed`);
     } else {
-      await axios.delete(`${API_URL}/users/${user._id}`);
+      await deleteUser(user.id, password);
       toast.success('You have successfully deleted your profile!');
       setPassword('');
       setErrorMessage('');
@@ -145,7 +125,7 @@ function Profile() {
 
   return (
     <>
-      {userDetails && (
+      {user && (
         <m.div className='w-screen h-screen flex justify-center'
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.75, ease: "easeOut" }} exit={{ opacity: 0 }}>
           <div className=' flex flex-col items-center justify-center'>
@@ -153,7 +133,7 @@ function Profile() {
               {!usernameEdit && !passwordChange && !deleteProfile && (
                 <div className='flex flex-col justify-evenly items-center mr-10'>
                   <i className="fa-regular fa-user fa-5x p-4"></i>
-                  <h1 className='text-3xl'>{userDetails.username}</h1>
+                  <h1 className='text-3xl'>{user.name}</h1>
                 </div>
               )}
               <div className='flex flex-col'>
@@ -164,7 +144,7 @@ function Profile() {
                       className='min-w-72 min-h-10 px-4 py-1 mx-2 mb-5 rounded-xl border-2 border-amber-700 hover:text-white
               shadow-slate-400 shadow-md hover:bg-amber-700  dark:shadow-neutral-900'
                     >
-                      Edit your Username
+                      Edit Email
                     </button>
                   </>
                 )}
@@ -190,7 +170,7 @@ function Profile() {
 
               {usernameEdit && (
                 <m.form
-                  onSubmit={handleSubmitUserEdit}
+                  onSubmit={handleEditEmail}
                   className='min-h-72 min-w-72 flex flex-col justify-around items-center'
                   initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.75, ease: "easeOut" }} exit={{ opacity: 0 }}
                 >
@@ -203,11 +183,11 @@ function Profile() {
                     </div>
                     <input
                       type='text'
-                      id='newUsername'
-                      name='newUsername'
+                      id='newEmail'
+                      name='newEmail'
                       className='shadow-slate-400 shadow-md dark:shadow-neutral-900 rounded-md min-w-72 min-h-10 pl-1 text-black'
-                      value={newUsername}
-                      onChange={e => setNewUsername(e.target.value)}
+                      value={newEmail}
+                      onChange={e => setNewEmail(e.target.value)}
                       ref={userRef}
                     />
                   </label>

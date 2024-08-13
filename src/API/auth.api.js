@@ -58,12 +58,17 @@ setAuthorizationHeaders();
 //     return axios.put(`${baseUrl}/updatePassword`, reqBody);
 // };
 
-// // Update user details
-// export const updateUserDetails = (reqBody) => {
-//     return axios.put(`${baseUrl}/updateUserDetails`, reqBody);
-// };
+// Update user details
+export const updateEmail = ({ user_id, new_email, password }) => {
+    const reqBody = { new_email, password };
+    return axios.put(`${baseUrl}/updateEmail/${user_id}`, reqBody);
+};
 
 // Delete user and all bank accounts
-export const deleteUser = async (user_id) => {
-    return axios.delete(`${baseUrl}/deleteUser/${user_id}`);
+export const deleteUser = async (user_id, password) => {
+    return axios.delete(`${baseUrl}/deleteUser/${user_id}`, {
+        data: {
+            password: password
+        }
+    });
 };
