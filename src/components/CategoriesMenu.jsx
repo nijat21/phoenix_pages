@@ -1,37 +1,37 @@
-import { useState, useRef, useEffect, useContext } from 'react'
-import { Navigate, useNavigate, Link } from 'react-router-dom'
+import { useState, useRef, useEffect, useContext } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import UserContext from '../context/UserProvider';
 import { motion as m } from "framer-motion";
 
 function CategoriesMenu() {
   const catMenu = useRef(null);
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
   const navigate = useNavigate();
-  const { category, setCategory } = useContext(UserContext);
+  const { setCategory } = useContext(UserContext);
 
   const handleOpen = () => {
     setOpen((prevOpen) => !prevOpen);
-  }
+  };
 
   const handleCategoryClick = (cat) => {
-    console.log(cat)
+    console.log(cat);
     setCategory(cat);
-    setOpen(false)
-    navigate('/books')
-  }
+    setOpen(false);
+    navigate('/books');
+  };
 
   useEffect(() => {
     const handleOutsideClick = (e) => {
       {
         open && catMenu.current && !catMenu.current.contains(e.target) &&
-          setOpen(false)
+          setOpen(false);
       }
-    }
+    };
     document.addEventListener('mousedown', handleOutsideClick);
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
-    }
-  }, [open, catMenu])
+    };
+  }, [open, catMenu]);
 
 
   return (
@@ -53,7 +53,7 @@ function CategoriesMenu() {
           null}
       </div>
     </div>
-  )
+  );
 }
 
 export default CategoriesMenu;

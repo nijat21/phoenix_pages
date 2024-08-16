@@ -19,6 +19,7 @@ import Footer from './components/Footer';
 import FourOFour from './pages/FourOFour';
 import ServerError from './pages/ServerError';
 import IsAnon from './components/IsAnon';
+import IsPrivate from './components/IsPrivate';
 
 function App() {
   return (
@@ -32,13 +33,13 @@ function App() {
             <Route path='/books' element={<BooksPage />} />
             <Route path='books/works/:bookKey' element={<SingleBookPage />} />
             <Route path='/authors/:authorKey' element={<AuthorPage />} />
-            <Route path='/mybooks' element={<MyBooks />} />
             <Route path='/aboutus' element={<AboutUsPage />} />
             <Route path='/login' element={<IsAnon><LogIn /></IsAnon>} />
             <Route path='/signup' element={<IsAnon><SignUp /></IsAnon>} />
-            <Route path='/profile' element={<Profile />} />
-            <Route path='/deleteuser' element={<DeleteUser />} />
+            <Route path='/profile' element={<IsPrivate><Profile /></IsPrivate>} />
+            <Route path='/deleteuser' element={<IsPrivate><DeleteUser /></IsPrivate>} />
             <Route path='/search' element={<Search />} />
+            <Route path='/mybooks' element={<IsPrivate><MyBooks /></IsPrivate>} />
 
             <Route path='/server-error' element={<ServerError />} />
             <Route path='*' element={<FourOFour />} />

@@ -1,18 +1,16 @@
 import axios from 'axios';
 import { useState, useEffect, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import UserContext, { UserProvider } from '../context/UserProvider';
+import UserContext from '../context/UserProvider';
 import { toast } from 'sonner';
 import { motion as m } from 'framer-motion';
 import { deleteUser } from '../API/auth.api';
 import { updateEmail } from '../API/auth.api';
 import { updatePass } from '../API/auth.api';
 
-const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
 function Profile() {
   const userRef = useRef(null);
-  const [userDetails, setUserDetails] = useState([]);
   const [usernameEdit, setUsernameEdit] = useState(false);
   const [passwordChange, setPasswordChange] = useState(false);
   const [deleteProfile, setDeleteProfile] = useState(false);

@@ -9,7 +9,6 @@ import BookCard from './BookCard';
 
 function BooksPage() {
   const [books, setBooks] = useState([]);
-  // const [loading, setLoading] = useState(true);
   const [imageLoaded, setImageLoaded] = useState(false);
   const [booksCount, setBooksCount] = useState(5);
   const [discoverClicked, setDiscoverClicked] = useState(false);
@@ -17,9 +16,6 @@ function BooksPage() {
   const navigate = useNavigate();
 
   const { category, setCategory, getTopBooks, loading, setLoading } = useContext(UserContext);
-
-  // Subject query that will look for a generic list of top 5 books
-  // const genericSubject = '*';
 
   // If any category selected save that, or else save genericSubject in local storage
   const claimCategory = cat => {
@@ -32,9 +28,7 @@ function BooksPage() {
   const getBooksByCategory = async cat => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        `https://openlibrary.org/search.json?subject=${cat}&limit=50`
-      );
+      const response = await axios.get(`https://openlibrary.org/search.json?subject=${cat}&limit=50`);
       setBooks(response.data.docs);
     } catch (error) {
       console.log(error);
@@ -46,7 +40,7 @@ function BooksPage() {
 
   // Books updated every time category changes
   useEffect(() => {
-    console.log(category);
+    console.log("Category", category);
     const selectedCat = category;
     if (selectedCat) {
       setLoading(true);
