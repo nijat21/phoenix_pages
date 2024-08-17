@@ -5,8 +5,13 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { motion as m } from 'framer-motion';
 import LoaderFull from '../components/LoaderFull';
+import {
+  retrieveBooksRead, retrieveBooksToRead,
+  addBooksToRead, addBooksRead,
+  removeBooksToRead, removeBooksRead
+} from '../API/books.api';
+import { toast } from 'sonner';
 
-const API_URL = 'https://server-phoenix-pages.adaptable.app';
 
 function SingleBookPage() {
   const { bookKey } = useParams();
@@ -20,6 +25,8 @@ function SingleBookPage() {
   const [descLength, setDescLength] = useState(850);
   const [descShow, setDescShow] = useState(true);
   const navigate = useNavigate();
+  const [booksToRead, setBooksToRead] = useState(null);
+  const [booksRead, setBooksRead] = useState(null);
 
 
   useEffect(() => {
@@ -53,107 +60,106 @@ function SingleBookPage() {
     }
   }, [book]);
 
+
+  // Retrives books of the user
+  const readUserBooks = async () => {
+    if (user) {
+      const responseToRead = await retrieveBooksToRead({ user_id: user.id });
+      setBooksToRead(responseToRead.data.books_to_read);
+      const responseAlreadyRead = await retrieveBooksRead({ user_id: user.id });
+      setBooksRead(responseAlreadyRead.data.books_to_read);
+    }
+  };
+
+
+  // Check current state of llist
+  const checkListState = async () => {
+    if (booksToRead) {
+      const bookCheckToRead = await booksToRead.find(book => book.bookKey === bookKey);
+      { bookCheckToRead && setWantToReadCheck(true); }
+    }
+    if (booksRead) {
+      const bookCheckAlreadyRead = await booksRead.find(book => book.bookKey === bookKey);
+      { bookCheckAlreadyRead && setAlreadyReadCheck(true); }
+    }
+  };
+
+  useEffect(() => {
+    checkListState();
+  }, [booksToRead, booksRead]);
+
+
   // Checks books and updates buttons' look
   useEffect(() => {
     const initializeListButtons = async () => {
-      const responseToRead = await axios.get(
-        `${API_URL}/users/${user._id}?_embed=books_to_read`
-      );
-      console.log("Books to read", responseToRead);
-      const responseAlreadyRead = await axios.get(
-        `${API_URL}/users/${user._id}?_embed=books_already_read`
-      );
-
-      if (user._id) {
-        const bookCheckToRead = await responseToRead.data.books_to_read.find(
-          book => book.bookKey === bookKey
-        );
-        const bookCheckAlreadyRead =
-          await responseAlreadyRead.data.books_already_read.find(
-            book => book.bookKey === bookKey
-          );
-
-        if (bookCheckToRead) {
-          setWantToReadCheck(true);
-        }
-        if (bookCheckAlreadyRead) {
-          setAlreadyReadCheck(true);
-        }
-      }
+      // Get the books in user's list
+      await readUserBooks();
+      // Check the current progress in a book
+      await checkListState();
     };
 
     if (book) {
       initializeListButtons();
+      checkListState();
     }
   }, [book]);
 
 
-  // when this function is called, it will add the given book to the Want To Read List
+  // Add the given book to the Want To Read List
   const wantToRead = async () => {
-    const requestBook = { bookKey, userId: user._id };
-
-    const responseToRead = await axios.get(
-      `${API_URL}/users/${user._id}?_embed=books_to_read`
-    );
-
-    const responseAlreadyRead = await axios.get(
-      `${API_URL}/users/${user._id}?_embed=books_already_read`
-    );
-
-    const bookCheckToRead = responseToRead.data.books_to_read.find(
-      book => book.bookKey === bookKey
-    );
-    const bookCheckAlreadyRead =
-      responseAlreadyRead.data.books_already_read.find(
-        book => book.bookKey === bookKey
-      );
-
-    // console.log(bookCheckAlreadyRead);
-
-    if (bookCheckToRead) {
-      console.log('This book is already on the list');
-    } else {
-      await axios.post(`${API_URL}/books_to_read`, requestBook);
-      setWantToReadCheck(true);
-
-      if (bookCheckAlreadyRead) {
-        await axios.delete(
-          `${API_URL}/books_already_read/${bookCheckAlreadyRead.id}`
-        );
-        setAlreadyReadCheck(false);
+    if (user && bookKey) {
+      try {
+        const requestBook = { book_key: bookKey, user_id: user.id };
+        if (wantToReadCheck) {
+          await removeBooksToRead(requestBook);
+          setWantToReadCheck(false);
+        } else {
+          await addBooksToRead(requestBook);
+          setWantToReadCheck(true);
+          // If the book is in already read, remove it from already read
+          if (alreadyReadCheck) {
+            await removeBooksRead(requestBook);
+            setAlreadyReadCheck(false);
+          }
+          toast.success("Book is successfully added");
+        }
+      } catch (error) {
+        // console.log(error);
+        if (error.response && error.response.status === 400) {
+          toast.error('This book is already in your Want to Read list.');
+        } else {
+          toast.error('Failed to update your reading list. Please try again.');
+        }
       }
+
     }
   };
 
 
   // when this function is called, it will add the given book to the Already Read List
   const alreadyRead = async () => {
-    const requestBook = { bookKey, userId: user._id };
-
-    const responseToRead = await axios.get(
-      `${API_URL}/users/${user._id}?_embed=books_to_read`
-    );
-
-    const responseAlreadyRead = await axios.get(
-      `${API_URL}/users/${user._id}?_embed=books_already_read`
-    );
-
-    const bookCheckToRead = responseToRead.data.books_to_read.find(
-      book => book.bookKey === bookKey
-    );
-    const bookCheckAlreadyRead =
-      responseAlreadyRead.data.books_already_read.find(
-        book => book.bookKey === bookKey
-      );
-
-    if (bookCheckAlreadyRead) {
-      // console.log('This book is already on the list');
-    } else {
-      await axios.post(`${API_URL}/books_already_read`, requestBook);
-      setAlreadyReadCheck(true);
-      if (bookCheckToRead) {
-        await axios.delete(`${API_URL}/books_to_read/${bookCheckToRead.id}`);
-        setWantToReadCheck(false);
+    if (user && bookKey) {
+      try {
+        const requestBook = { book_key: bookKey, user_id: user.id };
+        if (alreadyReadCheck) {
+          await removeBooksRead(requestBook);
+          setAlreadyReadCheck(false);
+        } else {
+          await addBooksRead(requestBook);
+          setAlreadyReadCheck(true);
+          if (wantToReadCheck) {
+            await removeBooksToRead(requestBook);
+            setWantToReadCheck(false);
+          }
+          toast.success("Book is successfully added");
+        }
+      } catch (error) {
+        // console.log(error);
+        if (error.response && error.response.status === 400) {
+          toast.error('This book is already in your Want to Read list.');
+        } else {
+          toast.error('Failed to update your reading list. Please try again.');
+        }
       }
     }
   };
@@ -209,34 +215,32 @@ function SingleBookPage() {
                   className='w-85 text-center object-contain mb-10 rounded-tr-xl rounded-br-xl shadow-slate-700 shadow-2xl'
                   onLoad={() => setImageLoaded(true)}
                 />
-                {user._id && (
+                {user && (
                   <div className='flex justify-evenly flex-col '>
-                    {!wantToReadCheck ? (
-                      <button
-                        onClick={() => wantToRead()}
-                        className='px-4 py-1 mx-2 mb-5 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700
-                        shadow-md shadow-slate-400 dark:shadow-neutral-900'
-                      >
-                        Want to Read
-                      </button>
-                    ) : (
-                      <div className='px-4 py-1 mx-2 mb-5 text-center rounded-2xl border-solid border-2 border-amber-800'>
-                        Want to Read
-                      </div>
-                    )}
-                    {!alreadyReadCheck ? (
-                      <button
-                        onClick={() => alreadyRead()}
-                        className='px-4 py-1 mx-2 rounded-2xl border-solid bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700
-                        shadow-md shadow-slate-400 dark:shadow-neutral-900'
-                      >
-                        Already Read
-                      </button>
-                    ) : (
-                      <div className='px-4 py-1 mx-2 text-center rounded-2xl border-solid border-2 border-amber-800'>
-                        Already Read
-                      </div>
-                    )}
+                    <button onClick={() => wantToRead()}>
+                      {!wantToReadCheck ? (
+                        <div className='px-4 py-1 mx-2 mb-5 rounded-2xl border-solid  bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700
+                        shadow-md shadow-slate-400 dark:shadow-neutral-900'>
+                          Want to Read
+                        </div>
+                      ) : (
+                        <div className='px-4 py-1 mx-2 mb-5 text-center rounded-2xl border-solid border-2 border-amber-800'>
+                          Want to Read
+                        </div>
+                      )}
+                    </button>
+                    <button onClick={() => alreadyRead()}>
+                      {!alreadyReadCheck ? (
+                        <div className='px-4 py-1 mx-2 rounded-2xl border-solid bg-amber-800 text-white border-2 border-amber-800 hover:bg-amber-700 hover:border-amber-700
+                        shadow-md shadow-slate-400 dark:shadow-neutral-900'>
+                          Already Read
+                        </div>
+                      ) : (
+                        <div className='px-4 py-1 mx-2 text-center rounded-2xl border-solid border-2 border-amber-800'>
+                          Already Read
+                        </div>
+                      )}
+                    </button>
                   </div>
                 )}
               </figure>

@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import RatingDisplay from '../components/RatingDisplay';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { motion as m } from "framer-motion";
+
 
 function BookCard({ book, setImageLoaded, imageLoaded }) {
   const [show, setShow] = useState(true);
@@ -14,6 +15,8 @@ function BookCard({ book, setImageLoaded, imageLoaded }) {
       setLength(24);
     }
   };
+
+
   return (
     <Link
       key={book.key}

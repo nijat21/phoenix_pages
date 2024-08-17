@@ -58,7 +58,7 @@ function Navbar() {
   return (
     <>
       <nav className='navbar w-full'>
-        {windowWidth < 680 && (
+        {windowWidth < 900 && (
           <div className='w-1/3 ml-4 '>
             <button className='dropdown'>
               <DropdownMobile />
@@ -68,7 +68,7 @@ function Navbar() {
 
         <div className='first-div '>
           <Link to={'/'} className='first-div-link '>
-            {windowWidth > 680 && (
+            {windowWidth > 900 && (
               <div>
                 <p className='text-amber-700 text-bold text-4xl'>
                   Phoenix Pages
@@ -78,8 +78,8 @@ function Navbar() {
           </Link>
         </div>
 
-        {windowWidth > 680 && (
-          <div className='w-1/3 flex justify-around text-center text-xl '>
+        {windowWidth > 900 && (
+          <div className='w-1/3 flex justify-around items-center text-center text-xl'>
             <button onClick={() => handleClick()}>
               <Link to={'/'}>
                 <h2 className='text-neutral-200 hover:border-b hover:border-neutral-200 zoom-container'>
@@ -110,7 +110,7 @@ function Navbar() {
         )}
 
         <div className='third-div'>
-          {windowWidth > 680 && (
+          {windowWidth > 900 && (
             <input
               type='text'
               placeholder='Search by title'

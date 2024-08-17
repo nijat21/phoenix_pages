@@ -87,6 +87,7 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     authenticateUser();
+    console.log("User", user);
   }, []);
 
   const getTopBooks = (input, slice, readlog) => {
