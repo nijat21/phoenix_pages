@@ -58,7 +58,7 @@ export const UserProvider = ({ children }) => {
       try {
         // Verify token
         const verified = await verify(storedToken);
-        console.log("Verified user", verified.data);
+        // console.log("Verified user", verified.data);
         setUser(verified.data.User);
         setUserLogged(true);
       } catch (error) {
@@ -87,7 +87,7 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     authenticateUser();
-    console.log("User", user);
+    // console.log("User", user);
   }, []);
 
   const getTopBooks = (input, slice, readlog) => {

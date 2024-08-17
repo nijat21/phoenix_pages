@@ -14,7 +14,7 @@ function CategoriesMenu() {
   };
 
   const handleCategoryClick = (cat) => {
-    console.log(cat);
+    // console.log(cat);
     setCategory(cat);
     setOpen(false);
     navigate('/books');

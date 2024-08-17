@@ -4,10 +4,10 @@ import { Navigate } from "react-router-dom";
 import LoaderFull from "./LoaderFull";
 
 const IsPrivate = props => {
-    const { isLoggedIn, isLoading } = useContext(UserContext);
+    const { userLogged, loading } = useContext(UserContext);
 
     // if the authentication is still loading 
-    if (isLoading) {
+    if (loading) {
         return (
             <div className="h-screen w-screen flex justify-center items-center">
                 <LoaderFull />
@@ -15,7 +15,7 @@ const IsPrivate = props => {
         );
     }
 
-    if (!isLoggedIn) {
+    if (!userLogged) {
         console.log("Not logged in");
         return <Navigate to={'/login'} />;
     } else {
