@@ -1,7 +1,7 @@
 import './App.css';
 import { Routes, Route } from 'react-router-dom';
-import { AnimatePresence, motion as m } from 'framer-motion';
-import { Toaster, toast } from 'sonner';
+import { AnimatePresence } from 'framer-motion';
+import { Toaster } from 'sonner';
 
 import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
